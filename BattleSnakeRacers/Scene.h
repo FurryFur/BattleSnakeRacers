@@ -25,7 +25,7 @@ class Scene {
 public:
 	template<typename ...ComponentTs>
 	Entity& createEntity(size_t firstComponent, ComponentTs... rest);
-	Entity& createEntity(size_t componentMask);
+	Entity& createEntity(size_t componentType);
 	void destroyEntity(Entity&);
 	Entity& getEntity(size_t entityID);
 	size_t getEntityCount();

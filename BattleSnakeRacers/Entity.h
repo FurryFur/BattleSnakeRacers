@@ -12,7 +12,7 @@
 
 class EntityEventListener;
  
-enum ComponentMask {
+enum ComponentType {
 	COMPONENT_TRANSFORM = 1 << 0,
 	COMPONENT_PHYSICS = 1 << 1,
 	COMPONENT_MODEL = 1 << 2,
@@ -51,7 +51,7 @@ public:
 
 	// Returns true if ALL the components in the supplied component 
 	// mask are present in the entity.
-	bool hasComponents(size_t componentMask) const;
+	bool hasComponents(size_t componentTypeMask) const;
 
 	// Returns true if ANY of the specified components are present
 	// in the entity.
@@ -60,7 +60,7 @@ public:
 
 	// Returns true if ANY of the components in the supplied component
 	// mask are present in the entity.
-	bool hasComponentsAny(size_t componentMask) const;
+	bool hasComponentsAny(size_t componentTypeMask) const;
 
 	// Returns true if this entity has any components
 	bool hasComponents() const;
@@ -72,12 +72,12 @@ public:
 	// Adds a component to the entity.
 	// A mask can also be specified to add more than one entity at
 	// a time i.e. (COMPONENT_NETWORK | COMPONENT_TRANSFORM).
-	void addComponents(size_t componentMask);
+	void addComponents(size_t componentTypeMask);
 
 	// Removes a component from the entity.
 	// A mask can also be specified to remove more than one entity at
 	// a time i.e. (COMPONENT_NETWORK | COMPONENT_TRANSFORM).
-	void removeComponents(size_t componentMask);
+	void removeComponents(size_t componentTypeMask);
 
 	// Removes multiple components from the entity
 	template<typename ...ComponentTs>
@@ -85,29 +85,29 @@ public:
 
 	// Assembles the component mask from multiple arguments
 	template<typename ...ComponentTs>
-	static size_t assembleComponentMask(size_t first, ComponentTs... rest);
-	static size_t assembleComponentMask(size_t componentMask);
+	static size_t assembleComponentTypeMask(size_t first, ComponentTs... rest);
+	static size_t assembleComponentTypeMask(size_t componentTypeMask);
 
 	// Returns true if ALL the specified components are present 
 	// in the entity.
 	template<typename ...ComponentTs>
-	static bool matches(size_t componentMask, size_t first, ComponentTs... rest);
+	static bool matches(size_t componentTypeMask, size_t first, ComponentTs... rest);
 
 	// Returns true if ALL the components in the supplied component 
 	// mask are present in the entity.
-	static bool matches(size_t lhsComponentMask, size_t rhsComponentMask);
+	static bool matches(size_t lhsComponentTypeMask, size_t rhsComponentTypeMask);
 
 	// Returns true if ANY of the specified components are present
 	// in the entity.
 	template<typename ...ComponentTs>
-	static bool matchesAny(size_t componentMask, size_t first, ComponentTs... rest);
+	static bool matchesAny(size_t componentTypeMask, size_t first, ComponentTs... rest);
 
 	// Returns true if ANY of the components in the supplied component
 	// mask are present in the entity.
-	static bool matchesAny(size_t lhsComponentMask, size_t rhsComponentMask);
+	static bool matchesAny(size_t lhsComponentTypeMask, size_t rhsComponentTypeMask);
 
-	void triggerAddedComponentsEvent(size_t componentMask);
-	void triggerAboutToRemoveComponentsEvent(size_t componentMask);
+	void triggerAddedComponentsEvent(size_t componentTypeMask);
+	void triggerAboutToRemoveComponentsEvent(size_t componentTypeMask);
 
 private:
 	Entity(std::vector<EntityEventListener*>& eventListeners);
@@ -115,7 +115,7 @@ private:
 	// Destroys to entity
 	void destroy();
 
-	size_t m_componentMask;
+	size_t m_componentTypeMask;
 	std::vector<EntityEventListener*>& m_eventListeners;
 };
 
@@ -146,19 +146,19 @@ inline void Entity::removeComponents(size_t first, ComponentTs ...rest)
 }
 
 template<typename ...ComponentTs>
-inline size_t Entity::assembleComponentMask(size_t first, ComponentTs ...rest)
+inline size_t Entity::assembleComponentTypeMask(size_t first, ComponentTs ...rest)
 {
 	return first | assembleComponentMask(rest...);
 }
 
 template<typename ...ComponentTs>
-inline bool Entity::matches(size_t componentMask, size_t first, ComponentTs ...rest)
+inline bool Entity::matches(size_t componentTypeMask, size_t first, ComponentTs ...rest)
 {
-	return matches(componentMask, first) && matches(componentMask, rest...);
+	return matches(componentTypeMask, first) && matches(componentTypeMask, rest...);
 }
 
 template<typename ...ComponentTs>
-inline bool Entity::matchesAny(size_t componentMask, size_t first, ComponentTs ...rest)
+inline bool Entity::matchesAny(size_t componentTypeMask, size_t first, ComponentTs ...rest)
 {
-	return matchesAny(componentMask, first) || matchesAny(componentMask, rest...);
+	return matchesAny(componentTypeMask, first) || matchesAny(componentTypeMask, rest...);
 }
