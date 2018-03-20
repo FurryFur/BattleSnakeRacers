@@ -14,19 +14,18 @@
 
 #pragma once
 
-#include "Clock.h"
-#include "Audio.h"
+#include "System.h"
 
 class Scene;
 class Entity;
 
-class PlayerControlSystem {
+class MovementSystem : public System {
 public:
-	PlayerControlSystem(Scene& scene);
+	MovementSystem(Scene& scene);
 
 	// Updates the entities position from input
-	void update(Entity& entity);
+	void update(Entity& entity) override;
 
-private:
-	Scene& m_scene;
+	void beginFrame() override { };
+	void endFrame() override { };
 };

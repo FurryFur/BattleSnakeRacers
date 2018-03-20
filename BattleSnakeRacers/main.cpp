@@ -22,11 +22,12 @@ int main()
 	g_log.setOutputFile("Log.txt");
 
 	Game::init();
-
-	while (!glfwWindowShouldClose(Game::getWindowContext())) {		
+	GLFWwindow* window = Game::getWindowContext();
+	while (!glfwWindowShouldClose(window)) {		
 		Game::executeOneFrame();
+		glfwPollEvents();
 	}
 
-	glfwDestroyWindow(Game::getWindowContext());
+	glfwDestroyWindow(window);
 	glfwTerminate();
 }

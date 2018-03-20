@@ -14,7 +14,7 @@
 
 #define _USE_MATH_DEFINES
 
-#include "PlayerControlSystem.h"
+#include "MovementSystem.h"
 
 #include "ControlComponent.h"
 #include "EngineEntityDefs.h"
@@ -32,12 +32,12 @@
 
 #include <cmath>
 
-PlayerControlSystem::PlayerControlSystem(Scene& scene)
-	: m_scene{ scene }
+MovementSystem::MovementSystem(Scene& scene)
+	: System{ scene }
 {
 }
 
-void PlayerControlSystem::update(Entity& entity)
+void MovementSystem::update(Entity& entity)
 {
 	// Filter movable
 	const size_t kMovableMask = COMPONENT_PLAYER_CONTROL | COMPONENT_INPUT | COMPONENT_TRANSFORM;

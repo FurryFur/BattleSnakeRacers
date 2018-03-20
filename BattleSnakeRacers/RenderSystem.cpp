@@ -22,6 +22,7 @@
 #include "UniformFormat.h"
 #include "EngineEntityDefs.h"
 #include "ModelUtils.h"
+#include "Game.h"
 
 #include <GLFW\glfw3.h>
 #include <glm\gtc\matrix_transform.hpp>
@@ -36,10 +37,10 @@ using glm::vec4;
 
 RenderState RenderSystem::s_renderState;
 
-RenderSystem::RenderSystem(GLFWwindow* glContext, Scene& scene)
-	: m_scene{ scene }
+RenderSystem::RenderSystem(Scene& scene)
+	: System{ scene }
 {
-	m_renderState.glContext = glContext;
+	m_renderState.glContext = Game::getWindowContext();
 	m_renderState.uniformBindingPoint = 0;
 	m_renderState.hasIrradianceMap = false;
 	m_renderState.hasRadianceMap = false;
@@ -97,18 +98,18 @@ void RenderSystem::drawDebugArrow(const glm::vec3& base, const glm::vec3& _direc
 	renderModel(model, transform);
 }
 
-void RenderSystem::beginRender()
+void RenderSystem::beginFrame()
 {
 	glDepthMask(GL_TRUE);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void RenderSystem::endRender()
+void RenderSystem::endFrame()
 {
 	glfwSwapBuffers(m_renderState.glContext);
 }
 
-void RenderSystem::update(const Entity& entity)
+void RenderSystem::update(Entity& entity)
 {
 	// Filter renderable entities
 	const size_t kRenderableMask = COMPONENT_MODEL;

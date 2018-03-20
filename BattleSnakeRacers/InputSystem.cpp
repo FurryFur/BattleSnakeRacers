@@ -18,21 +18,21 @@
 #include "KeyObserver.h"
 #include "Scene.h"
 #include "Utils.h"
+#include "Game.h"
 
 #include <GLFW\glfw3.h>
 #include <glm\gtc\matrix_transform.hpp>
 
-InputSystem::InputSystem(GLFWwindow* window, Scene& scene)
-	: m_window{ window }
-	, m_scene{ scene }
+InputSystem::InputSystem(Scene& scene)
+	: System{ scene }
 {
 	// Register input system as a listener for keyboard events
-	glfwSetWindowUserPointer(window, this);
+	glfwSetWindowUserPointer(Game::getWindowContext(), this);
 	auto keyFunc = [](GLFWwindow* window, int key, int scancode, int action, int mods) {
 		InputSystem* inputSystem = static_cast<InputSystem*>(glfwGetWindowUserPointer(window));
 		inputSystem->keyCallback(key, scancode, action, mods);
 	};
-	glfwSetKeyCallback(window, keyFunc);
+	glfwSetKeyCallback(Game::getWindowContext(), keyFunc);
 }
 
 void InputSystem::registerKeyObserver(IKeyObserver* observer)
@@ -45,7 +45,7 @@ void InputSystem::keyCallback(int key, int scancode, int action, int mods)
 {
 	// Close window on exit
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-		glfwSetWindowShouldClose(m_window, GLFW_TRUE);
+		glfwSetWindowShouldClose(Game::getWindowContext(), GLFW_TRUE);
 		return;
 	}
 
@@ -120,17 +120,18 @@ void InputSystem::keyCallback(int key, int scancode, int action, int mods)
 void InputSystem::beginFrame()
 {
 	static glm::dvec2 lastMousePos;
+	GLFWwindow* window = Game::getWindowContext();
 
 	// Set previous mouse pos to current mouse pos on first run
 	static bool firstRun = true;
 	if (firstRun) {
-		glfwGetCursorPos(m_window, &lastMousePos.x, &lastMousePos.y);
+		glfwGetCursorPos(window, &lastMousePos.x, &lastMousePos.y);
 		firstRun = false;
 	}
 
 	// Update input from mouse
 	glm::dvec2 mousePos;
-	glfwGetCursorPos(m_window, &mousePos.x, &mousePos.y);
+	glfwGetCursorPos(window, &mousePos.x, &mousePos.y);
 
 	// Update mouse delta
 	m_mouseDelta = mousePos - lastMousePos;
@@ -140,34 +141,36 @@ void InputSystem::beginFrame()
 
 void InputSystem::update(Entity& entity)
 {
+	GLFWwindow* window = Game::getWindowContext();
+
 	// DEBUG!!!
 	if (entity.hasComponents(COMPONENT_MODEL)) {
-		if (glfwGetKey(m_window, GLFW_KEY_KP_MULTIPLY) == GLFW_PRESS) {
+		if (glfwGetKey(window, GLFW_KEY_KP_MULTIPLY) == GLFW_PRESS) {
 			for (size_t i = 0; i < entity.model.materials.size(); ++i) {
 				entity.model.materials.at(i).shaderParams.metallicness = clamp(entity.model.materials.at(i).shaderParams.metallicness + 0.01f, 0.001f, 1.0f);
 			}
 		}
-		if (glfwGetKey(m_window, GLFW_KEY_KP_DIVIDE) == GLFW_PRESS) {
+		if (glfwGetKey(window, GLFW_KEY_KP_DIVIDE) == GLFW_PRESS) {
 			for (size_t i = 0; i < entity.model.materials.size(); ++i) {
 				entity.model.materials.at(i).shaderParams.metallicness = clamp(entity.model.materials.at(i).shaderParams.metallicness - 0.01f, 0.001f, 1.0f);
 			}
 		}
-		if (glfwGetKey(m_window, GLFW_KEY_KP_ADD) == GLFW_PRESS) {
+		if (glfwGetKey(window, GLFW_KEY_KP_ADD) == GLFW_PRESS) {
 			for (size_t i = 0; i < entity.model.materials.size(); ++i) {
 				entity.model.materials.at(i).shaderParams.glossiness = clamp(entity.model.materials.at(i).shaderParams.glossiness + 0.01f, 0.0001f, 1.0f);
 			}
 		}
-		if (glfwGetKey(m_window, GLFW_KEY_KP_SUBTRACT) == GLFW_PRESS) {
+		if (glfwGetKey(window, GLFW_KEY_KP_SUBTRACT) == GLFW_PRESS) {
 			for (size_t i = 0; i < entity.model.materials.size(); ++i) {
 				entity.model.materials.at(i).shaderParams.glossiness = clamp(entity.model.materials.at(i).shaderParams.glossiness - 0.01f, 0.0001f, 1.0f);
 			}
 		}
-		if (glfwGetKey(m_window, GLFW_KEY_PAGE_UP) == GLFW_PRESS) {
+		if (glfwGetKey(window, GLFW_KEY_PAGE_UP) == GLFW_PRESS) {
 			for (size_t i = 0; i < entity.model.materials.size(); ++i) {
 				entity.model.materials.at(i).shaderParams.specBias = clamp(entity.model.materials.at(i).shaderParams.specBias + 0.01f, 0.0f, 0.96f);
 			}
 		}
-		if (glfwGetKey(m_window, GLFW_KEY_PAGE_DOWN) == GLFW_PRESS) {
+		if (glfwGetKey(window, GLFW_KEY_PAGE_DOWN) == GLFW_PRESS) {
 			for (size_t i = 0; i < entity.model.materials.size(); ++i) {
 				entity.model.materials.at(i).shaderParams.specBias = clamp(entity.model.materials.at(i).shaderParams.specBias - 0.01f, 0.0f, 0.9599f);
 			}
@@ -201,34 +204,34 @@ void InputSystem::update(Entity& entity)
 
 	// Update input from buttons
 	input.axis = {};
-	if (inputMap.leftBtnMap && glfwGetKey(m_window, inputMap.leftBtnMap) == GLFW_PRESS)
+	if (inputMap.leftBtnMap && glfwGetKey(window, inputMap.leftBtnMap) == GLFW_PRESS)
 		input.axis.x -= 1;
-	if (inputMap.rightBtnMap && glfwGetKey(m_window, inputMap.rightBtnMap) == GLFW_PRESS)
+	if (inputMap.rightBtnMap && glfwGetKey(window, inputMap.rightBtnMap) == GLFW_PRESS)
 		input.axis.x += 1;
-	if (inputMap.forwardBtnMap && glfwGetKey(m_window, inputMap.forwardBtnMap) == GLFW_PRESS)
+	if (inputMap.forwardBtnMap && glfwGetKey(window, inputMap.forwardBtnMap) == GLFW_PRESS)
 		input.axis.z -= 1;
-	if (inputMap.backwardBtnMap && glfwGetKey(m_window, inputMap.backwardBtnMap) == GLFW_PRESS)
+	if (inputMap.backwardBtnMap && glfwGetKey(window, inputMap.backwardBtnMap) == GLFW_PRESS)
 		input.axis.z += 1;
-	if (inputMap.downBtnMap && glfwGetKey(m_window, inputMap.downBtnMap) == GLFW_PRESS)
+	if (inputMap.downBtnMap && glfwGetKey(window, inputMap.downBtnMap) == GLFW_PRESS)
 		input.axis.y -= 1;
-	if (inputMap.upBtnMap && glfwGetKey(m_window, inputMap.upBtnMap) == GLFW_PRESS)
+	if (inputMap.upBtnMap && glfwGetKey(window, inputMap.upBtnMap) == GLFW_PRESS)
 		input.axis.y += 1;
-	if (inputMap.azimuthPosBtnMap && glfwGetKey(m_window, inputMap.azimuthPosBtnMap) == GLFW_PRESS)
+	if (inputMap.azimuthPosBtnMap && glfwGetKey(window, inputMap.azimuthPosBtnMap) == GLFW_PRESS)
 		input.orientationDelta.x += 1;
-	if (inputMap.azimuthNegBtnMap && glfwGetKey(m_window, inputMap.azimuthNegBtnMap) == GLFW_PRESS)
+	if (inputMap.azimuthNegBtnMap && glfwGetKey(window, inputMap.azimuthNegBtnMap) == GLFW_PRESS)
 		input.orientationDelta.x -= 1;
-	if (inputMap.elevationPosBtnMap && glfwGetKey(m_window, inputMap.elevationPosBtnMap) == GLFW_PRESS)
+	if (inputMap.elevationPosBtnMap && glfwGetKey(window, inputMap.elevationPosBtnMap) == GLFW_PRESS)
 		input.orientationDelta.y += 1;
-	if (inputMap.elevationNegBtnMap && glfwGetKey(m_window, inputMap.elevationNegBtnMap) == GLFW_PRESS)
+	if (inputMap.elevationNegBtnMap && glfwGetKey(window, inputMap.elevationNegBtnMap) == GLFW_PRESS)
 		input.orientationDelta.y -= 1;
-	if (inputMap.rollBtnMap && glfwGetKey(m_window, inputMap.rollBtnMap) == GLFW_PRESS)
+	if (inputMap.rollBtnMap && glfwGetKey(window, inputMap.rollBtnMap) == GLFW_PRESS)
 		input.orientationDelta.z += 1;
 	if (inputMap.btn1Map)
-		input.btn1Down = glfwGetKey(m_window, inputMap.btn1Map) == GLFW_PRESS;
+		input.btn1Down = glfwGetKey(window, inputMap.btn1Map) == GLFW_PRESS;
 	if (inputMap.btn2Map)
-		input.btn2Down = glfwGetKey(m_window, inputMap.btn2Map) == GLFW_PRESS;
+		input.btn2Down = glfwGetKey(window, inputMap.btn2Map) == GLFW_PRESS;
 	if (inputMap.btn3Map)
-		input.btn3Down = glfwGetKey(m_window, inputMap.btn3Map) == GLFW_PRESS;
+		input.btn3Down = glfwGetKey(window, inputMap.btn3Map) == GLFW_PRESS;
 	if (inputMap.btn4Map)
-		input.btn4Down = glfwGetKey(m_window, inputMap.btn4Map) == GLFW_PRESS;
+		input.btn4Down = glfwGetKey(window, inputMap.btn4Map) == GLFW_PRESS;
 }

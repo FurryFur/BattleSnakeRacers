@@ -1,15 +1,16 @@
 #pragma once
 
 #include "Entity.h"
+#include "System.h"
 
 class Scene;
 
-class PhysicsSystem {
+class PhysicsSystem : public System {
 public:
 	PhysicsSystem(Scene&);
 
-	void update(Entity&, float deltaTick);
+	void update(Entity&) override;
 
-private:
-	Scene& m_scene;
+	void beginFrame() override {};
+	void endFrame() override {};
 };

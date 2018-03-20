@@ -13,25 +13,27 @@
 
 #pragma once
 
+#include "System.h"
+
 #include <glm\glm.hpp>
 
 #include <functional>
 #include <vector>
 
 class Scene;
-struct GLFWwindow;
 class Entity;
 class IKeyObserver;
 
-class InputSystem {
+class InputSystem : public System {
 public:
-	InputSystem(GLFWwindow* window, Scene& scene);
+	InputSystem(Scene& scene);
 
 	// Updates the entity with input
-	void update(Entity&);
+	void update(Entity&) override;
 
 	// Does per frame input system update
-	void beginFrame();
+	void beginFrame() override;
+	void endFrame() override {};
 
 	// Registers observers for keyboard input
 	void registerKeyObserver(IKeyObserver* observer);
@@ -50,8 +52,6 @@ private:
 	bool shootUp;
 	bool shootRightUp;
 
-	Scene& m_scene;
-	GLFWwindow* m_window;
 	glm::dvec2 m_mouseDelta;
 	std::vector<IKeyObserver*> m_keyObservers;
 };

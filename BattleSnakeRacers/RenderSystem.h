@@ -15,6 +15,7 @@
 
 #include "RenderState.h"
 #include "EntityEventListener.h"
+#include "System.h"
 
 #include <glad\glad.h>
 #include <glm\glm.hpp>
@@ -26,9 +27,9 @@ struct GLFWwindow;
 class Entity;
 struct ModelComponent;
 
-class RenderSystem {
+class RenderSystem : public System {
 public:
-	RenderSystem(GLFWwindow* glContext, Scene&);
+	RenderSystem(Scene&);
 	~RenderSystem();
 	RenderSystem(const RenderSystem&) = delete;
 	RenderSystem& operator=(const RenderSystem&) = delete;
@@ -47,13 +48,13 @@ public:
 
 	// Starts rendering the frame.
 	// Should be called before update.
-	void beginRender();
+	void beginFrame() override;
 
 	// Renders an entity.
-	void update(const Entity&);
+	void update(Entity&) override;
 
 	// Ends the frame.
-	void endRender();
+	void endFrame() override;
 
 	// Sets the current camera.
 	// Also sets the static debug camera for debug drawing.
@@ -70,6 +71,4 @@ private:
 
 	static RenderState s_renderState;
 	RenderState m_renderState;
-
-	Scene& m_scene;
 };
