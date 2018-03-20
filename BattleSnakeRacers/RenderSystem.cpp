@@ -152,7 +152,7 @@ void RenderSystem::renderModel(const ModelComponent& model, const glm::mat4& tra
 {
 	// Get Aspect ratio
 	int width, height;
-	GLFWwindow* glContext = glfwGetCurrentContext();
+	GLFWwindow* glContext = Game::getWindowContext();
 	glfwGetFramebufferSize(glContext, &width, &height);
 	float aspectRatio = static_cast<float>(width) / height;
 
@@ -188,6 +188,7 @@ void RenderSystem::renderModel(const ModelComponent& model, const glm::mat4& tra
 		for (size_t j = 0; j < material.colorMaps.size(); ++j) {
 			const Texture& texture = material.colorMaps.at(j);
 			glActiveTexture(GL_TEXTURE0 + textureUnit);
+			// TODO: Remove glGetUniformLocation (very slow and unecessary)
 			glUniform1i(glGetUniformLocation(material.shader, "colorSampler"), textureUnit);
 			glBindTexture(texture.target, texture.id);
 			++textureUnit;
@@ -199,6 +200,7 @@ void RenderSystem::renderModel(const ModelComponent& model, const glm::mat4& tra
 		for (size_t j = 0; j < material.metallicnessMaps.size(); ++j) {
 			const Texture& texture = material.metallicnessMaps.at(j);
 			glActiveTexture(GL_TEXTURE0 + textureUnit);
+			// TODO: Remove glGetUniformLocation (very slow and unecessary)
 			glUniform1i(glGetUniformLocation(material.shader, "metallicnessSampler"), textureUnit);
 			glBindTexture(texture.target, texture.id);
 			++textureUnit;
@@ -210,12 +212,14 @@ void RenderSystem::renderModel(const ModelComponent& model, const glm::mat4& tra
 		// Set environment map to use on GPU
 		if (s_renderState.hasRadianceMap) {
 			glActiveTexture(GL_TEXTURE0 + textureUnit);
+			// TODO: Remove glGetUniformLocation (very slow and unecessary)
 			glUniform1i(glGetUniformLocation(material.shader, "radianceSampler"), textureUnit);
 			glBindTexture(GL_TEXTURE_CUBE_MAP, s_renderState.radianceMap);
 			++textureUnit;
 		}
 		if (s_renderState.hasIrradianceMap) {
 			glActiveTexture(GL_TEXTURE0 + textureUnit);
+			// TODO: Remove glGetUniformLocation (very slow and unecessary)
 			glUniform1i(glGetUniformLocation(material.shader, "irradianceSampler"), textureUnit);
 			glBindTexture(GL_TEXTURE_CUBE_MAP, s_renderState.irradianceMap);
 			++textureUnit;
@@ -226,14 +230,29 @@ void RenderSystem::renderModel(const ModelComponent& model, const glm::mat4& tra
 		uniforms.glossiness = material.shaderParams.glossiness;
 		uniforms.specBias = material.shaderParams.specBias;
 
+		// Set spotlights
+		uniforms.numSpotlights = std::min(static_cast<GLuint>(s_renderState.spotlights.size()), UniformFormat::s_kMaxSpotlights);
+		//for (GLuint i = 0; i < uniforms.numSpotlights; ++i) {
+		//	const Entity* spotlightEntity = s_renderState.spotlights.at(i);
+		//	glm::vec4 spotlightDir = glm::vec4(s_renderState.spotlights.at(i)->spotlight.direction, 0);
+		//	// Transform to local coordinates of containing entity
+		//	glm::mat4 orientation = GLMUtils::eulerToMat(spotlightEntity->transform.eulerAngles);
+		//	spotlightDir = orientation * spotlightDir;
+		//	// Set spotlights in GPU uniform
+		//	uniforms.spotlightDirections.at(i) = spotlightDir;
+		//	uniforms.spotlightPositions.at(i) = glm::vec4(spotlightEntity->transform.position, 1);
+		//	uniforms.spotlightColors.at(i) = glm::vec4(spotlightEntity->spotlight.color, 1);
+		//}
 
 		// Send uniform data to the GPU
+		// TODO: Remove glGetUniformBlockIndex (very slow and unecessary)?
 		GLuint blockIndex = glGetUniformBlockIndex(material.shader, "Uniforms");
 		glUniformBlockBinding(material.shader, blockIndex, s_renderState.uniformBindingPoint);
 		glBindBufferBase(GL_UNIFORM_BUFFER, s_renderState.uniformBindingPoint, s_renderState.uboUniforms);
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(UniformFormat), &uniforms);
 		if (material.shader == GLUtils::getDebugShader()) {
 			const glm::vec3& debugColor = material.debugColor;
+			// TODO: Remove glGetUniformLocation (very slow and unecessary)
 			glUniform3f(glGetUniformLocation(material.shader, "debugColor"), debugColor.r, debugColor.g, debugColor.b);
 		}
 
