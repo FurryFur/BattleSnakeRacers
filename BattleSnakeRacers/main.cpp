@@ -21,7 +21,6 @@ int main()
 {
 	g_log.setOutputFile("Log.txt");
 
-	// Init combined Window and OpenGL context.
 	Game::init();
 
 	while (!glfwWindowShouldClose(Game::getWindowContext())) {		

@@ -13,8 +13,10 @@ GLFWwindow* Game::getWindowContext()
 
 void Game::init()
 {
+	// Init combined Window and OpenGL context.
 	g_window = GLUtils::initOpenGL();
 
+	// Preload models and textures
 	Game::preloadModelsAndTextures();
 }
 
