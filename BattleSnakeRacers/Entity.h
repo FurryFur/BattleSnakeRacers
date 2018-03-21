@@ -17,10 +17,9 @@ enum ComponentType {
 	COMPONENT_PHYSICS = 1 << 1,
 	COMPONENT_MODEL = 1 << 2,
 	COMPONENT_CAMERA = 1 << 3,
-	COMPONENT_PLAYER_CONTROL = 1 << 4,
+	COMPONENT_MOVEMENT = 1 << 4,
 	COMPONENT_INPUT = 1 << 5,
-	COMPONENT_INPUT_MAP = 1 << 6,
-	COMPONENT_PLAYER = 1 << 7,
+	COMPONENT_INPUT_MAP = 1 << 6
 };
 
 class Entity {
@@ -134,21 +133,21 @@ inline bool Entity::hasComponentsAny(size_t first, ComponentTs ...rest) const
 template<typename ...ComponentTs>
 inline void Entity::addComponents(size_t first, ComponentTs... rest)
 {
-	size_t componentMask = assembleComponentMask(first, rest...);
+	size_t componentMask = assembleComponentTypeMask(first, rest...);
 	addComponents(componentMask);
 }
 
 template<typename ...ComponentTs>
 inline void Entity::removeComponents(size_t first, ComponentTs ...rest)
 {
-	size_t componentMask = assembleComponentMask(first, rest...);
+	size_t componentMask = assembleComponentTypeMask(first, rest...);
 	removeComponents(componentMask);
 }
 
 template<typename ...ComponentTs>
 inline size_t Entity::assembleComponentTypeMask(size_t first, ComponentTs ...rest)
 {
-	return first | assembleComponentMask(rest...);
+	return first | assembleComponentTypeMask(rest...);
 }
 
 template<typename ...ComponentTs>

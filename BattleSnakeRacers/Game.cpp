@@ -2,6 +2,7 @@
 
 #include "GLUtils.h"
 #include "ScreenManager.h"
+#include "Clock.h"
 #include "GameplayScreen.h"
 
 #include <GLFW\glfw3.h>
@@ -35,5 +36,6 @@ void Game::preloadModelsAndTextures()
 
 void Game::executeOneFrame()
 {
+	Clock::update();
 	ScreenManager::update();
 }

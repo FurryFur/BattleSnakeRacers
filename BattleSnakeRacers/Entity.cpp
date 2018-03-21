@@ -79,11 +79,8 @@ void Entity::addComponents(size_t componentTypeMask)
 	if (matches(componentTypeMask, COMPONENT_CAMERA)) {
 		camera = {};
 	}
-	if (matches(componentTypeMask, COMPONENT_PLAYER_CONTROL)) {
+	if (matches(componentTypeMask, COMPONENT_MOVEMENT)) {
 		controlVars = {};
-	}
-	if (matches(componentTypeMask, COMPONENT_PLAYER)) {
-		
 	}
 	if (matches(componentTypeMask, COMPONENT_INPUT)) {
 		input = {};

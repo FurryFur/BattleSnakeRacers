@@ -32,6 +32,8 @@
 
 #include <cmath>
 
+using namespace glm;
+
 MovementSystem::MovementSystem(Scene& scene)
 	: System{ scene }
 {
@@ -40,7 +42,27 @@ MovementSystem::MovementSystem(Scene& scene)
 void MovementSystem::update(Entity& entity)
 {
 	// Filter movable
-	const size_t kMovableMask = COMPONENT_PLAYER_CONTROL | COMPONENT_INPUT | COMPONENT_TRANSFORM;
+	const size_t kMovableMask = COMPONENT_MOVEMENT | COMPONENT_INPUT | COMPONENT_TRANSFORM;
 	if (!entity.hasComponents(kMovableMask))
 		return;
+
+	// Update facing direction
+	// TODO: Only do this if on the ground
+	entity.transform.eulerAngles.y += entity.input.turnAxis * 0.005f * length(entity.physics.velocity);
+
+	// TODO: Make sideways drag higher so the car can't slide sideways (like it's on ice) when not accelerating
+
+	// Apply turning force
+	//vec3 steeringDir = normalize(vec3{ -entity.physics.velocity.y, 0, entity.physics.velocity.x });
+	//float velocityMag = length(entity.physics.velocity);
+	//entity.physics.acceleration += entity.input.turnAxis * steeringDir * velocityMag;
+	// TODO: Add max steering amount to movement component
+
+	if (entity.input.acceleratorDown) {
+		// Apply acceleration force
+		// TODO: Obay a max speed and acceleration variable set in the movement component
+		// Get forward vector
+		vec3 forward = glm::rotateY(vec4{ 1, 0, 0, 0 }, entity.transform.eulerAngles.y);
+		entity.physics.acceleration += forward * 10.0f;
+	}
 }

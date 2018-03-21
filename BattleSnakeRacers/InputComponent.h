@@ -20,28 +20,7 @@
 #include <array>
 
 struct InputComponent {
-	glm::vec3 axis;
-	glm::vec3 orientationDelta;
-	bool btn1Down;
-	bool btn2Down;
-	bool btn3Down;
-	bool btn4Down;
-
-	// Triggers for which direction the player is firing
-	bool shootLeftDown;
-	bool shootDown;
-	bool shootRightDown;
-	bool shootLeft;
-	bool shootRight;
-	bool shootLeftUp;
-	bool shootUp;
-	bool shootRightUp;
-
-	// These represent buttons that are currently down
-	// std::array<bool, 4> btnsDown;
-	// These represent action buttons that have been pressed and have
-	// not yet been handled. These should be set to false once the action
-	// has been handled.
-	// std::array<bool, 4> actionBtnsPressed;
-
+	float turnAxis;
+	bool acceleratorDown;
+	bool brakeDown;
 };

@@ -58,7 +58,4 @@ namespace Game {
 	// Creates an entity from a 3D model file.
 	// The entity returned is a simple entity with only a model and a lookAt component.
 	Entity& createModel(Scene&, const std::string& path, const TransformComponent& transform = {});
-	
-	// Handles boilerplate input binding
-	void setDefaultInputBindings(InputMapComponent& input);
 }

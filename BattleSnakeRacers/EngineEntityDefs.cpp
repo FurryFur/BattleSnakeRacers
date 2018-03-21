@@ -27,8 +27,6 @@ namespace Game {
 		entity.model.materials.at(0).shaderParams.metallicness = 0.0f;
 		entity.model.materials.at(0).shaderParams.specBias = 0;
 
-		setDefaultInputBindings(entity.inputMap);
-
 		// Replace default texture
 		entity.model.materials.at(0).colorMaps.at(0) = GLUtils::loadTexture("Assets/Textures/dessert-floor.png");
 
@@ -42,8 +40,6 @@ namespace Game {
 		entity.transform = transform;
 
 		entity.model = GLPrimitives::getSphereModel();
-
-		setDefaultInputBindings(entity.inputMap);
 
 		return entity;
 	}
@@ -59,8 +55,6 @@ namespace Game {
 
 		entity.model = GLPrimitives::getCylinderModel();
 
-		setDefaultInputBindings(entity.inputMap);
-
 		return entity;
 	}
 
@@ -72,8 +66,6 @@ namespace Game {
 
 		entity.model = GLPrimitives::getPyramidModel();
 
-		setDefaultInputBindings(entity.inputMap);
-
 		return entity;
 	}
 
@@ -84,8 +76,6 @@ namespace Game {
 		entity.transform = transform;
 
 		entity.model = GLPrimitives::getCubeModel();
-
-		setDefaultInputBindings(entity.inputMap);
 
 		return entity;
 	}
@@ -124,25 +114,5 @@ namespace Game {
 		entity.transform = transform;
 
 		return entity;
-	}
-
-	void setDefaultInputBindings(InputMapComponent& inputMap)
-	{
-		inputMap = {};
-		inputMap.leftBtnMap = GLFW_KEY_KP_4;
-		inputMap.rightBtnMap = GLFW_KEY_KP_6;
-		inputMap.forwardBtnMap = GLFW_KEY_KP_8;
-		inputMap.backwardBtnMap = GLFW_KEY_KP_5;
-		inputMap.downBtnMap = GLFW_KEY_KP_7;
-		inputMap.upBtnMap = GLFW_KEY_KP_9;
-		inputMap.azimuthPosBtnMap = GLFW_KEY_KP_1;
-		inputMap.azimuthNegBtnMap = GLFW_KEY_KP_2;
-		inputMap.elevationPosBtnMap = GLFW_KEY_KP_3;
-		inputMap.elevationNegBtnMap = GLFW_KEY_KP_DECIMAL;
-		inputMap.rollBtnMap = GLFW_KEY_KP_0;
-		inputMap.btn1Map = GLFW_KEY_KP_ADD;
-		inputMap.btn2Map = GLFW_KEY_KP_SUBTRACT;
-		inputMap.btn3Map = GLFW_KEY_KP_MULTIPLY;
-		inputMap.btn4Map = GLFW_KEY_KP_DIVIDE;
 	}
 }

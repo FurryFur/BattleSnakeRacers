@@ -8,77 +8,40 @@
 //
 // File Name	: clock.cpp
 // Description	: The clock for keeping time
-// Author		: Jack Mair
-// Mail			: jack.mair@mediadesign.school.nz
+// Author		: Lance Chaney
+// Mail			: lance.cha7337@mediadesign.school.nz
 //
 
-
-// Library Includes
-
-// Local Includes
 #include "Clock.h"
 
-// Static Variables
+#include <GLFW\glfw3.h>
 
-// Static Function Prototypes
+double g_timeDilation = 1;
+double g_deltaTime;
+double g_uiDeltaTime;
 
-// Implementation
-
-Clock::Clock()
-	: m_timeElapsed(0.0)
-	, m_deltaTime(0.0)
-	, m_lastTime(0.0)
-	, m_currentTime(0.0)
+void Clock::update()
 {
+	static double s_lastFrameTime = glfwGetTime();
 
+	double frameTime = glfwGetTime();
+	g_deltaTime = frameTime - s_lastFrameTime;
+	g_uiDeltaTime = g_deltaTime;
+	g_deltaTime *= g_timeDilation;
+	s_lastFrameTime = frameTime;
 }
 
-Clock::~Clock()
+float Clock::getDeltaTime()
 {
-
+	return static_cast<float>(g_deltaTime);
 }
 
-bool
-Clock::Initialise()
+float Clock::getUIDeltaTime()
 {
-	m_currentTime = glfwGetTime();;
-	m_lastTime = glfwGetTime();;
-	return (true);
+	return static_cast<float>(g_uiDeltaTime);
 }
 
-void
-Clock::Process()
+void Clock::setTimeDilation(double timeDilation)
 {
-	// Get the time this frame.
-	m_currentTime = glfwGetTime();;
-
-	// Time difference between this frame and the previous frame
-	m_deltaTime = static_cast<float>(m_currentTime - m_lastTime);
-
-	// Prepare for the next frame
-	m_lastTime = m_currentTime;
-
-	// Force non-negative
-	if (m_deltaTime < 0.0)
-	{
-		m_deltaTime = 0.0;
-	}
-
-	// Cap DeltaTime
-	if (m_deltaTime > 1.0)
-	{
-		m_deltaTime = 1.0;
-	}
-
-	m_timeElapsed += m_deltaTime;
-}
-
-float Clock::GetDeltaTick()
-{
-	return m_deltaTime;
-}
-
-double Clock::GetCurTime()
-{
-	return m_currentTime;
+	g_timeDilation = timeDilation;
 }

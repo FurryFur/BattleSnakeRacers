@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include "GameplayScreen.h"
 
 #include "InputSystem.h"
@@ -6,6 +7,8 @@
 #include "MovementSystem.h"
 #include "EngineEntityDefs.h"
 #include "GLUtils.h"
+
+#include <cmath>
 
 GameplayScreen::GameplayScreen()
 {
@@ -42,7 +45,21 @@ GameplayScreen::GameplayScreen()
 
 	m_activeSystems.push_back(std::move(renderSystem));
 
-	Game::createCube(m_scene);
+	// Create Ground
+	TransformComponent groundTransform{};
+	groundTransform.eulerAngles.x = M_PI / 2.0f;
+	groundTransform.position.y = -1;
+	groundTransform.scale *= 100;
+	Game::createQuad(m_scene, groundTransform);
+
+	// Setup player1
+	TransformComponent playerTransform{};
+	playerTransform.scale.x = 2.0f;
+	Entity& player1 = Game::createCube(m_scene, playerTransform);
+	player1.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS);
+	player1.inputMap.gamepadIdx = 0; // First gamepad plugged in
+	player1.inputMap.turnAxisMap = 0; // Left stick x axis
+	player1.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
 }
 
 

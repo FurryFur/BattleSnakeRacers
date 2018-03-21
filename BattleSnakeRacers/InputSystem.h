@@ -34,24 +34,4 @@ public:
 	// Does per frame input system update
 	void beginFrame() override;
 	void endFrame() override {};
-
-	// Registers observers for keyboard input
-	void registerKeyObserver(IKeyObserver* observer);
-
-private:
-	// Handles keyboard events
-	void keyCallback(int key, int scancode, int action, int mods);
-	
-	// Allows the player to shoot diagonally with 2 key inputs
-	bool shootLeftDown;
-	bool shootDown;
-	bool shootRightDown;
-	bool shootLeft;
-	bool shootRight;
-	bool shootLeftUp;
-	bool shootUp;
-	bool shootRightUp;
-
-	glm::dvec2 m_mouseDelta;
-	std::vector<IKeyObserver*> m_keyObservers;
 };
