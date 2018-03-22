@@ -80,7 +80,7 @@ void Entity::addComponents(size_t componentTypeMask)
 		camera = {};
 	}
 	if (matches(componentTypeMask, COMPONENT_MOVEMENT)) {
-		controlVars = {};
+		movement = {};
 	}
 	if (matches(componentTypeMask, COMPONENT_INPUT)) {
 		input = {};

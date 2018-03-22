@@ -84,11 +84,15 @@ void InputSystem::update(Entity& entity)
 	// Update input from axes
 	int count;
 	const float* pAxes = glfwGetJoystickAxes(gamepadIdx, &count);
-	std::vector<float> axes(pAxes, pAxes + count);
-	input.turnAxis = axes[inputMap.turnAxisMap];
+	if (count > 0) {
+		std::vector<float> axes(pAxes, pAxes + count);
+		input.turnAxis = axes[inputMap.turnAxisMap];
+	}
 
 	// Update input from buttons
 	const unsigned char* pBtns = glfwGetJoystickButtons(gamepadIdx, &count);
-	std::vector<unsigned char> btns(pBtns, pBtns + count);
-	input.acceleratorDown = btns[inputMap.accelerationBtnMap];
+	if (count > 0) {
+		std::vector<unsigned char> btns(pBtns, pBtns + count);
+		input.acceleratorDown = btns[inputMap.accelerationBtnMap];
+	}
 }

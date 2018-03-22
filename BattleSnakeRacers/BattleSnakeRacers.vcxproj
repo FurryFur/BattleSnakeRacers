@@ -177,7 +177,7 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
     <ClCompile Include="MovementSystem.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="EngineEntityDefs.cpp" />
+    <ClCompile Include="PrimativePrefabs.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
     <ClCompile Include="ShaderHelper.cpp" />
@@ -194,7 +194,6 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityEventListener.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="GameEntitiesDefs.h" />
     <ClInclude Include="GameplayScreen.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="ModelComponent.h" />
@@ -210,12 +209,12 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="ModelUtils.h" />
     <ClInclude Include="PhysicsComponent.h" />
-    <ClInclude Include="ControlComponent.h" />
+    <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="MovementSystem.h" />
     <ClInclude Include="RenderState.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="EngineEntityDefs.h" />
+    <ClInclude Include="PrimativePrefabs.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="ScreenManager.h" />
     <ClInclude Include="ShaderHelper.h" />

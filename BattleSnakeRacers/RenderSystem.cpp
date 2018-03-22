@@ -20,7 +20,7 @@
 #include "Scene.h"
 #include "Entity.h"
 #include "UniformFormat.h"
-#include "EngineEntityDefs.h"
+#include "PrimativePrefabs.h"
 #include "ModelUtils.h"
 #include "Game.h"
 

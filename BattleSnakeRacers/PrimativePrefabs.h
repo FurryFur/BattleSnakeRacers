@@ -29,7 +29,7 @@ struct Mesh;
 struct InputComponent;
 struct InputMapComponent;
 
-namespace Game {
+namespace Prefabs {
 	// Creates a unit square facing down the positive z axis with the 
 	// specified lookAt
 	Entity& createQuad(Scene&, const TransformComponent& transform = {});

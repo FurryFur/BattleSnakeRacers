@@ -2,7 +2,7 @@
 
 #include "InputComponent.h"
 #include "ModelComponent.h"
-#include "ControlComponent.h"
+#include "MovementComponent.h"
 #include "InputMapComponent.h"
 #include "PhysicsComponent.h"
 #include "TransformComponent.h"
@@ -30,7 +30,7 @@ public:
 	TransformComponent transform;
 	PhysicsComponent physics;
 	ModelComponent model;
-	ControlComponent controlVars;
+	MovementComponent movement;
 	InputComponent input;
 	InputMapComponent inputMap;
 	CameraComponent camera;

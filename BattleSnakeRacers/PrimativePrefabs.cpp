@@ -1,6 +1,6 @@
 #define _USE_MATH_DEFINES
 
-#include "EngineEntityDefs.h"
+#include "PrimativePrefabs.h"
 
 #include "GLUtils.h"
 #include "GLPrimitives.h"
@@ -13,7 +13,7 @@
 #include "Log.h"
 #include <memory>
 
-namespace Game {
+namespace Prefabs {
 
 	Entity& createQuad(Scene& scene, const TransformComponent& transform)
 	{

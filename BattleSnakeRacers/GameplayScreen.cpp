@@ -5,7 +5,7 @@
 #include "PhysicsSystem.h"
 #include "RenderSystem.h"
 #include "MovementSystem.h"
-#include "EngineEntityDefs.h"
+#include "PrimativePrefabs.h"
 #include "GLUtils.h"
 
 #include <cmath>
@@ -19,7 +19,7 @@ GameplayScreen::GameplayScreen()
 	auto renderSystem = std::make_unique<RenderSystem>(m_scene);
 
 	// Create environment map / skybox
-	Entity& skybox = Game::createSkybox(m_scene, {
+	Entity& skybox = Prefabs::createSkybox(m_scene, {
 		"Assets/Textures/envmap_violentdays/violentdays_rt.tga",
 		"Assets/Textures/envmap_violentdays/violentdays_lf.tga",
 		"Assets/Textures/envmap_violentdays/violentdays_up.tga",
@@ -40,7 +40,7 @@ GameplayScreen::GameplayScreen()
 	renderSystem->setIrradianceMap(irradianceMap.id);
 
 	// Setup the camera
-	Entity& cameraEntity = Game::createCamera(m_scene, { 0, 23, 26 }, { 0, 0, 5 }, { 0, 1, 0 });
+	Entity& cameraEntity = Prefabs::createCamera(m_scene, { 0, 23, 26 }, { 0, 0, 5 }, { 0, 1, 0 });
 	renderSystem->setCamera(&cameraEntity);
 
 	m_activeSystems.push_back(std::move(renderSystem));
@@ -50,12 +50,12 @@ GameplayScreen::GameplayScreen()
 	groundTransform.eulerAngles.x = M_PI / 2.0f;
 	groundTransform.position.y = -1;
 	groundTransform.scale *= 100;
-	Game::createQuad(m_scene, groundTransform);
+	Prefabs::createQuad(m_scene, groundTransform);
 
 	// Setup player1
 	TransformComponent playerTransform{};
 	playerTransform.scale.x = 2.0f;
-	Entity& player1 = Game::createCube(m_scene, playerTransform);
+	Entity& player1 = Prefabs::createCube(m_scene, playerTransform);
 	player1.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS);
 	player1.inputMap.gamepadIdx = 0; // First gamepad plugged in
 	player1.inputMap.turnAxisMap = 0; // Left stick x axis
