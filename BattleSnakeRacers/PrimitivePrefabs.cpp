@@ -1,6 +1,6 @@
 #define _USE_MATH_DEFINES
 
-#include "PrimativePrefabs.h"
+#include "PrimitivePrefabs.h"
 
 #include "GLUtils.h"
 #include "GLPrimitives.h"

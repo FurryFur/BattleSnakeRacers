@@ -23,6 +23,7 @@ int main()
 
 	Game::init();
 	GLFWwindow* window = Game::getWindowContext();
+
 	while (!glfwWindowShouldClose(window)) {		
 		Game::executeOneFrame();
 		glfwPollEvents();

@@ -17,7 +17,7 @@
 #include "MovementSystem.h"
 
 #include "MovementComponent.h"
-#include "PrimativePrefabs.h"
+#include "PrimitivePrefabs.h"
 #include "GLUtils.h"
 #include "GLMUtils.h"
 #include "Scene.h"

@@ -5,9 +5,9 @@
 #include "PhysicsSystem.h"
 #include "RenderSystem.h"
 #include "MovementSystem.h"
-#include "PrimativePrefabs.h"
+#include "PrimitivePrefabs.h"
 #include "GLUtils.h"
-
+#include "LevelLoader.h"
 #include <cmath>
 
 GameplayScreen::GameplayScreen()
@@ -46,11 +46,12 @@ GameplayScreen::GameplayScreen()
 	m_activeSystems.push_back(std::move(renderSystem));
 
 	// Create Ground
-	TransformComponent groundTransform{};
+	/*TransformComponent groundTransform{};
 	groundTransform.eulerAngles.x = M_PI / 2.0f;
 	groundTransform.position.y = -1;
 	groundTransform.scale *= 100;
-	Prefabs::createQuad(m_scene, groundTransform);
+	Prefabs::createQuad(m_scene, groundTransform);*/
+	CreateLevel(m_scene);
 
 	// Setup player1
 	TransformComponent playerTransform{};
