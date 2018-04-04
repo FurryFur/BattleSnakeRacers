@@ -67,27 +67,27 @@ void Entity::addComponents(size_t componentTypeMask)
 {
 	m_componentTypeMask |= componentTypeMask;
 
-	if (matches(componentTypeMask, COMPONENT_TRANSFORM)) {
-		transform = {};
-	}
-	if (matches(componentTypeMask, COMPONENT_PHYSICS)) {
-		physics = {};
-	}
-	if (matches(componentTypeMask, COMPONENT_MODEL)) {
-		model = {};
-	}
-	if (matches(componentTypeMask, COMPONENT_CAMERA)) {
-		camera = {};
-	}
-	if (matches(componentTypeMask, COMPONENT_MOVEMENT)) {
-		movement = {};
-	}
-	if (matches(componentTypeMask, COMPONENT_INPUT)) {
-		input = {};
-	}
-	if (matches(componentTypeMask, COMPONENT_INPUT_MAP)) {
-		inputMap = {};
-	}
+	//if (matches(componentTypeMask, COMPONENT_TRANSFORM)) {
+	//	transform = {};
+	//}
+	//if (matches(componentTypeMask, COMPONENT_PHYSICS)) {
+	//	physics = {};
+	//}
+	//if (matches(componentTypeMask, COMPONENT_MODEL)) {
+	//	model = {};
+	//}
+	//if (matches(componentTypeMask, COMPONENT_CAMERA)) {
+	//	camera = {};
+	//}
+	//if (matches(componentTypeMask, COMPONENT_MOVEMENT)) {
+	//	movement = {};
+	//}
+	//if (matches(componentTypeMask, COMPONENT_INPUT)) {
+	//	input = {};
+	//}
+	//if (matches(componentTypeMask, COMPONENT_INPUT_MAP)) {
+	//	inputMap = {};
+	//}
 
 	triggerAddedComponentsEvent(componentTypeMask);
 }
