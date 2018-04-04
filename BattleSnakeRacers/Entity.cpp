@@ -9,6 +9,13 @@
 Entity::Entity(std::vector<EntityEventListener*>& eventListeners)
 	: m_componentTypeMask{ 0 }
 	, m_eventListeners{ eventListeners }
+	, transform{}
+	, physics{}
+	, model{}
+	, movement{}
+	, input{}
+	, inputMap{}
+	, camera{}
 {
 }
 

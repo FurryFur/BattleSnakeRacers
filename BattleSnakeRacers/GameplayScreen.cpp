@@ -70,21 +70,21 @@ GameplayScreen::GameplayScreen()
 	player2.inputMap.turnAxisMap = 0; // Left stick x axis
 	player2.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
 
-	//// Setup player3
-	//playerTransform.scale.x = 2.0f;
-	//Entity& player3 = Prefabs::createCube(m_scene, playerTransform);
-	//player1.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS);
-	//player1.inputMap.gamepadIdx = 2; // First gamepad plugged in
-	//player1.inputMap.turnAxisMap = 0; // Left stick x axis
-	//player1.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
+	// Setup player3
+	playerTransform.scale.x = 2.0f;
+	Entity& player3 = Prefabs::createCube(m_scene, playerTransform);
+	player3.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS);
+	player3.inputMap.gamepadIdx = 2; // First gamepad plugged in
+	player3.inputMap.turnAxisMap = 0; // Left stick x axis
+	player3.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
 
-	//// Setup player4
-	//playerTransform.scale.x = 2.0f;
-	//Entity& player4 = Prefabs::createCube(m_scene, playerTransform);
-	//player1.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS);
-	//player1.inputMap.gamepadIdx = 3; // First gamepad plugged in
-	//player1.inputMap.turnAxisMap = 0; // Left stick x axis
-	//player1.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
+	// Setup player4
+	playerTransform.scale.x = 2.0f;
+	Entity& player4 = Prefabs::createCube(m_scene, playerTransform);
+	player4.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS);
+	player4.inputMap.gamepadIdx = 3; // First gamepad plugged in
+	player4.inputMap.turnAxisMap = 0; // Left stick x axis
+	player4.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
 }
 
 
