@@ -160,9 +160,9 @@ void RenderSystem::renderModel(const ModelComponent& model, const glm::mat4& tra
 	UniformFormat uniforms;
 	
 	uniforms.model = transform;
-	uniforms.view = s_renderState.cameraEntity->camera.lookAt;
+	uniforms.view = s_renderState.cameraEntity->camera.getView();
 	uniforms.projection = glm::perspective(glm::radians(60.0f), aspectRatio, 0.5f, 100.0f);
-	uniforms.cameraPos = glm::vec4(s_renderState.cameraEntity->camera.position, 1.0f);
+	uniforms.cameraPos = glm::vec4(s_renderState.cameraEntity->camera.getPosition(), 1.0f);
 
 	// Loop over all the meshes in the model
 	for (size_t i = 0; i < model.meshes.size(); ++i) {
