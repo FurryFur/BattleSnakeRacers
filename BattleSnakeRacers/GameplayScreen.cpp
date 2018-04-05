@@ -57,14 +57,14 @@ GameplayScreen::GameplayScreen()
 	Prefabs::createQuad(m_scene, groundTransform);*/
 	CreateLevel(m_scene,"Assets/Maps/Level2.txt");
 	
-	TransformComponent pickupTransform{};
-	pickupTransform.scale.x = 3;
-	pickupTransform.scale.y = 3;
-	pickupTransform.scale.z = 3;
-	Entity& pickup1 = Prefabs::createModel(m_scene, "Assets/Models/crystal/mese.obj", pickupTransform);
-	pickup1.transform.position = glm::vec3(-20, 1, -20);
-	pickup1.addComponents(COMPONENT_PICKUP);
-	pickup1.pickup.isActive = true;
+	//TransformComponent pickupTransform{};
+	//pickupTransform.scale.x = 3;
+	//pickupTransform.scale.y = 3;
+	//pickupTransform.scale.z = 3;
+	//Entity& pickup1 = Prefabs::createModel(m_scene, "Assets/Models/crystal/mese.obj", pickupTransform);
+	//pickup1.transform.position = glm::vec3(-20, 1, -20);
+	//pickup1.addComponents(COMPONENT_PICKUP);
+	//pickup1.pickup.isActive = true;
 
 	
 	// Setup player1
