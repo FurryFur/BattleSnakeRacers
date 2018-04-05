@@ -18,4 +18,4 @@
 class Scene;
 
 //pass scene in 
-void CreateLevel(Scene& scene);
+void CreateLevel(Scene& scene, std::string _path);
