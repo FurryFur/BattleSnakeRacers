@@ -4,11 +4,13 @@
 #include "InputSystem.h"
 #include "PhysicsSystem.h"
 #include "RenderSystem.h"
+#include "PickupSystem.h"
 #include "MovementSystem.h"
 #include "PrimitivePrefabs.h"
 #include "GLUtils.h"
 #include "LevelLoader.h"
 #include <cmath>
+#include <list>
 
 GameplayScreen::GameplayScreen()
 {
@@ -16,6 +18,7 @@ GameplayScreen::GameplayScreen()
 	m_activeSystems.push_back(std::make_unique<InputSystem>(m_scene));
 	m_activeSystems.push_back(std::make_unique<MovementSystem>(m_scene));
 	m_activeSystems.push_back(std::make_unique<PhysicsSystem>(m_scene));
+	
 	auto renderSystem = std::make_unique<RenderSystem>(m_scene);
 
 	// Create environment map / skybox
@@ -43,7 +46,7 @@ GameplayScreen::GameplayScreen()
 	Entity& cameraEntity = Prefabs::createCamera(m_scene, { 0, 23, 26 }, { 0, 0, 5 }, { 0, 1, 0 });
 	renderSystem->setCamera(&cameraEntity);
 
-	m_activeSystems.push_back(std::move(renderSystem));
+	
 
 	// Create Ground
 	/*TransformComponent groundTransform{};
@@ -51,18 +54,19 @@ GameplayScreen::GameplayScreen()
 	groundTransform.position.y = -1;
 	groundTransform.scale *= 100;
 	Prefabs::createQuad(m_scene, groundTransform);*/
+
 	CreateLevel(m_scene);
 	
+	TransformComponent pickupTransform{};
+	pickupTransform.scale.x = 3;
+	pickupTransform.scale.y = 3;
+	pickupTransform.scale.z = 3;
+	Entity& pickup1 = Prefabs::createModel(m_scene, "Assets/Models/crystal/mese.obj", pickupTransform);
+	pickup1.transform.position = glm::vec3(-20, 1, -20);
+	pickup1.addComponents(COMPONENT_PICKUP);
+	pickup1.pickup.isActive = true;
+
 	
-	//TransformComponent pickupTransform{};
-	//pickupTransform.scale.x = 0.5f;
-	//pickupTransform.scale.y = 0.5f;
-	//pickupTransform.scale.z = 0.5f;
-	//Entity& pickup1 = Prefabs::createSphere(m_scene, pickupTransform);
-	//pickup1.transform.position = glm::vec3(-20,0.5f,-20);
-	//pickup1.addComponents(COMPONENT_PICKUP);
-
-
 	// Setup player1
 	TransformComponent playerTransform{};
 	playerTransform.scale.x = 2.0f;
@@ -99,6 +103,14 @@ GameplayScreen::GameplayScreen()
 	player4.inputMap.turnAxisMap = 0; // Left stick x axis
 	player4.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
 	player4.inputMap.brakeBtnMap = 2;
+	
+	m_playerList.push_back (&player1);
+	m_playerList.push_back (&player2);
+	m_playerList.push_back (&player3);
+	m_playerList.push_back (&player4);
+
+	m_activeSystems.push_back(std::make_unique<PickupSystem>(m_scene, m_playerList));
+	m_activeSystems.push_back(std::move(renderSystem));
 }
 
 
