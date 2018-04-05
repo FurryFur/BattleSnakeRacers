@@ -162,6 +162,8 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="CameraComponent.cpp" />
+    <ClCompile Include="CameraSystem.cpp" />
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="ext\glad\src\glad.c" />
@@ -192,6 +194,7 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
     <ClInclude Include="AIUtils.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="CameraComponent.h" />
+    <ClInclude Include="CameraSystem.h" />
     <ClInclude Include="Clock.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityEventListener.h" />

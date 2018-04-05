@@ -9,6 +9,8 @@
 #include "PrimitivePrefabs.h"
 #include "GLUtils.h"
 #include "LevelLoader.h"
+#include "CameraSystem.h"
+
 #include <cmath>
 #include <list>
 
@@ -18,7 +20,7 @@ GameplayScreen::GameplayScreen()
 	m_activeSystems.push_back(std::make_unique<InputSystem>(m_scene));
 	m_activeSystems.push_back(std::make_unique<MovementSystem>(m_scene));
 	m_activeSystems.push_back(std::make_unique<PhysicsSystem>(m_scene));
-	
+	m_activeSystems.push_back(std::make_unique<CameraSystem>(m_scene));
 	auto renderSystem = std::make_unique<RenderSystem>(m_scene);
 
 	// Create environment map / skybox
@@ -43,7 +45,7 @@ GameplayScreen::GameplayScreen()
 	renderSystem->setIrradianceMap(irradianceMap.id);
 
 	// Setup the camera
-	Entity& cameraEntity = Prefabs::createCamera(m_scene, { 0, 23, 26 }, { 0, 0, 5 }, { 0, 1, 0 });
+	Entity& cameraEntity = Prefabs::createCamera(m_scene, { 0, 23*8, 26 }, { 0, 0, 5 }, { 0, 1, 0 });
 	renderSystem->setCamera(&cameraEntity);
 
 	
@@ -54,8 +56,7 @@ GameplayScreen::GameplayScreen()
 	groundTransform.position.y = -1;
 	groundTransform.scale *= 100;
 	Prefabs::createQuad(m_scene, groundTransform);*/
-
-	CreateLevel(m_scene);
+	CreateLevel(m_scene,"Assets/Maps/Level2.txt");
 	
 	TransformComponent pickupTransform{};
 	pickupTransform.scale.x = 3;
