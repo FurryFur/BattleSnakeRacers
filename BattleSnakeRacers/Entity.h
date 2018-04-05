@@ -7,6 +7,7 @@
 #include "PhysicsComponent.h"
 #include "TransformComponent.h"
 #include "CameraComponent.h"
+#include "PickupComponent.h"
 
 #include <vector>
 
@@ -19,7 +20,8 @@ enum ComponentType {
 	COMPONENT_CAMERA = 1 << 3,
 	COMPONENT_MOVEMENT = 1 << 4,
 	COMPONENT_INPUT = 1 << 5,
-	COMPONENT_INPUT_MAP = 1 << 6
+	COMPONENT_INPUT_MAP = 1 << 6,
+	COMPONENT_PICKUP = 1 << 7
 };
 
 class Entity {
@@ -34,6 +36,7 @@ public:
 	InputComponent input;
 	InputMapComponent inputMap;
 	CameraComponent camera;
+	PickupComponent pickup;
 
 	Entity(Entity&&) = default;
 	Entity(const Entity&) = delete;

@@ -176,6 +176,7 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
     <ClCompile Include="ModelUtils.cpp" />
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="MovementSystem.cpp" />
+    <ClCompile Include="PickupSystem.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="PrimitivePrefabs.cpp" />
@@ -213,6 +214,8 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="MovementSystem.h" />
+    <ClInclude Include="PickupComponent.h" />
+    <ClInclude Include="PickupSystem.h" />
     <ClInclude Include="RenderState.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Scene.h" />

@@ -52,6 +52,16 @@ GameplayScreen::GameplayScreen()
 	groundTransform.scale *= 100;
 	Prefabs::createQuad(m_scene, groundTransform);*/
 	CreateLevel(m_scene);
+	
+	
+	//TransformComponent pickupTransform{};
+	//pickupTransform.scale.x = 0.5f;
+	//pickupTransform.scale.y = 0.5f;
+	//pickupTransform.scale.z = 0.5f;
+	//Entity& pickup1 = Prefabs::createSphere(m_scene, pickupTransform);
+	//pickup1.transform.position = glm::vec3(-20,0.5f,-20);
+	//pickup1.addComponents(COMPONENT_PICKUP);
+
 
 	// Setup player1
 	TransformComponent playerTransform{};
