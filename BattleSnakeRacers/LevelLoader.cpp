@@ -60,6 +60,11 @@ NDArray<char,MaxMapWidth,MaxMapHeight> ReadFile()
 
 void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel, Scene& scene)
 {
+	//TransformComponent pickupTransform{};
+	//pickupTransform.scale.x = 0.5f;
+	//pickupTransform.scale.y = 0.5f;
+	//pickupTransform.scale.z = 0.5f;
+
 	// make object vector here 
 	for (int i = 0; i < MaxMapHeight; i++)
 	{
@@ -74,10 +79,19 @@ void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel
 				// make object here and put in an vector
 				//set its position and scale
 				Entity& en = Prefabs::createCube(scene);
+				
 				//scene.createEntity(COMPONENT_MODEL, COMPONENT_TRANSFORM);
-				en.transform.position = glm::vec3(-25 +j * 2, 0, i * 2);
+				en.transform.position = glm::vec3(-25 +j * 2, -2, i * 2);
+
+
+
+
+
+
+				//Entity& pickup = Prefabs::createSphere(scene, pickupTransform);
+				//pickup.transform.position = glm::vec3(-25 + j * 2, 0.5f, i * 2);
+				//pickup.addComponents(COMPONENT_PICKUP);
 			}
-			
 		}
 	}
 
