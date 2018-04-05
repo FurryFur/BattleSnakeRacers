@@ -61,6 +61,7 @@ GameplayScreen::GameplayScreen()
 	player1.inputMap.gamepadIdx = 0; // First gamepad plugged in
 	player1.inputMap.turnAxisMap = 0; // Left stick x axis
 	player1.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
+	player1.inputMap.brakeBtnMap = 2;
 
 	//// Setup player2
 	playerTransform.scale.x = 2.0f;
@@ -69,6 +70,7 @@ GameplayScreen::GameplayScreen()
 	player2.inputMap.gamepadIdx = 1; // First gamepad plugged in
 	player2.inputMap.turnAxisMap = 0; // Left stick x axis
 	player2.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
+	player2.inputMap.brakeBtnMap = 2;
 
 	// Setup player3
 	playerTransform.scale.x = 2.0f;
@@ -77,6 +79,7 @@ GameplayScreen::GameplayScreen()
 	player3.inputMap.gamepadIdx = 2; // First gamepad plugged in
 	player3.inputMap.turnAxisMap = 0; // Left stick x axis
 	player3.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
+	player3.inputMap.brakeBtnMap = 2;
 
 	// Setup player4
 	playerTransform.scale.x = 2.0f;
@@ -85,6 +88,7 @@ GameplayScreen::GameplayScreen()
 	player4.inputMap.gamepadIdx = 3; // First gamepad plugged in
 	player4.inputMap.turnAxisMap = 0; // Left stick x axis
 	player4.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
+	player4.inputMap.brakeBtnMap = 2;
 }
 
 

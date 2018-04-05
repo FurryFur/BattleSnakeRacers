@@ -94,5 +94,6 @@ void InputSystem::update(Entity& entity)
 	if (count > 0) {
 		std::vector<unsigned char> btns(pBtns, pBtns + count);
 		input.acceleratorDown = btns[inputMap.accelerationBtnMap];
+		input.brakeDown = btns[inputMap.brakeBtnMap];
 	}
 }
