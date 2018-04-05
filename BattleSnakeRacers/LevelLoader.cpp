@@ -156,10 +156,8 @@ void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel
 				{
 					rotation -= 360;
 				}
-				//en.transform.position = glm::vec3((-0.0f) + j * (50.0f), -2, ((-0.0f) + i* (50.0f)));
-				en.transform.position = glm::vec3( j * (fscale *50.0f),
-												-10*fscale,
-												( i * (fscale *50.0f)));
+				
+				en.transform.position = glm::vec3(j * (fscale * 50.0f), -10 * fscale, (i * (fscale * 50.0f)));
 
 				en.transform.eulerAngles = glm::vec3(270 * 3.14159/180, rotation * 3.14159/180, 0);
 				en.transform.scale = glm::vec3(fscale, fscale, fscale);
