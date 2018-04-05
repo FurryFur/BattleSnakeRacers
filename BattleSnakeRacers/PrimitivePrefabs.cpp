@@ -84,8 +84,7 @@ namespace Prefabs {
 	{
 		Entity& entity = scene.createEntity(COMPONENT_CAMERA);
 
-		entity.camera.lookAt = glm::lookAt(pos, center, up);
-		entity.camera.position = pos;
+		entity.camera.setLookAt(pos, center, up);
 
 		return entity;
 	}

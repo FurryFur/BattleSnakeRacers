@@ -8,6 +8,8 @@
 #include "PrimitivePrefabs.h"
 #include "GLUtils.h"
 #include "LevelLoader.h"
+#include "CameraSystem.h"
+
 #include <cmath>
 
 GameplayScreen::GameplayScreen()
@@ -16,6 +18,7 @@ GameplayScreen::GameplayScreen()
 	m_activeSystems.push_back(std::make_unique<InputSystem>(m_scene));
 	m_activeSystems.push_back(std::make_unique<MovementSystem>(m_scene));
 	m_activeSystems.push_back(std::make_unique<PhysicsSystem>(m_scene));
+	m_activeSystems.push_back(std::make_unique<CameraSystem>(m_scene));
 	auto renderSystem = std::make_unique<RenderSystem>(m_scene);
 
 	// Create environment map / skybox
