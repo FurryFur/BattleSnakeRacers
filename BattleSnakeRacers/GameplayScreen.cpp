@@ -43,7 +43,7 @@ GameplayScreen::GameplayScreen()
 	renderSystem->setIrradianceMap(irradianceMap.id);
 
 	// Setup the camera
-	Entity& cameraEntity = Prefabs::createCamera(m_scene, { 0, 23, 26 }, { 0, 0, 5 }, { 0, 1, 0 });
+	Entity& cameraEntity = Prefabs::createCamera(m_scene, { 0, 23*8, 26 }, { 0, 0, 5 }, { 0, 1, 0 });
 	renderSystem->setCamera(&cameraEntity);
 
 	m_activeSystems.push_back(std::move(renderSystem));
@@ -54,7 +54,7 @@ GameplayScreen::GameplayScreen()
 	groundTransform.position.y = -1;
 	groundTransform.scale *= 100;
 	Prefabs::createQuad(m_scene, groundTransform);*/
-	CreateLevel(m_scene);
+	CreateLevel(m_scene,"Assets/Maps/Level2.txt");
 	
 	
 	//TransformComponent pickupTransform{};
