@@ -78,7 +78,7 @@ GameplayScreen::GameplayScreen()
 	player1.inputMap.brakeBtnMap = 2;
 
 	//// Setup player2
-	playerTransform.scale.x = 2.0f;
+	/*playerTransform.scale.x = 2.0f;
 	Entity& player2 = Prefabs::createCube(m_scene, playerTransform);
 	player2.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS);
 	player2.inputMap.gamepadIdx = 1; // First gamepad plugged in
@@ -102,12 +102,12 @@ GameplayScreen::GameplayScreen()
 	player4.inputMap.gamepadIdx = 3; // First gamepad plugged in
 	player4.inputMap.turnAxisMap = 0; // Left stick x axis
 	player4.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
-	player4.inputMap.brakeBtnMap = 2;
+	player4.inputMap.brakeBtnMap = 2;*/
 	
 	m_playerList.push_back (&player1);
-	m_playerList.push_back (&player2);
-	m_playerList.push_back (&player3);
-	m_playerList.push_back (&player4);
+	//m_playerList.push_back (&player2);
+	//m_playerList.push_back (&player3);
+	//m_playerList.push_back (&player4);
 
 	m_activeSystems.push_back(std::make_unique<PickupSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<CameraSystem>(m_scene, m_playerList));
