@@ -3,5 +3,6 @@
 struct PickupComponent
 {
 	bool isActive;
-	int respawnTimer;
+	double respawnTimeOffset = 3.0;
+	double respawnTimeStamp;
 };

@@ -8,6 +8,9 @@
 #include "TransformComponent.h"
 #include "CameraComponent.h"
 #include "PickupComponent.h"
+#include "PlayerStatsComponent.h"
+#include "SnakeTailComponent.h"
+#include "ControlComponent.h"
 
 #include <vector>
 
@@ -21,7 +24,10 @@ enum ComponentType {
 	COMPONENT_MOVEMENT = 1 << 4,
 	COMPONENT_INPUT = 1 << 5,
 	COMPONENT_INPUT_MAP = 1 << 6,
-	COMPONENT_PICKUP = 1 << 7
+	COMPONENT_PICKUP = 1 << 7,
+	COMPONENT_PLAYERSTATS = 1 << 8,
+	COMPONENT_SNAKETAIL = 1 << 9,
+	COMPONENT_CONTROL = 1 << 10
 };
 
 class Entity {
@@ -37,6 +43,9 @@ public:
 	InputMapComponent inputMap;
 	CameraComponent camera;
 	PickupComponent pickup;
+	PlayerStatsComponent playerStats;
+	SnakeTailComponent snakeTail;
+	ControlComponent controlVars;
 
 	Entity(Entity&&) = default;
 	Entity(const Entity&) = delete;

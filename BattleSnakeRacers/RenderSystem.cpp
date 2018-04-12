@@ -116,6 +116,11 @@ void RenderSystem::update(Entity& entity)
 	if (!entity.hasComponents(kRenderableMask))
 		return;
 
+	// If it is an non-active pickup do not render it
+	const size_t kPickup = COMPONENT_PICKUP;
+	if (entity.hasComponents(kPickup) && !entity.pickup.isActive)
+		return;
+
 	// Can't render anything without a camera set
 	if (!m_renderState.cameraEntity) {
 		return;

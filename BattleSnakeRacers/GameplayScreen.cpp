@@ -10,6 +10,7 @@
 #include "GLUtils.h"
 #include "LevelLoader.h"
 #include "CameraSystem.h"
+#include "SnakeTailSystem.h"
 
 #include <cmath>
 #include <list>
@@ -57,21 +58,21 @@ GameplayScreen::GameplayScreen()
 	Prefabs::createQuad(m_scene, groundTransform);*/
 	CreateLevel(m_scene,"Assets/Maps/Level2.txt");
 	
-	//TransformComponent pickupTransform{};
-	//pickupTransform.scale.x = 3;
-	//pickupTransform.scale.y = 3;
-	//pickupTransform.scale.z = 3;
-	//Entity& pickup1 = Prefabs::createModel(m_scene, "Assets/Models/crystal/mese.obj", pickupTransform);
-	//pickup1.transform.position = glm::vec3(-20, 1, -20);
-	//pickup1.addComponents(COMPONENT_PICKUP);
-	//pickup1.pickup.isActive = true;
+	TransformComponent pickupTransform{};
+	pickupTransform.scale.x = 3;
+	pickupTransform.scale.y = 3;
+	pickupTransform.scale.z = 3;
+	Entity& pickup1 = Prefabs::createModel(m_scene, "Assets/Models/crystal/mese.obj", pickupTransform);
+	pickup1.transform.position = glm::vec3(-20, 1, -20);
+	pickup1.addComponents(COMPONENT_PICKUP);
+	pickup1.pickup.isActive = true;
 
 	
 	// Setup player1
 	TransformComponent playerTransform{};
 	playerTransform.scale.x = 2.0f;
 	Entity& player1 = Prefabs::createCube(m_scene, playerTransform);
-	player1.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS);
+	player1.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player1.inputMap.gamepadIdx = 0; // First gamepad plugged in
 	player1.inputMap.turnAxisMap = 0; // Left stick x axis
 	player1.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
@@ -80,7 +81,7 @@ GameplayScreen::GameplayScreen()
 	//// Setup player2
 	playerTransform.scale.x = 2.0f;
 	Entity& player2 = Prefabs::createCube(m_scene, playerTransform);
-	player2.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS);
+	player2.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player2.inputMap.gamepadIdx = 1; // First gamepad plugged in
 	player2.inputMap.turnAxisMap = 0; // Left stick x axis
 	player2.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
@@ -89,7 +90,7 @@ GameplayScreen::GameplayScreen()
 	// Setup player3
 	playerTransform.scale.x = 2.0f;
 	Entity& player3 = Prefabs::createCube(m_scene, playerTransform);
-	player3.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS);
+	player3.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player3.inputMap.gamepadIdx = 2; // First gamepad plugged in
 	player3.inputMap.turnAxisMap = 0; // Left stick x axis
 	player3.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
@@ -98,7 +99,7 @@ GameplayScreen::GameplayScreen()
 	// Setup player4
 	playerTransform.scale.x = 2.0f;
 	Entity& player4 = Prefabs::createCube(m_scene, playerTransform);
-	player4.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS);
+	player4.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player4.inputMap.gamepadIdx = 3; // First gamepad plugged in
 	player4.inputMap.turnAxisMap = 0; // Left stick x axis
 	player4.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
@@ -111,6 +112,7 @@ GameplayScreen::GameplayScreen()
 
 	m_activeSystems.push_back(std::make_unique<PickupSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<CameraSystem>(m_scene, m_playerList));
+	m_activeSystems.push_back(std::make_unique<SnakeTailSystem>(m_scene));
 	m_activeSystems.push_back(std::move(renderSystem));
 }
 

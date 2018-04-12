@@ -17,6 +17,9 @@ Entity::Entity(std::vector<EntityEventListener*>& eventListeners)
 	, inputMap{}
 	, camera{}
 	, pickup{}
+	, playerStats{}
+	, snakeTail{}
+	, controlVars{}
 {
 }
 
