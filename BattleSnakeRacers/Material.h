@@ -21,6 +21,8 @@
 #include <glm\glm.hpp>
 
 #include <vector>
+#include <string>
+#include <unordered_map>
 
 struct Material {
 	GLuint shader;
@@ -33,4 +35,11 @@ struct Material {
 	std::vector<Texture> displacementMaps;
 	bool willDrawDepth;
 	glm::vec3 debugColor;
+
+	GLuint getUniformLocation(const std::string& uniformName) const;
+	GLuint getUniformBlockIndex(const std::string& uniformBlockName) const;
+
+private:
+	mutable std::unordered_map<std::string, GLuint> m_uniformLocationCache;
+	mutable std::unordered_map<std::string, GLuint> m_uniformBlockIndexCache;
 };

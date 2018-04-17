@@ -11,6 +11,7 @@
 #include "LevelLoader.h"
 #include "CameraSystem.h"
 #include "SnakeTailSystem.h"
+#include "Utils.h"
 
 #include <cmath>
 #include <list>
@@ -77,6 +78,12 @@ GameplayScreen::GameplayScreen()
 	player1.inputMap.turnAxisMap = 0; // Left stick x axis
 	player1.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
 	player1.inputMap.brakeBtnMap = 2;
+
+	//for (int i = 0; i < 10000; ++i) {
+	//	TransformComponent transform;
+	//	transform.position = { randomReal(-100.0f, 100.0f), randomReal(-100.0f, 100.0f), randomReal(-100.0f, 100.0f) };
+	//	Prefabs::createPyramid(m_scene, transform);
+	//}
 
 	//// Setup player2
 	/*playerTransform.scale.x = 2.0f;

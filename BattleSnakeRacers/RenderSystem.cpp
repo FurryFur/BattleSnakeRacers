@@ -19,7 +19,7 @@
 #include "Mesh.h"
 #include "Scene.h"
 #include "Entity.h"
-#include "UniformFormat.h"
+#include "UniformBlockFormat.h"
 #include "PrimitivePrefabs.h"
 #include "ModelUtils.h"
 #include "Game.h"
@@ -45,10 +45,10 @@ RenderSystem::RenderSystem(Scene& scene)
 	m_renderState.hasIrradianceMap = false;
 	m_renderState.hasRadianceMap = false;
 
-	// Create buffer for uniforms
+	// Create buffer for uniformBlock
 	glGenBuffers(1, &m_renderState.uboUniforms);
 	glBindBufferBase(GL_UNIFORM_BUFFER, m_renderState.uniformBindingPoint, m_renderState.uboUniforms);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(UniformFormat), nullptr, GL_DYNAMIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(UniformBlockFormat), nullptr, GL_DYNAMIC_DRAW);
 
 	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
 }
@@ -162,12 +162,12 @@ void RenderSystem::renderModel(const ModelComponent& model, const glm::mat4& tra
 	float aspectRatio = static_cast<float>(width) / height;
 
 	// Get model, view and projection matrices
-	UniformFormat uniforms;
+	UniformBlockFormat uniformBlock;
 	
-	uniforms.model = transform;
-	uniforms.view = s_renderState.cameraEntity->camera.getView();
-	uniforms.projection = glm::perspective(glm::radians(60.0f), aspectRatio, 0.5f, 10000.0f);
-	uniforms.cameraPos = glm::vec4(s_renderState.cameraEntity->camera.getPosition(), 1.0f);
+	uniformBlock.model = transform;
+	uniformBlock.view = s_renderState.cameraEntity->camera.getView();
+	uniformBlock.projection = glm::perspective(glm::radians(60.0f), aspectRatio, 0.5f, 10000.0f);
+	uniformBlock.cameraPos = glm::vec4(s_renderState.cameraEntity->camera.getPosition(), 1.0f);
 
 	// Loop over all the meshes in the model
 	for (size_t i = 0; i < model.meshes.size(); ++i) {
@@ -193,8 +193,7 @@ void RenderSystem::renderModel(const ModelComponent& model, const glm::mat4& tra
 		for (size_t j = 0; j < material.colorMaps.size(); ++j) {
 			const Texture& texture = material.colorMaps.at(j);
 			glActiveTexture(GL_TEXTURE0 + textureUnit);
-			// TODO: Remove glGetUniformLocation (very slow and unecessary)
-			glUniform1i(glGetUniformLocation(material.shader, "colorSampler"), textureUnit);
+			glUniform1i(material.getUniformLocation("colorSampler"), textureUnit);
 			glBindTexture(texture.target, texture.id);
 			++textureUnit;
 
@@ -205,8 +204,7 @@ void RenderSystem::renderModel(const ModelComponent& model, const glm::mat4& tra
 		for (size_t j = 0; j < material.metallicnessMaps.size(); ++j) {
 			const Texture& texture = material.metallicnessMaps.at(j);
 			glActiveTexture(GL_TEXTURE0 + textureUnit);
-			// TODO: Remove glGetUniformLocation (very slow and unecessary)
-			glUniform1i(glGetUniformLocation(material.shader, "metallicnessSampler"), textureUnit);
+			glUniform1i(material.getUniformLocation("metallicnessSampler"), textureUnit);
 			glBindTexture(texture.target, texture.id);
 			++textureUnit;
 
@@ -217,48 +215,43 @@ void RenderSystem::renderModel(const ModelComponent& model, const glm::mat4& tra
 		// Set environment map to use on GPU
 		if (s_renderState.hasRadianceMap) {
 			glActiveTexture(GL_TEXTURE0 + textureUnit);
-			// TODO: Remove glGetUniformLocation (very slow and unecessary)
-			glUniform1i(glGetUniformLocation(material.shader, "radianceSampler"), textureUnit);
+			glUniform1i(material.getUniformLocation("radianceSampler"), textureUnit);
 			glBindTexture(GL_TEXTURE_CUBE_MAP, s_renderState.radianceMap);
 			++textureUnit;
 		}
 		if (s_renderState.hasIrradianceMap) {
 			glActiveTexture(GL_TEXTURE0 + textureUnit);
-			// TODO: Remove glGetUniformLocation (very slow and unecessary)
-			glUniform1i(glGetUniformLocation(material.shader, "irradianceSampler"), textureUnit);
+			glUniform1i(material.getUniformLocation("irradianceSampler"), textureUnit);
 			glBindTexture(GL_TEXTURE_CUBE_MAP, s_renderState.irradianceMap);
 			++textureUnit;
 		}
 
 		// Set shader parameters
-		uniforms.metallicness = material.shaderParams.metallicness;
-		uniforms.glossiness = material.shaderParams.glossiness;
-		uniforms.specBias = material.shaderParams.specBias;
+		uniformBlock.metallicness = material.shaderParams.metallicness;
+		uniformBlock.glossiness = material.shaderParams.glossiness;
+		uniformBlock.specBias = material.shaderParams.specBias;
 
 		// Set spotlights
-		uniforms.numSpotlights = std::min(static_cast<GLuint>(s_renderState.spotlights.size()), UniformFormat::s_kMaxSpotlights);
-		//for (GLuint i = 0; i < uniforms.numSpotlights; ++i) {
+		uniformBlock.numSpotlights = std::min(static_cast<GLuint>(s_renderState.spotlights.size()), UniformBlockFormat::s_kMaxSpotlights);
+		//for (GLuint i = 0; i < uniformBlock.numSpotlights; ++i) {
 		//	const Entity* spotlightEntity = s_renderState.spotlights.at(i);
 		//	glm::vec4 spotlightDir = glm::vec4(s_renderState.spotlights.at(i)->spotlight.direction, 0);
 		//	// Transform to local coordinates of containing entity
 		//	glm::mat4 orientation = GLMUtils::eulerToMat(spotlightEntity->transform.eulerAngles);
 		//	spotlightDir = orientation * spotlightDir;
 		//	// Set spotlights in GPU uniform
-		//	uniforms.spotlightDirections.at(i) = spotlightDir;
-		//	uniforms.spotlightPositions.at(i) = glm::vec4(spotlightEntity->transform.position, 1);
-		//	uniforms.spotlightColors.at(i) = glm::vec4(spotlightEntity->spotlight.color, 1);
+		//	uniformBlock.spotlightDirections.at(i) = spotlightDir;
+		//	uniformBlock.spotlightPositions.at(i) = glm::vec4(spotlightEntity->transform.position, 1);
+		//	uniformBlock.spotlightColors.at(i) = glm::vec4(spotlightEntity->spotlight.color, 1);
 		//}
 
 		// Send uniform data to the GPU
-		// TODO: Remove glGetUniformBlockIndex (very slow and unecessary)?
-		GLuint blockIndex = glGetUniformBlockIndex(material.shader, "Uniforms");
-		glUniformBlockBinding(material.shader, blockIndex, s_renderState.uniformBindingPoint);
+		glUniformBlockBinding(material.shader, material.getUniformBlockIndex("UniformBlock"), s_renderState.uniformBindingPoint);
 		glBindBufferBase(GL_UNIFORM_BUFFER, s_renderState.uniformBindingPoint, s_renderState.uboUniforms);
-		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(UniformFormat), &uniforms);
+		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(UniformBlockFormat), &uniformBlock);
 		if (material.shader == GLUtils::getDebugShader()) {
 			const glm::vec3& debugColor = material.debugColor;
-			// TODO: Remove glGetUniformLocation (very slow and unecessary)
-			glUniform3f(glGetUniformLocation(material.shader, "debugColor"), debugColor.r, debugColor.g, debugColor.b);
+			glUniform3f(material.getUniformLocation("debugColor"), debugColor.r, debugColor.g, debugColor.b);
 		}
 
 		// Render the mesh
