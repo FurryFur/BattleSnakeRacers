@@ -18,7 +18,7 @@ GLuint Material::getUniformBlockIndex(const std::string& uniformBlockName) const
 		return searchResult->second;
 
 
-	auto location = glGetUniformLocation(shader, uniformBlockName.c_str());
+	auto location = glGetUniformBlockIndex(shader, uniformBlockName.c_str());
 	m_uniformBlockIndexCache[uniformBlockName] = location;
 	return location;
 }
