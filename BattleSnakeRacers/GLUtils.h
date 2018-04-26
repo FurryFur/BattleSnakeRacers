@@ -14,6 +14,7 @@
 #pragma once
 
 #include "Texture.h"
+#include "Shader.h"
 
 #include <glad\glad.h>
 #include <glm\glm.hpp>
@@ -32,21 +33,21 @@ namespace GLUtils {
 
 	// Returns a handler to the default shader.
 	// This function will build the shader if it is not already built.
-	GLuint getDefaultShader();
+	Shader& getDefaultShader();
 
 	// Returns a handler to a shader that can take a metallicness map.
 	// This function will build the shader if it is not already built.
-	GLuint getMetalShader();
+	Shader& getMetalShader();
 
 	// Returns a handler to the debug shader.
 	// This shader can draw meshes with a solid color.
 	// Change the materials debug color property to set which color to use.
 	// This function will build the shader if it is not already built.
-	GLuint getDebugShader();
+	Shader& getDebugShader();
 
 	// Returns a hander to the skybox shader.
 	// This function will build the sahder if it is not already built.
-	GLuint getSkyboxShader();
+	Shader& getSkyboxShader();
 
 	// Buffers vertex and index data to the GPU.
 	// Returns a handler the the VAO associated with the vertices / indices.

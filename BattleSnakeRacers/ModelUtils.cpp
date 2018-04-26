@@ -84,12 +84,12 @@ Material processMaterial(const aiMaterial* _aiMaterial, const aiScene* scene, co
 		material.debugColor.r = color.r;
 		material.debugColor.g = color.g;
 		material.debugColor.b = color.b;
-		material.shader = GLUtils::getDebugShader();
+		material.shader = &GLUtils::getDebugShader();
 	}
 	else if (metallicnessMaps.size() > 0)
-		material.shader = GLUtils::getMetalShader();
+		material.shader = &GLUtils::getMetalShader();
 	else
-		material.shader = GLUtils::getDefaultShader();
+		material.shader = &GLUtils::getDefaultShader();
 
 	return material;
 }

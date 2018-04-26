@@ -17,6 +17,7 @@
 #include "Mesh.h"
 #include "ShaderHelper.h"
 #include "VertexFormat.h"
+#include "Shader.h"
 #include "stb_image.h"
 
 #include <GLFW\glfw3.h>
@@ -87,66 +88,38 @@ GLFWwindow* GLUtils::initOpenGL()
 	return glContext;
 }
 
-GLuint GLUtils::getDefaultShader()
+Shader& GLUtils::getDefaultShader()
 {
-	static GLuint s_shader;
-	static bool s_shaderBuilt = false;
-
-	if (!s_shaderBuilt) {
-		compileAndLinkShaders(
-			"Assets/Shaders/default_vert.glsl",
-			"Assets/Shaders/default_frag.glsl",
-			s_shader);
-		s_shaderBuilt = true;
-	}
+	static Shader s_shader = compileAndLinkShaders(
+		"Assets/Shaders/default_vert.glsl",
+		"Assets/Shaders/default_frag.glsl");
 
 	return s_shader;
 }
 
-GLuint GLUtils::getMetalShader()
+Shader& GLUtils::getMetalShader()
 {
-	static GLuint s_shader;
-	static bool s_shaderBuilt = false;
-
-	if (!s_shaderBuilt) {
-		compileAndLinkShaders(
-			"Assets/Shaders/default_vert.glsl",
-			"Assets/Shaders/metal_frag.glsl",
-			s_shader);
-		s_shaderBuilt = true;
-	}
+	static Shader s_shader = compileAndLinkShaders(
+		"Assets/Shaders/default_vert.glsl",
+		"Assets/Shaders/metal_frag.glsl");
 
 	return s_shader;
 }
 
-GLuint GLUtils::getDebugShader()
+Shader& GLUtils::getDebugShader()
 {
-	static GLuint s_shader;
-	static bool s_shaderBuilt = false;
-
-	if (!s_shaderBuilt) {
-		compileAndLinkShaders(
-			"Assets/Shaders/default_vert.glsl",
-			"Assets/Shaders/debug_frag.glsl",
-			s_shader);
-		s_shaderBuilt = true;
-	}
+	static Shader s_shader = compileAndLinkShaders(
+		"Assets/Shaders/default_vert.glsl",
+		"Assets/Shaders/debug_frag.glsl");
 
 	return s_shader;
 }
 
-GLuint GLUtils::getSkyboxShader()
+Shader& GLUtils::getSkyboxShader()
 {
-	static GLuint s_shader;
-	static bool s_shaderBuilt = false;
-
-	if (!s_shaderBuilt) {
-		compileAndLinkShaders(
-			"Assets/Shaders/skybox_vert.glsl",
-			"Assets/Shaders/skybox_frag.glsl",
-			s_shader);
-		s_shaderBuilt = true;
-	}
+	static Shader s_shader = compileAndLinkShaders(
+		"Assets/Shaders/skybox_vert.glsl",
+		"Assets/Shaders/skybox_frag.glsl");
 
 	return s_shader;
 }

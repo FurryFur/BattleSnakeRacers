@@ -14,6 +14,8 @@
 #ifndef _SHADER_HELPER__
 #define _SHADER_HELPER__
 
+#include "Shader.h"
+
 #include <string>
 #include <glad\glad.h>
 
@@ -28,6 +30,6 @@ GLint validateProgram(GLuint programObjectId);
 // vertex_shader is the file path to the vertex_shader code.
 // fragment_shader is the file path to the fragment_shader code.
 // program is returned by reference into last parameter.
-void compileAndLinkShaders(std::string vertex_shader, std::string fragment_shader, GLuint& program);
+Shader compileAndLinkShaders(std::string vertex_shader, std::string fragment_shader);
 
 #endif

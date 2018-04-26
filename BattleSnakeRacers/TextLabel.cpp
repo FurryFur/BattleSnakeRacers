@@ -5,15 +5,15 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 
-TextLabel::TextLabel(std::string text, std::string font){
+TextLabel::TextLabel(std::string text, std::string font)
+	: m_shader{ compileAndLinkShaders("Assets/Shaders/text.vs", "Assets/Shaders/text.fs") }
+{
 	
 	this->m_text = text;
 	this->m_color = glm::vec3(1.0, 1.0, 1.0);
 	this->m_scale = 1.0;
 
 	this->setPosition(m_position);
-
-	compileAndLinkShaders("Assets/Shaders/text.vs", "Assets/Shaders/text.fs", m_shader);
 	
 	int width;
 	int height;
@@ -21,8 +21,8 @@ TextLabel::TextLabel(std::string text, std::string font){
 	glfwGetFramebufferSize(glfwGetCurrentContext(), &width, &height);
 
 	glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(width), 0.0f, static_cast<GLfloat>(height));
-	glUseProgram(m_shader);
-	glUniformMatrix4fv(glGetUniformLocation(m_shader, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+	m_shader.use();
+	glUniformMatrix4fv(m_shader.getUniformLocation("projection"), 1, GL_FALSE, glm::value_ptr(projection));
 	
 	// FreeType
 	FT_Library ft;
@@ -121,8 +121,8 @@ void TextLabel::Render(){
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	// Activate corresponding render state	
-	glUseProgram(m_shader);
-	glUniform3f(glGetUniformLocation(m_shader, "textColor"), this->m_color.x, this->m_color.y, this->m_color.z);
+	m_shader.use();
+	glUniform3f(m_shader.getUniformLocation("textColor"), this->m_color.x, this->m_color.y, this->m_color.z);
 	glActiveTexture(GL_TEXTURE0);
 	glBindVertexArray(m_VAO);
 

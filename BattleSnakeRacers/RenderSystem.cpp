@@ -87,7 +87,7 @@ void RenderSystem::drawDebugArrow(const glm::vec3& base, const glm::vec3& _direc
 
 	ModelComponent& model = ModelUtils::loadModel("Assets/Models/red_arrow/red_arrow.obj");
 	for (size_t i = 0; i < model.materials.size(); ++i) {
-		model.materials.at(i).shader = GLUtils::getDebugShader();
+		model.materials.at(i).shader = &GLUtils::getDebugShader();
 		model.materials.at(i).debugColor = color;
 	}
 
@@ -176,7 +176,7 @@ void RenderSystem::renderModel(const ModelComponent& model, const glm::mat4& tra
 		const Material& material = model.materials.at(mesh.materialIndex);
 
 		// Tell the gpu what shader to use
-		glUseProgram(material.shader);
+		material.shader->use();
 
 		// Mostly here to ensure cubemaps don't draw on top of anything else
 		if (material.willDrawDepth) {
@@ -194,7 +194,7 @@ void RenderSystem::renderModel(const ModelComponent& model, const glm::mat4& tra
 		for (size_t j = 0; j < material.colorMaps.size(); ++j) {
 			const Texture& texture = material.colorMaps.at(j);
 			glActiveTexture(GL_TEXTURE0 + textureUnit);
-			glUniform1i(material.getUniformLocation("colorSampler"), textureUnit);
+			glUniform1i(material.shader->getUniformLocation("colorSampler"), textureUnit);
 			glBindTexture(texture.target, texture.id);
 			++textureUnit;
 
@@ -205,7 +205,7 @@ void RenderSystem::renderModel(const ModelComponent& model, const glm::mat4& tra
 		for (size_t j = 0; j < material.metallicnessMaps.size(); ++j) {
 			const Texture& texture = material.metallicnessMaps.at(j);
 			glActiveTexture(GL_TEXTURE0 + textureUnit);
-			glUniform1i(material.getUniformLocation("metallicnessSampler"), textureUnit);
+			glUniform1i(material.shader->getUniformLocation("metallicnessSampler"), textureUnit);
 			glBindTexture(texture.target, texture.id);
 			++textureUnit;
 
@@ -216,13 +216,13 @@ void RenderSystem::renderModel(const ModelComponent& model, const glm::mat4& tra
 		// Set environment map to use on GPU
 		if (s_renderState.hasRadianceMap) {
 			glActiveTexture(GL_TEXTURE0 + textureUnit);
-			glUniform1i(material.getUniformLocation("radianceSampler"), textureUnit);
+			glUniform1i(material.shader->getUniformLocation("radianceSampler"), textureUnit);
 			glBindTexture(GL_TEXTURE_CUBE_MAP, s_renderState.radianceMap);
 			++textureUnit;
 		}
 		if (s_renderState.hasIrradianceMap) {
 			glActiveTexture(GL_TEXTURE0 + textureUnit);
-			glUniform1i(material.getUniformLocation("irradianceSampler"), textureUnit);
+			glUniform1i(material.shader->getUniformLocation("irradianceSampler"), textureUnit);
 			glBindTexture(GL_TEXTURE_CUBE_MAP, s_renderState.irradianceMap);
 			++textureUnit;
 		}
@@ -247,12 +247,12 @@ void RenderSystem::renderModel(const ModelComponent& model, const glm::mat4& tra
 		//}
 
 		// Send uniform data to the GPU
-		glUniformBlockBinding(material.shader, material.getUniformBlockIndex("UniformBlock"), s_renderState.uniformBindingPoint);
+		glUniformBlockBinding(material.shader->getGPUHandle(), material.shader->getUniformBlockIndex("UniformBlock"), s_renderState.uniformBindingPoint);
 		glBindBufferBase(GL_UNIFORM_BUFFER, s_renderState.uniformBindingPoint, s_renderState.uboUniforms);
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(UniformBlockFormat), &uniformBlock);
-		if (material.shader == GLUtils::getDebugShader()) {
+		if (material.shader == &GLUtils::getDebugShader()) {
 			const glm::vec3& debugColor = material.debugColor;
-			glUniform3f(material.getUniformLocation("debugColor"), debugColor.r, debugColor.g, debugColor.b);
+			glUniform3f(material.shader->getUniformLocation("debugColor"), debugColor.r, debugColor.g, debugColor.b);
 		}
 
 		// Render the mesh

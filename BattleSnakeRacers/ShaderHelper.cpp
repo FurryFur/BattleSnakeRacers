@@ -11,9 +11,12 @@
 // Mail         : lance.cha7337@mediadesign.school.nz
 //
 
-#include "Log.h"
-#include <fstream>
 #include "ShaderHelper.h"
+
+#include "Log.h"
+#include "Shader.h"
+
+#include <fstream>
 
 std::string readShaderFileFromResource(const char* pFileName);
 GLuint compileVertexShader(const char* shaderCode);
@@ -108,13 +111,15 @@ GLint validateProgram(GLuint programObjectId) {
 	return Success;
 }
 
-void compileAndLinkShaders(std::string vertex_shader, std::string fragment_shader, GLuint& program) {
+Shader compileAndLinkShaders(std::string vertex_shader, std::string fragment_shader) {
 	std::string vertexShaderSource = readShaderFileFromResource(vertex_shader.c_str());
 	std::string fragmentShaderSource = readShaderFileFromResource(fragment_shader.c_str());
 	GLuint vertexShader = compileVertexShader(vertexShaderSource.c_str());
 	GLuint fragmentShader = compileFragmentShader(fragmentShaderSource.c_str());
-	program = linkProgram(vertexShader, fragmentShader);
+	GLuint program = linkProgram(vertexShader, fragmentShader);
 	//validateProgram(program);
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+
+	return Shader{ program };
 }
