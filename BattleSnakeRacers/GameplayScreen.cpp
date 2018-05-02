@@ -11,6 +11,7 @@
 #include "LevelLoader.h"
 #include "CameraSystem.h"
 #include "SnakeTailSystem.h"
+#include "Utils.h"
 
 #include <cmath>
 #include <list>
@@ -78,8 +79,14 @@ GameplayScreen::GameplayScreen()
 	player1.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
 	player1.inputMap.brakeBtnMap = 2;
 
+	//for (int i = 0; i < 10000; ++i) {
+	//	TransformComponent transform;
+	//	transform.position = { randomReal(-100.0f, 100.0f), randomReal(-100.0f, 100.0f), randomReal(-100.0f, 100.0f) };
+	//	Prefabs::createPyramid(m_scene, transform);
+	//}
+
 	//// Setup player2
-	/*playerTransform.scale.x = 2.0f;
+	playerTransform.scale.x = 2.0f;
 	Entity& player2 = Prefabs::createCube(m_scene, playerTransform);
 	player2.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player2.inputMap.gamepadIdx = 1; // First gamepad plugged in
@@ -88,7 +95,7 @@ GameplayScreen::GameplayScreen()
 	player2.inputMap.brakeBtnMap = 2;
 
 	// Setup player3
-	playerTransform.scale.x = 2.0f;
+	/*playerTransform.scale.x = 2.0f;
 	Entity& player3 = Prefabs::createCube(m_scene, playerTransform);
 	player3.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player3.inputMap.gamepadIdx = 2; // First gamepad plugged in
@@ -106,13 +113,13 @@ GameplayScreen::GameplayScreen()
 	player4.inputMap.brakeBtnMap = 2;*/
 	
 	m_playerList.push_back (&player1);
-	//m_playerList.push_back (&player2);
+	m_playerList.push_back (&player2);
 	//m_playerList.push_back (&player3);
 	//m_playerList.push_back (&player4);
 
 	m_activeSystems.push_back(std::make_unique<PickupSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<CameraSystem>(m_scene, m_playerList));
-	m_activeSystems.push_back(std::make_unique<SnakeTailSystem>(m_scene));
+	m_activeSystems.push_back(std::make_unique<SnakeTailSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::move(renderSystem));
 }
 

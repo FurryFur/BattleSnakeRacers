@@ -37,18 +37,20 @@ void PickupSystem::update(Entity& entity)
 					// Spawn a tail for the player
 					TransformComponent snakeTailTransform{};
 					Entity& snakeTail = Prefabs::createCube(m_scene, snakeTailTransform);
-					snakeTail.transform.position = m_playerList[i]->transform.position;
 					snakeTail.addComponents(COMPONENT_SNAKETAIL, COMPONENT_PHYSICS, COMPONENT_CONTROL);
 					
 					// No current snake tails, follow the player
 					if(m_playerList[i]->playerStats.snakeTails.size() == 0)
 						snakeTail.snakeTail.entityToFollow = m_playerList[i];
+
 					// Else, follow the last snake tail in the queue
 					else
 						snakeTail.snakeTail.entityToFollow = m_playerList[i]->playerStats.snakeTails.at(m_playerList[i]->playerStats.snakeTails.size() - 1);
 
 					// Add the snake tail to the player's list of tails
 					m_playerList[i]->playerStats.snakeTails.push_back(&snakeTail);
+
+					snakeTail.transform.position = snakeTail.snakeTail.entityToFollow->transform.position;
 
 					// Set the owner of the snake tail to the player
 					snakeTail.snakeTail.player = m_playerList[i];
