@@ -43,11 +43,15 @@ void PickupSystem::update(Entity& entity)
 					// No current snake tails, follow the player
 					if(m_playerList[i]->playerStats.snakeTails.size() == 0)
 						snakeTail.snakeTail.entityToFollow = m_playerList[i];
-					// Follow the last snake tail in the queue
+					// Else, follow the last snake tail in the queue
 					else
 						snakeTail.snakeTail.entityToFollow = m_playerList[i]->playerStats.snakeTails.at(m_playerList[i]->playerStats.snakeTails.size() - 1);
 
+					// Add the snake tail to the player's list of tails
 					m_playerList[i]->playerStats.snakeTails.push_back(&snakeTail);
+
+					// Set the owner of the snake tail to the player
+					snakeTail.snakeTail.player = m_playerList[i];
 				}
 			}
 		}
