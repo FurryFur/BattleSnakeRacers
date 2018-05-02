@@ -34,6 +34,9 @@ glm::vec3 pursue(glm::vec3 targetPosition, glm::vec3 targetVelocity, float trage
 // Returns a force to move towards the target position, slows down with arrival when close.
 glm::vec3 seekWithArrival(glm::vec3 targetPosition, glm::vec3 currentPosition, glm::vec3 currentVelocity, float maxMoveSpeed);
 
+// Returns a force to follow the target
+glm::vec3 followLeader(glm::vec3 targetPosition, glm::vec3 targetVelocity, glm::vec3 targetPreviousVelocity, glm::vec3 currentPosition, glm::vec3 currentVelocity, float maxMoveSpeed);
+
 // Applies steering to the entity while
 // keeping the entity within the level boundaries.
 // Entities will not exceed their maximum acceleration.

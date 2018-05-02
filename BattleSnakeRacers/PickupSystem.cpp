@@ -31,7 +31,6 @@ void PickupSystem::update(Entity& entity)
 			{
 				if (m_playerList[i]->transform.position.z >= entity.transform.position.z - 2 && m_playerList[i]->transform.position.z <= entity.transform.position.z + 2)
 				{
-					m_playerList[i]->playerStats.numOfTails += 1;
 					entity.pickup.isActive = false;
 					entity.pickup.respawnTimeStamp = glfwGetTime();
 
@@ -39,10 +38,16 @@ void PickupSystem::update(Entity& entity)
 					TransformComponent snakeTailTransform{};
 					Entity& snakeTail = Prefabs::createCube(m_scene, snakeTailTransform);
 					snakeTail.transform.position = m_playerList[i]->transform.position;
-					snakeTail.addComponents(COMPONENT_SNAKETAIL, COMPONENT_PHYSICS);
-					snakeTail.snakeTail.entityToFollow = m_playerList[i];
-					if(snakeTail.snakeTail.entityToFollow != NULL)
-						std::cout << snakeTail.snakeTail.entityToFollow;
+					snakeTail.addComponents(COMPONENT_SNAKETAIL, COMPONENT_PHYSICS, COMPONENT_CONTROL);
+					
+					// No current snake tails, follow the player
+					if(m_playerList[i]->playerStats.snakeTails.size() == 0)
+						snakeTail.snakeTail.entityToFollow = m_playerList[i];
+					// Follow the last snake tail in the queue
+					else
+						snakeTail.snakeTail.entityToFollow = m_playerList[i]->playerStats.snakeTails.at(m_playerList[i]->playerStats.snakeTails.size() - 1);
+
+					m_playerList[i]->playerStats.snakeTails.push_back(&snakeTail);
 				}
 			}
 		}

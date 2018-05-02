@@ -1,7 +1,10 @@
 #pragma once
 
+class Entity;
+
 #include <glm\glm.hpp>
+#include <vector>
 
 struct PlayerStatsComponent {
-	int numOfTails;
+	std::vector<Entity*> snakeTails;
 };
