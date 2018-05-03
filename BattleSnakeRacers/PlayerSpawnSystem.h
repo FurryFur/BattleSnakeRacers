@@ -13,9 +13,11 @@ public:
 	void beginFrame() override {};
 	void endFrame() override {};
 
+	void respawn();
+	//void addSpawnPoint(Entity);
 private:
 	std::vector<Entity*>& m_playerList;
 	std::vector<Entity> m_spawnPointList;
-
+	glm::vec3 m_spawnPoint;
 	
 };
