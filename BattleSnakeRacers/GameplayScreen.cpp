@@ -111,7 +111,7 @@ GameplayScreen::GameplayScreen()
 	player4.inputMap.brakeBtnMap = 2;*/
 	
 	m_playerList.push_back (&player1);
-	m_playerList.push_back (&player2);
+	//m_playerList.push_back (&player2);
 	//m_playerList.push_back (&player3);
 	//m_playerList.push_back (&player4);
 
