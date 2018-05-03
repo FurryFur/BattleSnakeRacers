@@ -69,10 +69,8 @@ GameplayScreen::GameplayScreen()
 	
 	// Setup player1
 	TransformComponent playerTransform{};
-	//playerTransform.scale.x = 1.0f;
-	playerTransform.eulerAngles.y += 1.5708f;
-	playerTransform.position.y += 1;
-	Entity& player1 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
+	playerTransform.scale.x = 2.0f;
+	Entity& player1 = Prefabs::createCube(m_scene, playerTransform);
 	player1.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player1.inputMap.gamepadIdx = 0; // First gamepad plugged in
 	player1.inputMap.turnAxisMap = 0; // Left stick x axis
@@ -86,7 +84,8 @@ GameplayScreen::GameplayScreen()
 	//}
 
 	//// Setup player2
-	Entity& player2 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
+	playerTransform.scale.x = 2.0f;
+	Entity& player2 = Prefabs::createCube(m_scene, playerTransform);
 	player2.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player2.inputMap.gamepadIdx = 1; // First gamepad plugged in
 	player2.inputMap.turnAxisMap = 0; // Left stick x axis
@@ -94,7 +93,6 @@ GameplayScreen::GameplayScreen()
 	player2.inputMap.brakeBtnMap = 2;
 
 	// Setup player3
-	/*
 	Entity& player3 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
 	player3.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player3.inputMap.gamepadIdx = 2; // First gamepad plugged in
@@ -103,26 +101,79 @@ GameplayScreen::GameplayScreen()
 	player3.inputMap.brakeBtnMap = 2;
 
 	// Setup player4
-	
 	Entity& player4 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
 	player4.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player4.inputMap.gamepadIdx = 3; // First gamepad plugged in
 	player4.inputMap.turnAxisMap = 0; // Left stick x axis
 	player4.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
-	player4.inputMap.brakeBtnMap = 2;*/
+	player4.inputMap.brakeBtnMap = 2;
 	
 	m_playerList.push_back (&player1);
-	//m_playerList.push_back (&player2);
-	//m_playerList.push_back (&player3);
-	//m_playerList.push_back (&player4);
+	m_playerList.push_back (&player2);
+	m_playerList.push_back (&player3);
+	m_playerList.push_back (&player4);
 
 	m_activeSystems.push_back(std::make_unique<PickupSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<CameraSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<SnakeTailSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::move(renderSystem));
-}
 
+	// Create text labels for each players score
+	for (size_t i = 0; i < m_playerList.size(); ++i)
+	{
+		std::string label = "Player " + toString(i + 1) + ": 05";
+		TextLabel playerScore(label, "Assets/Fonts/NYCTALOPIATILT.TTF");
+		playerScore.setPosition(glm::vec2(30.0f, 770.0f - (i * 30)));
+		playerScore.setScale(0.4f);
+
+		if (i == 0)
+		{
+			playerScore.setColor(glm::vec3(1.0f, 0.5f, 0.8f));
+			player1.playerStats.scoreLabel = &playerScore;
+		}
+		else if (i == 1)
+		{
+			playerScore.setColor(glm::vec3(0.5f, 0.8f, 1.0f));
+			player2.playerStats.scoreLabel = &playerScore;
+		}
+		else if (i == 2)
+		{
+			playerScore.setColor(glm::vec3(1.0f, 1.0f, 0.2f));
+			player3.playerStats.scoreLabel = &playerScore;
+		}
+		else
+		{
+			playerScore.setColor(glm::vec3(0.5f, 1.0f, 0.8f));
+			player4.playerStats.scoreLabel = &playerScore;
+		}
+
+		m_playerScores.push_back(playerScore);
+	}
+}
 
 GameplayScreen::~GameplayScreen()
 {
 }
+
+void GameplayScreen::update()
+{
+	for (auto& system : m_activeSystems) {
+		system->beginFrame();
+	}
+
+	for (size_t i = 0; i < m_scene.getEntityCount(); ++i) {
+		for (auto& system : m_activeSystems) {
+			system->update(m_scene.getEntity(i));
+		}
+	}
+
+	for (size_t i = 0; i < m_playerScores.size(); ++i)
+	{
+		m_playerScores.at(i).Render();
+	}
+
+	for (auto& system : m_activeSystems) {
+		system->endFrame();
+	}
+}
+

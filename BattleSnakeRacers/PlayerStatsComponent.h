@@ -5,7 +5,14 @@ class Entity;
 #include <glm\glm.hpp>
 #include <vector>
 
+#include "TextLabel.h"
+
 struct PlayerStatsComponent {
-	std::vector<Entity*> snakeTails;
+	
+	int currentScore = 5;
 	bool isDead;
+
+	TextLabel* scoreLabel;
+
+	std::vector<Entity*> snakeTails;
 };

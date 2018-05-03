@@ -13,7 +13,7 @@ public:
 	Screen(const Screen&) = delete;
 	Screen& operator=(const Screen&) = delete;
 
-	void update();
+	virtual void update();
 
 protected:
 	Screen() {};
