@@ -110,31 +110,35 @@ void RenderSystem::endFrame()
 	glfwSwapBuffers(m_renderState.glContext);
 }
 
-void RenderSystem::update(Entity& entity)
+void RenderSystem::update()
 {
-	// Filter renderable entities
-	const size_t kRenderableMask = COMPONENT_MODEL;
-	if (!entity.hasComponents(kRenderableMask))
-		return;
+	for (size_t i = 0; i < m_scene.getEntityCount(); ++i) {
+		Entity& entity = m_scene.getEntity(i);
 
-	// If it is an non-active pickup do not render it
-	const size_t kPickup = COMPONENT_PICKUP;
-	if (entity.hasComponents(kPickup) && !entity.pickup.isActive)
-		return;
+		// Filter renderable entities
+		const size_t kRenderableMask = COMPONENT_MODEL;
+		if (!entity.hasComponents(kRenderableMask))
+			continue;
 
-	// Can't render anything without a camera set
-	if (!m_renderState.cameraEntity) {
-		return;
+		// If it is an non-active pickup do not render it
+		const size_t kPickup = COMPONENT_PICKUP;
+		if (entity.hasComponents(kPickup) && !entity.pickup.isActive)
+			continue;
+
+		// Can't render anything without a camera set
+		if (!m_renderState.cameraEntity) {
+			continue;
+		}
+
+		bool hasTransform = entity.hasComponents(COMPONENT_TRANSFORM);
+
+		// Swap the current global render state with this RenderSystems state.
+		s_renderState = m_renderState;
+
+		// Render the 
+
+		renderModel(entity.model, GLMUtils::transformToMat(entity.transform));
 	}
-
-	bool hasTransform = entity.hasComponents(COMPONENT_TRANSFORM);
-
-	// Swap the current global render state with this RenderSystems state.
-	s_renderState = m_renderState;
-
-	// Render the 
-
-	renderModel(entity.model, GLMUtils::transformToMat(entity.transform));
 }
 
 void RenderSystem::setCamera(const Entity* entity)

@@ -34,66 +34,70 @@ void InputSystem::beginFrame()
 	
 }
 
-void InputSystem::update(Entity& entity)
+void InputSystem::update()
 {
-	GLFWwindow* window = Game::getWindowContext();
+	for (size_t i = 0; i < m_scene.getEntityCount(); ++i) {
+		Entity& entity = m_scene.getEntity(i);
 
-	// DEBUG!!!
-	if (entity.hasComponents(COMPONENT_MODEL)) {
-		if (glfwGetKey(window, GLFW_KEY_KP_MULTIPLY) == GLFW_PRESS) {
-			for (size_t i = 0; i < entity.model.materials.size(); ++i) {
-				entity.model.materials.at(i).shaderParams.metallicness = clamp(entity.model.materials.at(i).shaderParams.metallicness + 0.01f, 0.001f, 1.0f);
-			}
-		}
-		if (glfwGetKey(window, GLFW_KEY_KP_DIVIDE) == GLFW_PRESS) {
-			for (size_t i = 0; i < entity.model.materials.size(); ++i) {
-				entity.model.materials.at(i).shaderParams.metallicness = clamp(entity.model.materials.at(i).shaderParams.metallicness - 0.01f, 0.001f, 1.0f);
-			}
-		}
-		if (glfwGetKey(window, GLFW_KEY_KP_ADD) == GLFW_PRESS) {
-			for (size_t i = 0; i < entity.model.materials.size(); ++i) {
-				entity.model.materials.at(i).shaderParams.glossiness = clamp(entity.model.materials.at(i).shaderParams.glossiness + 0.01f, 0.0001f, 1.0f);
-			}
-		}
-		if (glfwGetKey(window, GLFW_KEY_KP_SUBTRACT) == GLFW_PRESS) {
-			for (size_t i = 0; i < entity.model.materials.size(); ++i) {
-				entity.model.materials.at(i).shaderParams.glossiness = clamp(entity.model.materials.at(i).shaderParams.glossiness - 0.01f, 0.0001f, 1.0f);
-			}
-		}
-		if (glfwGetKey(window, GLFW_KEY_PAGE_UP) == GLFW_PRESS) {
-			for (size_t i = 0; i < entity.model.materials.size(); ++i) {
-				entity.model.materials.at(i).shaderParams.specBias = clamp(entity.model.materials.at(i).shaderParams.specBias + 0.01f, 0.0f, 0.96f);
-			}
-		}
-		if (glfwGetKey(window, GLFW_KEY_PAGE_DOWN) == GLFW_PRESS) {
-			for (size_t i = 0; i < entity.model.materials.size(); ++i) {
-				entity.model.materials.at(i).shaderParams.specBias = clamp(entity.model.materials.at(i).shaderParams.specBias - 0.01f, 0.0f, 0.9599f);
-			}
-		}
-	}
+		GLFWwindow* window = Game::getWindowContext();
 
-	// Filter input receivers
-	const size_t kInputReceiverMask = COMPONENT_INPUT | COMPONENT_INPUT_MAP;
-	if (!entity.hasComponents(kInputReceiverMask))
-		return;
+		// DEBUG!!!
+		if (entity.hasComponents(COMPONENT_MODEL)) {
+			if (glfwGetKey(window, GLFW_KEY_KP_MULTIPLY) == GLFW_PRESS) {
+				for (size_t i = 0; i < entity.model.materials.size(); ++i) {
+					entity.model.materials.at(i).shaderParams.metallicness = clamp(entity.model.materials.at(i).shaderParams.metallicness + 0.01f, 0.001f, 1.0f);
+				}
+			}
+			if (glfwGetKey(window, GLFW_KEY_KP_DIVIDE) == GLFW_PRESS) {
+				for (size_t i = 0; i < entity.model.materials.size(); ++i) {
+					entity.model.materials.at(i).shaderParams.metallicness = clamp(entity.model.materials.at(i).shaderParams.metallicness - 0.01f, 0.001f, 1.0f);
+				}
+			}
+			if (glfwGetKey(window, GLFW_KEY_KP_ADD) == GLFW_PRESS) {
+				for (size_t i = 0; i < entity.model.materials.size(); ++i) {
+					entity.model.materials.at(i).shaderParams.glossiness = clamp(entity.model.materials.at(i).shaderParams.glossiness + 0.01f, 0.0001f, 1.0f);
+				}
+			}
+			if (glfwGetKey(window, GLFW_KEY_KP_SUBTRACT) == GLFW_PRESS) {
+				for (size_t i = 0; i < entity.model.materials.size(); ++i) {
+					entity.model.materials.at(i).shaderParams.glossiness = clamp(entity.model.materials.at(i).shaderParams.glossiness - 0.01f, 0.0001f, 1.0f);
+				}
+			}
+			if (glfwGetKey(window, GLFW_KEY_PAGE_UP) == GLFW_PRESS) {
+				for (size_t i = 0; i < entity.model.materials.size(); ++i) {
+					entity.model.materials.at(i).shaderParams.specBias = clamp(entity.model.materials.at(i).shaderParams.specBias + 0.01f, 0.0f, 0.96f);
+				}
+			}
+			if (glfwGetKey(window, GLFW_KEY_PAGE_DOWN) == GLFW_PRESS) {
+				for (size_t i = 0; i < entity.model.materials.size(); ++i) {
+					entity.model.materials.at(i).shaderParams.specBias = clamp(entity.model.materials.at(i).shaderParams.specBias - 0.01f, 0.0f, 0.9599f);
+				}
+			}
+		}
 
-	InputComponent& input = entity.input;
-	InputMapComponent& inputMap = entity.inputMap;
-	int gamepadIdx = inputMap.gamepadIdx;
+		// Filter input receivers
+		const size_t kInputReceiverMask = COMPONENT_INPUT | COMPONENT_INPUT_MAP;
+		if (!entity.hasComponents(kInputReceiverMask))
+			continue;
 
-	// Update input from axes
-	int count;
-	const float* pAxes = glfwGetJoystickAxes(gamepadIdx, &count);
-	if (count > 0) {
-		std::vector<float> axes(pAxes, pAxes + count);
-		input.turnAxis = axes[inputMap.turnAxisMap];
-	}
+		InputComponent& input = entity.input;
+		InputMapComponent& inputMap = entity.inputMap;
+		int gamepadIdx = inputMap.gamepadIdx;
 
-	// Update input from buttons
-	const unsigned char* pBtns = glfwGetJoystickButtons(gamepadIdx, &count);
-	if (count > 0) {
-		std::vector<unsigned char> btns(pBtns, pBtns + count);
-		input.acceleratorDown = btns[inputMap.accelerationBtnMap];
-		input.brakeDown = btns[inputMap.brakeBtnMap];
+		// Update input from axes
+		int count;
+		const float* pAxes = glfwGetJoystickAxes(gamepadIdx, &count);
+		if (count > 0) {
+			std::vector<float> axes(pAxes, pAxes + count);
+			input.turnAxis = axes[inputMap.turnAxisMap];
+		}
+
+		// Update input from buttons
+		const unsigned char* pBtns = glfwGetJoystickButtons(gamepadIdx, &count);
+		if (count > 0) {
+			std::vector<unsigned char> btns(pBtns, pBtns + count);
+			input.acceleratorDown = btns[inputMap.accelerationBtnMap];
+			input.brakeDown = btns[inputMap.brakeBtnMap];
+		}
 	}
 }

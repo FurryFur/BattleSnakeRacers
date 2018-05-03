@@ -10,7 +10,7 @@ class PickupSystem : public System {
 public:
 	PickupSystem(Scene&, std::vector<Entity*>& playerList);
 
-	void update(Entity&) override;
+	void update() override;
 	void beginFrame() override {};
 	void endFrame() override {};
 private:

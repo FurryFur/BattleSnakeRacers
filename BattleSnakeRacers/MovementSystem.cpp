@@ -40,56 +40,60 @@ MovementSystem::MovementSystem(Scene& scene)
 {
 }
 
-void MovementSystem::update(Entity& entity)
+void MovementSystem::update()
 {
-	// Filter movable
-	const size_t kMovableMask = COMPONENT_MOVEMENT | COMPONENT_INPUT | COMPONENT_TRANSFORM;
-	if (!entity.hasComponents(kMovableMask))
-		return;
+	for (size_t i = 0; i < m_scene.getEntityCount(); ++i) {
+		Entity& entity = m_scene.getEntity(i);
 
-	// Only control the player if they are not dead
-	if (!entity.playerStats.isDead)
-	{
-		// Update facing direction
-		// TODO: Only do this if on the ground
-		entity.transform.eulerAngles.y -= entity.input.turnAxis * 0.0005f * length(entity.physics.velocity);
+		// Filter movable
+		const size_t kMovableMask = COMPONENT_MOVEMENT | COMPONENT_INPUT | COMPONENT_TRANSFORM;
+		if (!entity.hasComponents(kMovableMask))
+			continue;
 
-		// TODO: Make sideways drag higher so the car can't slide sideways (like it's on ice) when not accelerating
+		// Only control the player if they are not dead
+		if (!entity.playerStats.isDead)
+		{
+			// Update facing direction
+			// TODO: Only do this if on the ground
+			entity.transform.eulerAngles.y -= entity.input.turnAxis * 0.0005f * length(entity.physics.velocity);
 
-		// Apply turning force
-		//vec3 steeringDir = normalize(vec3{ -entity.physics.velocity.y, 0, entity.physics.velocity.x });
-		//float velocityMag = length(entity.physics.velocity);
-		//entity.physics.acceleration += entity.input.turnAxis * steeringDir * velocityMag;
-		// TODO: Add max steering amount to movement component
+			// TODO: Make sideways drag higher so the car can't slide sideways (like it's on ice) when not accelerating
 
-		// Get orientation vectors
-		vec3 forward = glm::rotateY(vec4{ 0, 0, 1, 0 }, entity.transform.eulerAngles.y);
-		vec3 right = glm::rotateY(vec4{ -1, 0, 0, 0 }, entity.transform.eulerAngles.y);
+			// Apply turning force
+			//vec3 steeringDir = normalize(vec3{ -entity.physics.velocity.y, 0, entity.physics.velocity.x });
+			//float velocityMag = length(entity.physics.velocity);
+			//entity.physics.acceleration += entity.input.turnAxis * steeringDir * velocityMag;
+			// TODO: Add max steering amount to movement component
 
-		// Project acceleration onto right vector and apply static and dynamic friction in this direction
-		// TODO: Add sideways friction to movement component
-		const float sidewaysMaxSpeedBeforeTractionLoss = 2.5f;
-		const float sidewaysDynamicFrictionMag = 50.0f;
-		vec3 sidewaysForce = glm::dot(right, entity.physics.acceleration) * right;
-		vec3 sidewaysVelocity = glm::dot(right, entity.physics.velocity) * right;
-		vec3 sidewaysVelocityDir = glm::normalize(sidewaysVelocity);
-		vec3 frictionForce = vec3(0, 0, 0);
-		if (glm::length(sidewaysVelocity) > sidewaysMaxSpeedBeforeTractionLoss)
-			entity.physics.acceleration -= sidewaysVelocityDir * sidewaysDynamicFrictionMag;
-		else
-			entity.physics.velocity -= sidewaysVelocity;
+			// Get orientation vectors
+			vec3 forward = glm::rotateY(vec4{ 0, 0, 1, 0 }, entity.transform.eulerAngles.y);
+			vec3 right = glm::rotateY(vec4{ -1, 0, 0, 0 }, entity.transform.eulerAngles.y);
 
-		if (entity.input.acceleratorDown) {
-			// Apply acceleration force
-			// TODO: Obay a max speed and acceleration variable set in the movement component
+			// Project acceleration onto right vector and apply static and dynamic friction in this direction
+			// TODO: Add sideways friction to movement component
+			const float sidewaysMaxSpeedBeforeTractionLoss = 2.5f;
+			const float sidewaysDynamicFrictionMag = 50.0f;
+			vec3 sidewaysForce = glm::dot(right, entity.physics.acceleration) * right;
+			vec3 sidewaysVelocity = glm::dot(right, entity.physics.velocity) * right;
+			vec3 sidewaysVelocityDir = glm::normalize(sidewaysVelocity);
+			vec3 frictionForce = vec3(0, 0, 0);
+			if (glm::length(sidewaysVelocity) > sidewaysMaxSpeedBeforeTractionLoss)
+				entity.physics.acceleration -= sidewaysVelocityDir * sidewaysDynamicFrictionMag;
+			else
+				entity.physics.velocity -= sidewaysVelocity;
 
-			entity.physics.acceleration += forward * 10.0f;
-		}
+			if (entity.input.acceleratorDown) {
+				// Apply acceleration force
+				// TODO: Obay a max speed and acceleration variable set in the movement component
 
-		if (entity.input.brakeDown) {
-			// TODO: Obay a max reverse speed and acceleration variable set in the movement component
+				entity.physics.acceleration += forward * 10.0f;
+			}
 
-			entity.physics.acceleration += -entity.physics.velocity * 5.0f;
+			if (entity.input.brakeDown) {
+				// TODO: Obay a max reverse speed and acceleration variable set in the movement component
+
+				entity.physics.acceleration += -entity.physics.velocity * 5.0f;
+			}
 		}
 	}
 }

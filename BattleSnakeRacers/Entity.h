@@ -11,6 +11,7 @@
 #include "PlayerStatsComponent.h"
 #include "SnakeTailComponent.h"
 #include "ControlComponent.h"
+#include "CollisionComponents.h"
 
 #include <vector>
 
@@ -27,7 +28,10 @@ enum ComponentType {
 	COMPONENT_PICKUP = 1 << 7,
 	COMPONENT_PLAYERSTATS = 1 << 8,
 	COMPONENT_SNAKETAIL = 1 << 9,
-	COMPONENT_CONTROL = 1 << 10
+	COMPONENT_CONTROL = 1 << 10,
+	COMPONENT_SPHERE_COLLISION = 1 << 11,
+	COMPONENT_BOX_COLLISION = 1 << 12,
+	COMPONENT_CAPSULE_COLLISION = 1 << 13
 };
 
 class Entity {
@@ -46,6 +50,9 @@ public:
 	PlayerStatsComponent playerStats;
 	SnakeTailComponent snakeTail;
 	ControlComponent controlVars;
+	SphereCollisionComponent sphereCollision;
+	BoxCollisionComponent boxCollision;
+	CapsuleCollisionComponent capsuleCollision;
 
 	Entity(Entity&&) = default;
 	Entity(const Entity&) = delete;

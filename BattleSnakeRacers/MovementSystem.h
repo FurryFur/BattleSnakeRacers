@@ -24,7 +24,7 @@ public:
 	MovementSystem(Scene& scene);
 
 	// Updates the entities position from input
-	void update(Entity& entity) override;
+	void update() override;
 
 	void beginFrame() override { };
 	void endFrame() override { };

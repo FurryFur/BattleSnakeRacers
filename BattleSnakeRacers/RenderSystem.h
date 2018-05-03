@@ -51,7 +51,7 @@ public:
 	void beginFrame() override;
 
 	// Renders an entity.
-	void update(Entity&) override;
+	void update() override;
 
 	// Ends the frame.
 	void endFrame() override;

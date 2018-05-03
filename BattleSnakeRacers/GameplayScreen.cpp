@@ -12,6 +12,7 @@
 #include "CameraSystem.h"
 #include "SnakeTailSystem.h"
 #include "Utils.h"
+#include "CollisionSystem.h"
 
 #include <cmath>
 #include <list>
@@ -21,6 +22,7 @@ GameplayScreen::GameplayScreen()
 	// Init systems
 	m_activeSystems.push_back(std::make_unique<InputSystem>(m_scene));
 	m_activeSystems.push_back(std::make_unique<MovementSystem>(m_scene));
+	m_activeSystems.push_back(std::make_unique<CollisionSystem>(m_scene));
 	m_activeSystems.push_back(std::make_unique<PhysicsSystem>(m_scene));
 	auto renderSystem = std::make_unique<RenderSystem>(m_scene);
 
@@ -72,7 +74,9 @@ GameplayScreen::GameplayScreen()
 	//playerTransform.scale.x = 1.0f;
 	playerTransform.eulerAngles.y += 1.5708f;
 	Entity& player1 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
-	player1.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
+	player1.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
+	player1.transform.position.z = -5;
+	player1.sphereCollision.radius = 2;
 	player1.inputMap.gamepadIdx = 0; // First gamepad plugged in
 	player1.inputMap.turnAxisMap = 0; // Left stick x axis
 	player1.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
@@ -86,7 +90,8 @@ GameplayScreen::GameplayScreen()
 
 	//// Setup player2
 	Entity& player2 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
-	player2.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
+	player2.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
+	player2.sphereCollision.radius = 2;
 	player2.inputMap.gamepadIdx = 1; // First gamepad plugged in
 	player2.inputMap.turnAxisMap = 0; // Left stick x axis
 	player2.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
@@ -95,7 +100,8 @@ GameplayScreen::GameplayScreen()
 	// Setup player3
 	/*
 	Entity& player3 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
-	player3.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
+	player3.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
+	player3.sphereCollision.radius = 2;
 	player3.inputMap.gamepadIdx = 2; // First gamepad plugged in
 	player3.inputMap.turnAxisMap = 0; // Left stick x axis
 	player3.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
@@ -104,14 +110,15 @@ GameplayScreen::GameplayScreen()
 	// Setup player4
 	
 	Entity& player4 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
-	player4.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
+	player4.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
+	player4.sphereCollision.radius = 2;
 	player4.inputMap.gamepadIdx = 3; // First gamepad plugged in
 	player4.inputMap.turnAxisMap = 0; // Left stick x axis
 	player4.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
 	player4.inputMap.brakeBtnMap = 2;*/
 	
 	m_playerList.push_back (&player1);
-	//m_playerList.push_back (&player2);
+	m_playerList.push_back (&player2);
 	//m_playerList.push_back (&player3);
 	//m_playerList.push_back (&player4);
 
