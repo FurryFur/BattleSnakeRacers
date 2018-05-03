@@ -25,7 +25,7 @@ void CameraSystem::update(Entity& entity)
 	if (m_playerList.size() > 0) {
 		float minX = m_playerList[0]->transform.position.x;
 		float maxX = minX;
-		float minZ = m_playerList[0]->transform.position.y;
+		float minZ = m_playerList[0]->transform.position.z;
 		float maxZ = minZ;
 		for (auto player : m_playerList) {
 			const vec3& position = player->transform.position;
