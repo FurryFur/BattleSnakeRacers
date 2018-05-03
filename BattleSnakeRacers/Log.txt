@@ -1,1 +1,0 @@
-Texture failed to load at path: Assets/Models/truck/E:\krishna\truck\truck_1\tex\Truck_1_Diff.psd
