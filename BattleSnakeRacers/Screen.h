@@ -15,6 +15,8 @@ public:
 
 	virtual void update();
 
+	void createTextLabel(std::string labelText, glm::vec2 position, std::vector<TextLabel>* screen, float scale = 1.0f);
+
 protected:
 	Screen() {};
 
