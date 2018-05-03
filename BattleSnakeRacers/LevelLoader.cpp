@@ -183,7 +183,7 @@ void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel
 				else
 				{
 					//curved piece
-					en.model = ModelUtils::loadModel("Assets/Models/Track/curve1.obj");
+					en.model = ModelUtils::loadModel("Assets/Models/Track/box_edge.obj");
 					track = curveTrack;
 				}
 				
