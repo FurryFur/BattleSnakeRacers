@@ -176,6 +176,7 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainMenuScreen.cpp" />
     <ClCompile Include="ModelUtils.cpp" />
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="MovementSystem.cpp" />
@@ -207,6 +208,7 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
     <ClInclude Include="GameplayScreen.h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="Log.h" />
+    <ClInclude Include="MainMenuScreen.h" />
     <ClInclude Include="ModelComponent.h" />
     <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="GLMUtils.h" />
