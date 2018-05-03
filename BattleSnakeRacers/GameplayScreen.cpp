@@ -69,8 +69,9 @@ GameplayScreen::GameplayScreen()
 	
 	// Setup player1
 	TransformComponent playerTransform{};
-	playerTransform.scale.z = 2.0f;
-	Entity& player1 = Prefabs::createCube(m_scene, playerTransform);
+	//playerTransform.scale.x = 1.0f;
+	playerTransform.eulerAngles.y += 1.5708f;
+	Entity& player1 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
 	player1.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player1.inputMap.gamepadIdx = 0; // First gamepad plugged in
 	player1.inputMap.turnAxisMap = 0; // Left stick x axis
@@ -84,17 +85,16 @@ GameplayScreen::GameplayScreen()
 	//}
 
 	//// Setup player2
-	//playerTransform.scale.z = 2.0f;
-	//Entity& player2 = Prefabs::createCube(m_scene, playerTransform);
-	//player2.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
-	//player2.inputMap.gamepadIdx = 1; // First gamepad plugged in
-	//player2.inputMap.turnAxisMap = 0; // Left stick x axis
-	//player2.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
-	//player2.inputMap.brakeBtnMap = 2;
+	Entity& player2 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
+	player2.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
+	player2.inputMap.gamepadIdx = 1; // First gamepad plugged in
+	player2.inputMap.turnAxisMap = 0; // Left stick x axis
+	player2.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
+	player2.inputMap.brakeBtnMap = 2;
 
 	// Setup player3
-	/*playerTransform.scale.z = 2.0f;
-	Entity& player3 = Prefabs::createCube(m_scene, playerTransform);
+	/*
+	Entity& player3 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
 	player3.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player3.inputMap.gamepadIdx = 2; // First gamepad plugged in
 	player3.inputMap.turnAxisMap = 0; // Left stick x axis
@@ -102,8 +102,8 @@ GameplayScreen::GameplayScreen()
 	player3.inputMap.brakeBtnMap = 2;
 
 	// Setup player4
-	playerTransform.scale.z = 2.0f;
-	Entity& player4 = Prefabs::createCube(m_scene, playerTransform);
+	
+	Entity& player4 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
 	player4.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player4.inputMap.gamepadIdx = 3; // First gamepad plugged in
 	player4.inputMap.turnAxisMap = 0; // Left stick x axis
