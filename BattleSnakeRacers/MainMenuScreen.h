@@ -11,6 +11,7 @@ public:
 	~MainMenuScreen() override;
 	void update() override;
 private:
-	std::vector<TextLabel> m_UIButtons;
+	std::vector<TextLabel> m_UIButtons; // The buttons 
+	std::vector<TextLabel> m_UITexts; // The static Text in the menu
 };
 
