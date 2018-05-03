@@ -176,4 +176,3 @@ void GameplayScreen::update()
 		system->endFrame();
 	}
 }
-
