@@ -250,7 +250,7 @@ void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel
 								Entity& pickup1 = Prefabs::createModel(scene, "Assets/Models/crystal/mese.obj", pickupTransform);
 								//Entity& pickup = Prefabs::createSphere(scene);
 								//pickup1.transform.position = glm::vec3(-20, 1, -20);
-								pickup1.addComponents(COMPONENT_PICKUP);
+								//pickup1.addComponents(COMPONENT_PICKUP);
 								pickup1.pickup.isActive = true;
 
 								pickup1.transform.position.x = (-45.0f + 10.0f * i);
