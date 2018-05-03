@@ -96,7 +96,7 @@ void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel
 {
 
 	NDArray<char, 20, 20> straightTrack = ItemFile("Assets/Maps/straight road item.txt");
-	NDArray<char, 20, 20> curveTrack = ItemFile("Assets/Maps/curve road item.txt");
+	NDArray<char, 20, 20> curveTrack = ItemFile("Assets/Maps/boxcorner road item.txt");
 	//TransformComponent pickupTransform{};
 	//pickupTransform.scale.x = 0.5f;
 	//pickupTransform.scale.y = 0.5f;
@@ -117,12 +117,21 @@ void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel
 			{
 				bool isStraight = false;
 				float rotation = 0;
+				bool spawnPickUps = false;
 				switch (charLevel[i][j])
 				{
+				case 'U':
+				{
+					spawnPickUps = true;
+				}
 				case 'u':
 				{
 					isStraight = true;
 					break;
+				}
+				case 'L':
+				{
+					spawnPickUps = true;
 				}
 				case 'l':
 				{
@@ -130,11 +139,19 @@ void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel
 					isStraight = true;
 					break;
 				}
+				case 'D':
+				{
+					spawnPickUps = true;
+				}
 				case 'd':
 				{
 					rotation = 180;
 					isStraight = true;
 					break;
+				}
+				case 'R':
+				{
+					spawnPickUps = true;
 				}
 				case 'r':
 				{
@@ -142,11 +159,18 @@ void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel
 					isStraight = true;
 					break;
 				}
+				case '5':
+				{
+					spawnPickUps = true;
+				}
 				case '1':
 				{
-					
 					isStraight = false;
 					break;
+				}
+				case '6':
+				{
+					spawnPickUps = true;
 				}
 				case '2':
 				{
@@ -154,11 +178,19 @@ void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel
 					isStraight = false;
 					break;
 				}
+				case '7':
+				{
+					spawnPickUps = true;
+				}
 				case '3':
 				{
 					rotation = 180;
 					isStraight = false;
 					break;
+				}
+				case '8':
+				{
+					spawnPickUps = true;
 				}
 				case '4':
 				{
@@ -200,37 +232,51 @@ void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel
 				en.transform.eulerAngles = glm::vec3(270 * 3.14159/180, rotation * 3.14159/180, 0);
 				en.transform.scale = glm::vec3(fscale, fscale, fscale);
 
-				for (int i = 0; i < 19; i++)
+				if (spawnPickUps == true)
 				{
-					for (int j = 0; j < 19; j++)
+					for (int i = 0; i < 19; i++)
 					{
-						if (track[i][j] != 'x' && track[i][j] != ' ')
+						for (int j = 0; j < 19; j++)
 						{
-							if (randomInt(1, 9) > track[i][j] - '0')
+							if (track[i][j] != 'x' && track[i][j] != ' ')
 							{
-								continue;
-							}
-							Entity& pickup = Prefabs::createSphere(scene);			
-							pickup.transform.position.x = (-45.0f +  10.0f * i);
-							pickup.transform.position.z = (-45.0f +  10.0f * j * 0.5f);
-							
-							if(isStraight)
-							{
-								glm::mat4 rot = glm::rotate({}, (rotation - 90) * 3.14159f / 180.0f, glm::vec3(0, 1, 0));
-								pickup.transform.position = rot * glm::vec4(pickup.transform.position, 1.0f);
-							}
-							else
-							{
-								glm::mat4 rot = glm::rotate({}, (rotation - 180) * 3.14159f / 180.0f, glm::vec3(0, 1, 0));
-								pickup.transform.position = rot * glm::vec4(pickup.transform.position, 1.0f);
-							}
+								if (randomInt(1, 9) > track[i][j] - '0')
+								{
+									continue;
+								}
 
-							pickup.transform.position += en.transform.position;
-							pickup.transform.position.y = 0;
-							pickup.addComponents(COMPONENT_PICKUP);
+								TransformComponent pickupTransform{};
+								pickupTransform.scale = glm::vec3(3, 3, 3);
+								Entity& pickup1 = Prefabs::createModel(scene, "Assets/Models/crystal/mese.obj", pickupTransform);
+								//Entity& pickup = Prefabs::createSphere(scene);
+								//pickup1.transform.position = glm::vec3(-20, 1, -20);
+								//pickup1.addComponents(COMPONENT_PICKUP);
+								pickup1.pickup.isActive = true;
+
+								pickup1.transform.position.x = (-45.0f + 10.0f * i);
+								pickup1.transform.position.z = (-45.0f + 10.0f * j * 0.5f);
+
+								if (isStraight)
+								{
+									glm::mat4 rot = glm::rotate({}, (rotation - 90) * 3.14159f / 180.0f, glm::vec3(0, 1, 0));
+									pickup1.transform.position = rot * glm::vec4(pickup1.transform.position, 1.0f);
+								}
+								else
+								{
+									glm::mat4 rot = glm::rotate({}, (rotation - 180) * 3.14159f / 180.0f, glm::vec3(0, 1, 0));
+									pickup1.transform.position = rot * glm::vec4(pickup1.transform.position, 1.0f);
+								}
+
+								pickup1.transform.position += en.transform.position;
+								pickup1.transform.position.y = 1;
+								pickup1.addComponents(COMPONENT_PICKUP);
+							}
 						}
 					}
 				}
+				
+				//Entity& pickup1 = Prefabs::createModel(scene, "Assets/Models/crystal/mese.obj", pickupTransform);
+				
 				//Entity& pickup = Prefabs::createSphere(scene, pickupTransform);
 				//pickup.transform.position = glm::vec3(-25 + j * 2, 0.5f, i * 2);
 				//pickup.addComponents(COMPONENT_PICKUP);

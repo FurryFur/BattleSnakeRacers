@@ -93,8 +93,7 @@ GameplayScreen::GameplayScreen()
 	player2.inputMap.brakeBtnMap = 2;
 
 	// Setup player3
-	playerTransform.scale.x = 2.0f;
-	Entity& player3 = Prefabs::createCube(m_scene, playerTransform);
+	Entity& player3 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
 	player3.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player3.inputMap.gamepadIdx = 2; // First gamepad plugged in
 	player3.inputMap.turnAxisMap = 0; // Left stick x axis
@@ -102,8 +101,7 @@ GameplayScreen::GameplayScreen()
 	player3.inputMap.brakeBtnMap = 2;
 
 	// Setup player4
-	playerTransform.scale.x = 2.0f;
-	Entity& player4 = Prefabs::createCube(m_scene, playerTransform);
+	Entity& player4 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
 	player4.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player4.inputMap.gamepadIdx = 3; // First gamepad plugged in
 	player4.inputMap.turnAxisMap = 0; // Left stick x axis

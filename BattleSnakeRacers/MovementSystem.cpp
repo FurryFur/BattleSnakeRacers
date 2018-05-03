@@ -52,7 +52,7 @@ void MovementSystem::update(Entity& entity)
 	{
 		// Update facing direction
 		// TODO: Only do this if on the ground
-		entity.transform.eulerAngles.y -= entity.input.turnAxis * 0.005f * length(entity.physics.velocity);
+		entity.transform.eulerAngles.y -= entity.input.turnAxis * 0.0005f * length(entity.physics.velocity);
 
 		// TODO: Make sideways drag higher so the car can't slide sideways (like it's on ice) when not accelerating
 
@@ -63,22 +63,21 @@ void MovementSystem::update(Entity& entity)
 		// TODO: Add max steering amount to movement component
 
 		// Get orientation vectors
-		vec3 forward = glm::rotateY(vec4{ 1, 0, 0, 0 }, entity.transform.eulerAngles.y);
-		vec3 right = glm::rotateY(vec4{ 0, 0, 1, 0 }, entity.transform.eulerAngles.y);
+		vec3 forward = glm::rotateY(vec4{ 0, 0, 1, 0 }, entity.transform.eulerAngles.y);
+		vec3 right = glm::rotateY(vec4{ -1, 0, 0, 0 }, entity.transform.eulerAngles.y);
 
 		// Project acceleration onto right vector and apply static and dynamic friction in this direction
 		// TODO: Add sideways friction to movement component
-		const float sidewaysStaticFrictionMaxMag = 10.0f;
-		const float sidewaysDynamicFrictionMag = 7.5f;
+		const float sidewaysMaxSpeedBeforeTractionLoss = 2.5f;
+		const float sidewaysDynamicFrictionMag = 50.0f;
 		vec3 sidewaysForce = glm::dot(right, entity.physics.acceleration) * right;
 		vec3 sidewaysVelocity = glm::dot(right, entity.physics.velocity) * right;
 		vec3 sidewaysVelocityDir = glm::normalize(sidewaysVelocity);
-		vec3 frictionForce;
-		if (glm::length(sidewaysVelocity) > 0.0001)
-			frictionForce = -sidewaysVelocityDir * sidewaysDynamicFrictionMag;
+		vec3 frictionForce = vec3(0, 0, 0);
+		if (glm::length(sidewaysVelocity) > sidewaysMaxSpeedBeforeTractionLoss)
+			entity.physics.acceleration -= sidewaysVelocityDir * sidewaysDynamicFrictionMag;
 		else
-			frictionForce = GLMUtils::limitVec(-sidewaysForce, sidewaysStaticFrictionMaxMag);
-		entity.physics.acceleration += frictionForce;
+			entity.physics.velocity -= sidewaysVelocity;
 
 		if (entity.input.acceleratorDown) {
 			// Apply acceleration force
