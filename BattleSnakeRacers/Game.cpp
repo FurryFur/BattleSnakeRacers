@@ -4,6 +4,7 @@
 #include "ScreenManager.h"
 #include "Clock.h"
 #include "GameplayScreen.h"
+#include "MainMenuScreen.h"
 
 #include <GLFW\glfw3.h>
 
@@ -25,6 +26,7 @@ void Game::init()
 	Game::preloadModelsAndTextures();
 
 	ScreenManager::switchScreen(std::unique_ptr<Screen>(new GameplayScreen));
+	//ScreenManager::switchScreen(std::unique_ptr<Screen>(new MainMenuScreen));
 }
 
 // Load game specific models and textures into GPU memory here

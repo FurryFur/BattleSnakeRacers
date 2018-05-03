@@ -13,7 +13,9 @@ public:
 	Screen(const Screen&) = delete;
 	Screen& operator=(const Screen&) = delete;
 
-	void update();
+	virtual void update();
+
+	void createTextLabel(std::string labelText, glm::vec2 position, std::vector<TextLabel>* screen, float scale = 1.0f);
 
 protected:
 	Screen() {};
