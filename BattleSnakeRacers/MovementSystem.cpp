@@ -63,8 +63,8 @@ void MovementSystem::update(Entity& entity)
 		// TODO: Add max steering amount to movement component
 
 		// Get orientation vectors
-		vec3 forward = glm::rotateY(vec4{ 1, 0, 0, 0 }, entity.transform.eulerAngles.y);
-		vec3 right = glm::rotateY(vec4{ 0, 0, 1, 0 }, entity.transform.eulerAngles.y);
+		vec3 forward = glm::rotateY(vec4{ 0, 0, 1, 0 }, entity.transform.eulerAngles.y);
+		vec3 right = glm::rotateY(vec4{ -1, 0, 0, 0 }, entity.transform.eulerAngles.y);
 
 		// Project acceleration onto right vector and apply static and dynamic friction in this direction
 		// TODO: Add sideways friction to movement component

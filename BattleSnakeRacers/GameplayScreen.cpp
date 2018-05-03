@@ -69,7 +69,7 @@ GameplayScreen::GameplayScreen()
 	
 	// Setup player1
 	TransformComponent playerTransform{};
-	playerTransform.scale.x = 2.0f;
+	playerTransform.scale.z = 2.0f;
 	Entity& player1 = Prefabs::createCube(m_scene, playerTransform);
 	player1.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player1.inputMap.gamepadIdx = 0; // First gamepad plugged in
@@ -84,16 +84,16 @@ GameplayScreen::GameplayScreen()
 	//}
 
 	//// Setup player2
-	playerTransform.scale.x = 2.0f;
-	Entity& player2 = Prefabs::createCube(m_scene, playerTransform);
-	player2.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
-	player2.inputMap.gamepadIdx = 1; // First gamepad plugged in
-	player2.inputMap.turnAxisMap = 0; // Left stick x axis
-	player2.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
-	player2.inputMap.brakeBtnMap = 2;
+	//playerTransform.scale.z = 2.0f;
+	//Entity& player2 = Prefabs::createCube(m_scene, playerTransform);
+	//player2.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
+	//player2.inputMap.gamepadIdx = 1; // First gamepad plugged in
+	//player2.inputMap.turnAxisMap = 0; // Left stick x axis
+	//player2.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
+	//player2.inputMap.brakeBtnMap = 2;
 
 	// Setup player3
-	/*playerTransform.scale.x = 2.0f;
+	/*playerTransform.scale.z = 2.0f;
 	Entity& player3 = Prefabs::createCube(m_scene, playerTransform);
 	player3.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player3.inputMap.gamepadIdx = 2; // First gamepad plugged in
@@ -102,7 +102,7 @@ GameplayScreen::GameplayScreen()
 	player3.inputMap.brakeBtnMap = 2;
 
 	// Setup player4
-	playerTransform.scale.x = 2.0f;
+	playerTransform.scale.z = 2.0f;
 	Entity& player4 = Prefabs::createCube(m_scene, playerTransform);
 	player4.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player4.inputMap.gamepadIdx = 3; // First gamepad plugged in
@@ -111,7 +111,7 @@ GameplayScreen::GameplayScreen()
 	player4.inputMap.brakeBtnMap = 2;*/
 	
 	m_playerList.push_back (&player1);
-	m_playerList.push_back (&player2);
+	//m_playerList.push_back (&player2);
 	//m_playerList.push_back (&player3);
 	//m_playerList.push_back (&player4);
 
