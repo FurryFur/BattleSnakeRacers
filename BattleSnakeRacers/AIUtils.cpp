@@ -56,8 +56,8 @@ glm::vec3 seekWithArrival(glm::vec3 targetPosition, glm::vec3 currentPosition, g
 
 	// Apply arrival behaviour as the entity gets close to the target.
 	glm::vec3 desiredVelocity;
-	if (displacementMag < 2)
-		desiredVelocity = displacement / displacementMag * maxMoveSpeed * (displacementMag / 2);
+	if (displacementMag < 10.0f)
+		desiredVelocity = displacement / displacementMag * maxMoveSpeed * (displacementMag / 5.0f);
 	else
 		desiredVelocity = displacement / displacementMag * maxMoveSpeed;
 
