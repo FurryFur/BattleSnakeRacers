@@ -39,7 +39,7 @@ void SnakeTailSystem::update(Entity& entity)
 		if (m_playerList[i] != entity.snakeTail.player)
 		{
 			// Check they collide
-			if (m_playerList[i]->transform.position.x >= entity.transform.position.x - 2 && m_playerList[i]->transform.position.x <= entity.transform.position.x + 2)
+			if (m_playerList[i]->transform.position.x >= entity.transform.position.x - 1 && m_playerList[i]->transform.position.x <= entity.transform.position.x + 1)
 			{
 				// Remove all the snake tails leaders to follow
 				for (size_t i = 0; i < m_playerList[i]->playerStats.snakeTails.size(); ++i)
@@ -48,7 +48,8 @@ void SnakeTailSystem::update(Entity& entity)
 				}
 
 				// Destroy the player
-				
+				m_playerList[i]->playerStats.isDead = true;
+
 				// Update the players score
 			}
 		}

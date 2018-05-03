@@ -7,4 +7,5 @@ class Entity;
 
 struct PlayerStatsComponent {
 	std::vector<Entity*> snakeTails;
+	bool isDead;
 };

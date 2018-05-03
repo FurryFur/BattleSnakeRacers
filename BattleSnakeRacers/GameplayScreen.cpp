@@ -49,8 +49,6 @@ GameplayScreen::GameplayScreen()
 	Entity& cameraEntity = Prefabs::createCamera(m_scene, { 0, 23*8, 26 }, { 0, 0, 5 }, { 0, 1, 0 });
 	renderSystem->setCamera(&cameraEntity);
 
-	
-
 	// Create Ground
 	/*TransformComponent groundTransform{};
 	groundTransform.eulerAngles.x = M_PI / 2.0f;
