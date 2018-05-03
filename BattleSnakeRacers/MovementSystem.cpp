@@ -52,7 +52,7 @@ void MovementSystem::update(Entity& entity)
 	{
 		// Update facing direction
 		// TODO: Only do this if on the ground
-		entity.transform.eulerAngles.y -= entity.input.turnAxis * 0.005f * length(entity.physics.velocity);
+		entity.transform.eulerAngles.y -= entity.input.turnAxis * 0.0005f * length(entity.physics.velocity);
 
 		// TODO: Make sideways drag higher so the car can't slide sideways (like it's on ice) when not accelerating
 
@@ -68,7 +68,7 @@ void MovementSystem::update(Entity& entity)
 
 		// Project acceleration onto right vector and apply static and dynamic friction in this direction
 		// TODO: Add sideways friction to movement component
-		const float sidewaysMaxSpeedBeforeTractionLoss = 5;
+		const float sidewaysMaxSpeedBeforeTractionLoss = 2.5f;
 		const float sidewaysDynamicFrictionMag = 50.0f;
 		vec3 sidewaysForce = glm::dot(right, entity.physics.acceleration) * right;
 		vec3 sidewaysVelocity = glm::dot(right, entity.physics.velocity) * right;
