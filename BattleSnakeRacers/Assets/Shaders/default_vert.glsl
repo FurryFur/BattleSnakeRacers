@@ -11,7 +11,7 @@ out VertexData {
 	vec3 worldPos;
 } o;
 
-layout (std140) uniform Uniforms {
+layout (std140) uniform UniformBlock {
     mat4 model;
     mat4 view;
     mat4 projection;

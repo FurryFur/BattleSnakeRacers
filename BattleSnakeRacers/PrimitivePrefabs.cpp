@@ -97,7 +97,7 @@ namespace Prefabs {
 
 		// Replace default material
 		entity.model.materials.at(0) = {};
-		entity.model.materials.at(0).shader = GLUtils::getSkyboxShader();
+		entity.model.materials.at(0).shader = &GLUtils::getSkyboxShader();
 		entity.model.materials.at(0).colorMaps.push_back(GLUtils::loadCubeMapFaces(faceFilenames));
 		entity.model.materials.at(0).willDrawDepth = false;
 

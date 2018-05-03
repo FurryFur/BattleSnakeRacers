@@ -315,7 +315,7 @@ const ModelComponent& GLPrimitives::getQuadModel()
 		model.meshes.push_back(getQuadMesh());
 
 		Material material;
-		material.shader = GLUtils::getDefaultShader();
+		material.shader = &GLUtils::getDefaultShader();
 		material.colorMaps.push_back(GLUtils::loadTexture("Assets/Textures/random-texture3.png"));
 		material.willDrawDepth = true;
 		material.shaderParams.metallicness = 0.0f;
@@ -352,7 +352,7 @@ const ModelComponent& GLPrimitives::getSphereModel()
 		model.meshes.push_back(getSphereMesh());
 
 		Material material;
-		material.shader = GLUtils::getDefaultShader();
+		material.shader = &GLUtils::getDefaultShader();
 		material.colorMaps.push_back(GLUtils::loadTexture("Assets/Textures/random-texture3.png"));
 		material.willDrawDepth = true;
 		material.shaderParams.metallicness = 0;
@@ -389,7 +389,7 @@ const ModelComponent& GLPrimitives::getCylinderModel()
 		model.meshes.push_back(getCylinderMesh());
 
 		Material material;
-		material.shader = GLUtils::getDefaultShader();
+		material.shader = &GLUtils::getDefaultShader();
 		material.colorMaps.push_back(GLUtils::loadTexture("Assets/Textures/doge.jpg"));
 		material.willDrawDepth = true;
 		material.shaderParams.metallicness = 0;
@@ -426,7 +426,7 @@ const ModelComponent& GLPrimitives::getPyramidModel()
 		model.meshes.push_back(getPyramidMesh());
 
 		Material material;
-		material.shader = GLUtils::getDefaultShader();
+		material.shader = &GLUtils::getDefaultShader();
 		material.colorMaps.push_back(GLUtils::loadTexture("Assets/Textures/random-texture3.png"));
 		material.willDrawDepth = true;
 		material.shaderParams.metallicness = 0;
@@ -463,7 +463,7 @@ const ModelComponent& GLPrimitives::getCubeModel()
 		model.meshes.push_back(getCubeMesh());
 
 		Material material;
-		material.shader = GLUtils::getDefaultShader();
+		material.shader = &GLUtils::getDefaultShader();
 		material.colorMaps.push_back(GLUtils::loadTexture("Assets/Textures/random-texture3.png"));
 		material.willDrawDepth = true;
 		material.shaderParams.metallicness = 0;

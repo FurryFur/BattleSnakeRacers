@@ -185,6 +185,7 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
     <ClCompile Include="PrimitivePrefabs.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderHelper.cpp" />
     <ClCompile Include="SnakeTailSystem.cpp" />
     <ClCompile Include="stb_image.cpp" />
@@ -229,6 +230,7 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
     <ClInclude Include="PrimitivePrefabs.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="ScreenManager.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderHelper.h" />
     <ClInclude Include="SnakeTailComponent.h" />
     <ClInclude Include="SnakeTailSystem.h" />
@@ -237,7 +239,7 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
     <ClInclude Include="TextLabel.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TransformComponent.h" />
-    <ClInclude Include="UniformFormat.h" />
+    <ClInclude Include="UniformBlockFormat.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="VertexFormat.h" />
   </ItemGroup>

@@ -43,9 +43,8 @@ private:
 	glm::vec3 m_color;
 	glm::vec2 m_position;
 
-	GLuint m_VAO, m_VBO, m_shader;
+	GLuint m_VAO, m_VBO;
+	Shader m_shader;
 	std::map<GLchar, Character> m_characters;
-
-
 };
 

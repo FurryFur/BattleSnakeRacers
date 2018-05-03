@@ -16,14 +16,16 @@
 
 #include "ShaderParams.h"
 #include "Texture.h"
+#include "Shader.h"
 
 #include <glad\glad.h>
 #include <glm\glm.hpp>
 
 #include <vector>
+#include <string>
 
 struct Material {
-	GLuint shader;
+	Shader* shader;
 	ShaderParams shaderParams;
 	std::vector<Texture> colorMaps;
 	std::vector<Texture> metallicnessMaps;

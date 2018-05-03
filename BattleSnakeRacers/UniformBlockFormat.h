@@ -16,11 +16,12 @@
 
 #pragma once
 
+#include <glad\glad.h>
 #include <glm\glm.hpp>
 
 #include <array>
 
-struct UniformFormat {
+struct UniformBlockFormat {
 	static const GLuint s_kMaxSpotlights = 8;
 
 	glm::mat4 model;

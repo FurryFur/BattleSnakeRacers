@@ -6,7 +6,7 @@ in VertexData {
 
 out vec4 outColor;
 
-layout (std140) uniform Uniforms {
+layout (std140) uniform UniformBlock {
     mat4 model;
     mat4 view;
     mat4 projection;

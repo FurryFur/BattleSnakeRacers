@@ -6,7 +6,7 @@ out VertexData {
     vec3 textureDir;
 } o;
 
-layout (std140) uniform Uniforms {
+layout (std140) uniform UniformBlock {
     mat4 model;
     mat4 view;
     mat4 projection;
