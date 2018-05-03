@@ -9,15 +9,15 @@ class PlayerSpawnSystem : public System
 public:
 	PlayerSpawnSystem(Scene&, std::vector<Entity*>& _playerList);
 
-	void update(Entity&) override;
-	void beginFrame() override {};
+	void update(Entity&) override {};
+	void beginFrame() override;
 	void endFrame() override {};
 
 	void respawn();
-	//void addSpawnPoint(Entity);
+	void addSpawnPoint(glm::vec3);
 private:
 	std::vector<Entity*>& m_playerList;
-	std::vector<Entity> m_spawnPointList;
+	std::vector<glm::vec3> m_spawnPointList;
 	glm::vec3 m_spawnPoint;
 	
 };

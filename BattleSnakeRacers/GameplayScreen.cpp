@@ -11,6 +11,7 @@
 #include "LevelLoader.h"
 #include "CameraSystem.h"
 #include "SnakeTailSystem.h"
+#include "PlayerSpawnSystem.h"
 #include "Utils.h"
 
 #include <cmath>
@@ -22,6 +23,7 @@ GameplayScreen::GameplayScreen()
 	m_activeSystems.push_back(std::make_unique<InputSystem>(m_scene));
 	m_activeSystems.push_back(std::make_unique<MovementSystem>(m_scene));
 	m_activeSystems.push_back(std::make_unique<PhysicsSystem>(m_scene));
+	
 	auto renderSystem = std::make_unique<RenderSystem>(m_scene);
 
 	// Create environment map / skybox
@@ -69,8 +71,8 @@ GameplayScreen::GameplayScreen()
 	
 	// Setup player1
 	TransformComponent playerTransform{};
-	playerTransform.scale.x = 2.0f;
-	Entity& player1 = Prefabs::createCube(m_scene, playerTransform);
+	playerTransform.eulerAngles.y += 1.5708;
+	Entity& player1 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
 	player1.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player1.inputMap.gamepadIdx = 0; // First gamepad plugged in
 	player1.inputMap.turnAxisMap = 0; // Left stick x axis
@@ -82,9 +84,9 @@ GameplayScreen::GameplayScreen()
 	//	transform.position = { randomReal(-100.0f, 100.0f), randomReal(-100.0f, 100.0f), randomReal(-100.0f, 100.0f) };
 	//	Prefabs::createPyramid(m_scene, transform);
 	//}
-
+	
 	//// Setup player2
-	playerTransform.scale.x = 2.0f;
+	//playerTransform.scale.x = 2.0f;
 	Entity& player2 = Prefabs::createCube(m_scene, playerTransform);
 	player2.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player2.inputMap.gamepadIdx = 1; // First gamepad plugged in
@@ -116,6 +118,7 @@ GameplayScreen::GameplayScreen()
 	m_activeSystems.push_back(std::make_unique<PickupSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<CameraSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<SnakeTailSystem>(m_scene, m_playerList));
+	m_activeSystems.push_back(std::make_unique<PlayerSpawnSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::move(renderSystem));
 
 	// Create text labels for each players score
