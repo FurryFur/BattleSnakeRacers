@@ -25,8 +25,8 @@ void Game::init()
 	// Preload models and textures
 	Game::preloadModelsAndTextures();
 
-	ScreenManager::switchScreen(std::unique_ptr<Screen>(new GameplayScreen));
-	//ScreenManager::switchScreen(std::unique_ptr<Screen>(new MainMenuScreen));
+	//ScreenManager::switchScreen(std::unique_ptr<Screen>(new GameplayScreen));
+	ScreenManager::switchScreen(std::unique_ptr<Screen>(new MainMenuScreen));
 }
 
 // Load game specific models and textures into GPU memory here
