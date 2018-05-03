@@ -71,6 +71,7 @@ GameplayScreen::GameplayScreen()
 	TransformComponent playerTransform{};
 	//playerTransform.scale.x = 1.0f;
 	playerTransform.eulerAngles.y += 1.5708f;
+	playerTransform.position.y += 1;
 	Entity& player1 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
 	player1.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS);
 	player1.inputMap.gamepadIdx = 0; // First gamepad plugged in
