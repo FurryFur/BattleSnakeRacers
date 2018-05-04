@@ -110,12 +110,12 @@ void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel
 			{
 				if (ch == LevelProg[j][i])
 				{
-					float sca = fscale / 4;
+					//float sca = fscale / 4;
 					found = true;
-					Entity& //en = scene.createEntity(COMPONENT_TRANSFORM | COMPONENT_LEVELPROG);
-					en = Prefabs::createSphere(scene);
-					en.transform.position = glm::vec3(j * (fscale * 25.0f), 01 * fscale, (i * (fscale * 25.0f)));
-					en.transform.eulerAngles = glm::vec3(0, 0, 90.0 * 3.14159 / 180);
+					//Entity& //en = scene.createEntity(COMPONENT_TRANSFORM | COMPONENT_LEVELPROG);
+					//en = Prefabs::createSphere(scene);
+					//en.transform.position = glm::vec3(j * (fscale * 25.0f), 01 * fscale, (i * (fscale * 25.0f)));
+					//en.transform.eulerAngles = glm::vec3(0, 0, 90.0 * 3.14159 / 180);
 					break;
 				}
 			}
