@@ -12,6 +12,7 @@
 #include "SnakeTailComponent.h"
 #include "ControlComponent.h"
 #include "CollisionComponents.h"
+#include "LevelProgComponent.h"
 
 #include <vector>
 
@@ -31,7 +32,8 @@ enum ComponentType {
 	COMPONENT_CONTROL = 1 << 10,
 	COMPONENT_SPHERE_COLLISION = 1 << 11,
 	COMPONENT_BOX_COLLISION = 1 << 12,
-	COMPONENT_CAPSULE_COLLISION = 1 << 13
+	COMPONENT_CAPSULE_COLLISION = 1 << 13,
+	COMPONENT_LEVELPROG = 1 << 14
 };
 
 class Entity {
@@ -53,6 +55,7 @@ public:
 	SphereCollisionComponent sphereCollision;
 	BoxCollisionComponent boxCollision;
 	CapsuleCollisionComponent capsuleCollision;
+	LevelProgComponent levelProg;
 
 	Entity(Entity&&) = default;
 	Entity(const Entity&) = delete;

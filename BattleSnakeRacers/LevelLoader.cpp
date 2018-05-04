@@ -92,19 +92,45 @@ NDArray<char, 20, 20> ItemFile(std::string _path)
 }
 
 
-void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel, Scene& scene)
+void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel,std::string progPath, Scene& scene)
 {
-
 	NDArray<char, 20, 20> straightTrack = ItemFile("Assets/Maps/straight road item.txt");
 	NDArray<char, 20, 20> curveTrack = ItemFile("Assets/Maps/boxcorner road item.txt");
-	//TransformComponent pickupTransform{};
-	//pickupTransform.scale.x = 0.5f;
-	//pickupTransform.scale.y = 0.5f;
-	//pickupTransform.scale.z = 0.5f;
 
+	NDArray<char, MaxMapWidth, MaxMapHeight> LevelProg = ReadFile(progPath);
 	// make object vector here 
 	float fscale = 1.0f;
 	
+	for (char ch = 'A'; ch < 'n'; ch++)
+	{
+		bool found = false;
+		for (int i = 0; i < MaxMapHeight; i++)
+		{
+			for (int j = 0; j < MaxMapWidth; j++)
+			{
+				if (ch == LevelProg[j][i])
+				{
+					float sca = fscale / 4;
+					found = true;
+					Entity& //en = scene.createEntity(COMPONENT_TRANSFORM | COMPONENT_LEVELPROG);
+					en = Prefabs::createSphere(scene);
+					en.transform.position = glm::vec3(j * (fscale * 25.0f), 01 * fscale, (i * (fscale * 25.0f)));
+					en.transform.eulerAngles = glm::vec3(0, 0, 90.0 * 3.14159 / 180);
+					break;
+				}
+			}
+			if (found == true)
+			{
+				break;
+			}
+		}
+
+		if (found == false)
+		{//found all the peices 'n' is the max for level2 the others are smaller
+			break;
+		}
+	}
+
 	for (int i = 0; i < MaxMapHeight; i++)
 	{
 		for (int j = 0; j < MaxMapWidth; j += 1)
@@ -113,7 +139,7 @@ void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel
 			{
 				continue;
 			}
-			else // (charLevel[i][j] == '1')
+			else 
 			{
 				bool isStraight = false;
 				float rotation = 0;
@@ -228,10 +254,9 @@ void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel
 				}
 				
 				en.transform.position = glm::vec3(j * (fscale * 50.0f), -10 * fscale, (i * (fscale * 50.0f)));
-
 				en.transform.eulerAngles = glm::vec3(270 * 3.14159/180, rotation * 3.14159/180, 0);
 				en.transform.scale = glm::vec3(fscale, fscale, fscale);
-
+				
 				if (spawnPickUps == true)
 				{
 					for (int i = 0; i < 19; i++)
@@ -287,6 +312,16 @@ void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel
 
 void CreateLevel(Scene& scene, std::string path)
 {
-	TranslateCharLevel(ReadFile(path), scene);
+	std::string prog;
+	for (int i = 0; i < path.length(); i++)
+	{
+		if (path.at(i) == '.')
+		{
+			prog = path.substr(0, i);
+			break;
+		}
+	}
+	prog += "Progression.txt";
+	TranslateCharLevel(ReadFile(path), prog, scene);
 }
 

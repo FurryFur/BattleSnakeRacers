@@ -210,6 +210,7 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameplayScreen.h" />
     <ClInclude Include="LevelLoader.h" />
+    <ClInclude Include="LevelProgComponent.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="MainMenuScreen.h" />
     <ClInclude Include="ModelComponent.h" />
