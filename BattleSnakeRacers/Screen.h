@@ -14,7 +14,8 @@ enum screenState
 	PLAYERSELECT,
 	LEVELSELECT,
 	GAMEPLAY,
-	VICTORY
+	VICTORY,
+	QUIT
 };
 
 class Screen
@@ -23,7 +24,6 @@ public:
 	virtual ~Screen() {};
 	Screen(const Screen&) = delete;
 	Screen& operator=(const Screen&) = delete;
-
 	virtual void update();
 
 	// Controlling UI functions
@@ -41,7 +41,7 @@ protected:
 
 	std::vector<TextLabel> m_UIButtons; // The buttons 
 	std::vector<TextLabel> m_UITexts; // The static Text in the menu
-	int m_iActiveMenuButtonNumber; // The index of which button is active in the vector of buttons
+	size_t m_iActiveMenuButtonNumber; // The index of which button is active in the vector of buttons
 	bool m_bMenuButtonPressed; // bool to flag if a menu button has been pressed
 	bool m_bMenuAxisPressed; // bool to flag if the axis on the controller has been 'pressed'
 

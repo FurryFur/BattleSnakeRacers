@@ -40,16 +40,16 @@ MainMenuScreen::MainMenuScreen()
 	renderSystem->setCamera(&cameraEntity);
 
 	// Create the main menu Start button
-	createTextLabel("Start", glm::vec2(637.0f, 312.0f), &m_UIButtons);
+	createTextLabel("Start", glm::vec2(620.0f, 312.0f), &m_UIButtons);
 	// Create the main menu controls button
-	createTextLabel("Controls", glm::vec2(632.0f, 212.0f), &m_UIButtons);
+	createTextLabel("Controls", glm::vec2(570.0f, 212.0f), &m_UIButtons);
 	// Create the main menu quit button
-	createTextLabel("Quit", glm::vec2(637.0f, 112.0f), &m_UIButtons);
+	createTextLabel("Quit", glm::vec2(640.0f, 112.0f), &m_UIButtons);
 
 	// Create the main menu title text
-	createTextLabel("Battle Snake", glm::vec2(280.0f, 550.0f), &m_UITexts, 2.0f, glm::vec3(1.0f, 1.0f, 1.0));
+	createTextLabel("Battle Snake", glm::vec2(280.0f, 580.0f), &m_UITexts, 2.0f, glm::vec3(1.0f, 1.0f, 1.0));
 	// Create the main menu sub title text
-	createTextLabel("Racers", glm::vec2(700.0f, 500.0f), &m_UITexts, 0.8f, glm::vec3(1.0f, 1.0f, 1.0));
+	createTextLabel("Racers!", glm::vec2(700.0f, 480.0f), &m_UITexts, 2.0f, glm::vec3(1.0f, 1.0f, 1.0));
 	// Create the main menu credits text
 	createTextLabel("Made by: Lance Chaney, Jack Mair, Hugo Adams, Blair Corban", glm::vec2(400.0f, 10.0f), &m_UITexts, 0.5f, glm::vec3(1.0f, 1.0f, 1.0));
 
@@ -69,6 +69,7 @@ void MainMenuScreen::buttonPressed()
 	if (m_iActiveMenuButtonNumber == 0)
 	{
 		m_screenToTransitionTo = GAMEPLAY;
+		//m_screenToTransitionTo = PLAYERSELECT;
 		m_bChangeScreen = true;
 	}
 	// Controls Pressed
