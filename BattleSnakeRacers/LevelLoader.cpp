@@ -28,6 +28,8 @@
 const int MaxMapWidth = 40;
 const int MaxMapHeight = 40; // must be even
 
+std::string GetFilePath(std::string _file);
+
 NDArray<char,MaxMapWidth,MaxMapHeight> ReadFile(std::string _path)
 {
 	NDArray<char, MaxMapWidth, MaxMapHeight> charLevel;
@@ -92,44 +94,20 @@ NDArray<char, 20, 20> ItemFile(std::string _path)
 }
 
 
-void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel,std::string progPath, Scene& scene)
+void TranslateCharLevel(std::string _path, Scene& scene)
 {
 	NDArray<char, 20, 20> straightTrack = ItemFile("Assets/Maps/straight road item.txt");
 	NDArray<char, 20, 20> curveTrack = ItemFile("Assets/Maps/boxcorner road item.txt");
 
-	NDArray<char, MaxMapWidth, MaxMapHeight> LevelProg = ReadFile(progPath);
+	std::string progression = GetFilePath(_path) + "Progression.txt";
+	std::string respawn = GetFilePath(_path) + "Respawn.txt";
+	NDArray<char, MaxMapWidth, MaxMapHeight> LevelProg, LevelRes, charLevel;
+	charLevel = ReadFile(_path);
+	LevelProg= ReadFile(progression);
+	LevelRes = ReadFile(respawn);
 	// make object vector here 
 	float fscale = 1.0f;
 	
-	for (char ch = 'A'; ch < 'n'; ch++)
-	{
-		bool found = false;
-		for (int i = 0; i < MaxMapHeight; i++)
-		{
-			for (int j = 0; j < MaxMapWidth; j++)
-			{
-				if (ch == LevelProg[j][i])
-				{
-					//float sca = fscale / 4;
-					found = true;
-					//Entity& //en = scene.createEntity(COMPONENT_TRANSFORM | COMPONENT_LEVELPROG);
-					//en = Prefabs::createSphere(scene);
-					//en.transform.position = glm::vec3(j * (fscale * 25.0f), 01 * fscale, (i * (fscale * 25.0f)));
-					//en.transform.eulerAngles = glm::vec3(0, 0, 90.0 * 3.14159 / 180);
-					break;
-				}
-			}
-			if (found == true)
-			{
-				break;
-			}
-		}
-
-		if (found == false)
-		{//found all the peices 'n' is the max for level2 the others are smaller
-			break;
-		}
-	}
 
 	for (int i = 0; i < MaxMapHeight; i++)
 	{
@@ -144,6 +122,7 @@ void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel
 				bool isStraight = false;
 				float rotation = 0;
 				bool spawnPickUps = false;
+
 				switch (charLevel[i][j])
 				{
 				case 'U':
@@ -257,15 +236,42 @@ void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel
 				en.transform.eulerAngles = glm::vec3(270 * 3.14159/180, rotation * 3.14159/180, 0);
 				en.transform.scale = glm::vec3(fscale, fscale, fscale);
 				
+				char cdebug = charLevel[i][j];
+
+				for (int xoff = 0; xoff < 2; xoff++)
+				{
+					for (int yoff = 0; yoff < 2; yoff++)
+					{
+						char cLPrg = LevelProg[i + xoff][j + yoff];
+						if (cLPrg != '0')
+						{
+							//Entity& enb = Prefabs::createSphere(scene);
+							//enb.addComponents(COMPONENT_TRANSFORM, COMPONENT_LEVELPROG);
+
+							Entity& enb = scene.createEntity(COMPONENT_LEVELPROG | COMPONENT_TRANSFORM);
+							enb.levelProg.priority = (unsigned int)cLPrg;
+							enb.transform.position = en.transform.position;
+							enb.transform.position.x += ((fscale * -25.0f) + (yoff * 50.0f * fscale));
+							enb.transform.position.z += ((fscale * -25.0f) + (xoff * 50.0f * fscale));
+							enb.transform.position.y = 0;
+							if (cLPrg != LevelRes[j + xoff][i + yoff])
+							{
+								enb.levelProg.isRespawn = true;
+								enb.levelProg.respawnDirection = LevelRes[i + xoff][j + yoff];
+							}
+						}
+					}
+				}
+
 				if (spawnPickUps == true)
 				{
-					for (int i = 0; i < 19; i++)
+					for (int pui = 0; pui < 19; pui++)
 					{
-						for (int j = 0; j < 19; j++)
+						for (int puj = 0; puj < 19; puj++)
 						{
-							if (track[i][j] != 'x' && track[i][j] != ' ')
+							if (track[pui][puj] != 'x' && track[pui][puj] != ' ')
 							{
-								if (randomInt(1, 9) > track[i][j] - '0')
+								if (randomInt(1, 9) > track[pui][puj] - '0')
 								{
 									continue;
 								}
@@ -278,8 +284,8 @@ void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel
 								//pickup1.addComponents(COMPONENT_PICKUP);
 								pickup1.pickup.isActive = true;
 
-								pickup1.transform.position.x = (-45.0f + 10.0f * i);
-								pickup1.transform.position.z = (-45.0f + 10.0f * j * 0.5f);
+								pickup1.transform.position.x = (-45.0f + 10.0f * pui);
+								pickup1.transform.position.z = (-45.0f + 10.0f * puj * 0.5f);
 
 								if (isStraight)
 								{
@@ -299,12 +305,6 @@ void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel
 						}
 					}
 				}
-				
-				//Entity& pickup1 = Prefabs::createModel(scene, "Assets/Models/crystal/mese.obj", pickupTransform);
-				
-				//Entity& pickup = Prefabs::createSphere(scene, pickupTransform);
-				//pickup.transform.position = glm::vec3(-25 + j * 2, 0.5f, i * 2);
-				//pickup.addComponents(COMPONENT_PICKUP);
 			}
 		}
 	}
@@ -312,16 +312,19 @@ void TranslateCharLevel(const NDArray<char, MaxMapWidth, MaxMapHeight> charLevel
 
 void CreateLevel(Scene& scene, std::string path)
 {
+	TranslateCharLevel(path, scene);
+}
+
+std::string GetFilePath(std::string _file)
+{
 	std::string prog;
-	for (int i = 0; i < path.length(); i++)
+	for (int i = 0; i < _file.length(); i++)
 	{
-		if (path.at(i) == '.')
+		if (_file.at(i) == '.')
 		{
-			prog = path.substr(0, i);
+			prog = _file.substr(0, i);
 			break;
 		}
 	}
-	prog += "Progression.txt";
-	TranslateCharLevel(ReadFile(path), prog, scene);
+	return prog;
 }
-
