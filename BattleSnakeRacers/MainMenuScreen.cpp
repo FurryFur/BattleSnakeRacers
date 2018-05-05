@@ -6,6 +6,9 @@
 #include "LevelLoader.h"
 #include "CameraSystem.h"
 #include "Utils.h"
+#include "KeyObserver.h"
+
+#include <GLFW\glfw3.h>
 
 MainMenuScreen::MainMenuScreen()
 {
@@ -51,10 +54,104 @@ MainMenuScreen::MainMenuScreen()
 	createTextLabel("Made by: Lance Chaney, Jack Mair, Hugo Adams, Blair Corban", glm::vec2(400.0f, 10.0f), &m_UITexts, 0.5f);
 	
 	m_activeSystems.push_back(std::move(renderSystem));
+	m_iActiveButtonNumber = 0;
+	m_UIButtons.at(m_iActiveButtonNumber).setColor(glm::vec3(1.0f, 1.0f, 0.0f));
 }
 
 MainMenuScreen::~MainMenuScreen()
 {
+}
+
+void MainMenuScreen::setNewActiveButton(bool moveForward)
+{
+	m_UIButtons.at(m_iActiveButtonNumber).setColor(glm::vec3(0.8f, 0.8f, 0.8f));
+	if (moveForward)
+	{
+		if (m_iActiveButtonNumber == m_UIButtons.size() - 1)
+			m_iActiveButtonNumber = 0;
+		else
+			++m_iActiveButtonNumber;
+	}
+	else
+	{
+		if (m_iActiveButtonNumber == 0)
+			m_iActiveButtonNumber = m_UIButtons.size() - 1;
+		else
+			--m_iActiveButtonNumber;
+	}
+	m_UIButtons.at(m_iActiveButtonNumber).setColor(glm::vec3(1.0f, 1.0f, 0.0f));
+}
+
+void MainMenuScreen::buttonPressed()
+{
+	// Start Pressed
+	if (m_iActiveButtonNumber == 0)
+	{
+		m_screenToTransitionTo = GAMEPLAY;
+		m_bChangeScreen = true;
+	}
+	// Controls Pressed
+	else if (m_iActiveButtonNumber == 1)
+	{
+
+	}
+	// Quit Pressed
+	else if (m_iActiveButtonNumber == 2)
+	{
+
+	}
+}
+
+void MainMenuScreen::controllerInput()
+{
+	// Only player 1 can control the menu screen.
+	int gamepadIdx = 0;
+
+	// Update input from axes
+	int count;
+	const float* pAxes = glfwGetJoystickAxes(gamepadIdx, &count);
+	if (count > 0) {
+		std::vector<float> axes(pAxes, pAxes + count);
+		if (!m_axisPressed)
+		{
+			// Move forward in the list of buttons
+			if (axes.at(1) < -0.8f)
+			{
+				setNewActiveButton(true);
+				m_axisPressed = true;
+				m_axisPressed = true;
+				m_buttonPressed = false;
+			}
+			// Move backwards in the list of buttons
+			if (axes.at(1) > 0.8f)
+			{
+				setNewActiveButton(false);
+				m_axisPressed = true;
+				m_buttonPressed = false;
+			}
+		}
+		else if ((axes.at(1) < 0.6f) && (axes.at(1) > -0.6f))
+			m_axisPressed = false;
+	}
+
+	// Update input from buttons
+ 	const unsigned char* pBtns = glfwGetJoystickButtons(gamepadIdx, &count);
+	if (count > 0) {
+		std::vector<unsigned char> btns(pBtns, pBtns + count);
+		// Check if the player pressed the A button
+		if (!m_buttonPressed && btns[0] == 1)
+		{
+			m_UIButtons.at(m_iActiveButtonNumber).setColor(glm::vec3(1.0f, 0.0f, 0.0f));
+			m_buttonPressed = true;
+		}
+		// The button has been pressed, trigger the response
+		else if (m_buttonPressed && btns[0] == 0)
+		{
+			m_UIButtons.at(m_iActiveButtonNumber).setColor(glm::vec3(1.0f, 1.0f, 0.0f));
+			m_buttonPressed = false;
+			buttonPressed();
+		}
+	}
 }
 
 void MainMenuScreen::update()
@@ -66,6 +163,9 @@ void MainMenuScreen::update()
 	for (auto& system : m_activeSystems) {
 		system->update();
 	}
+
+	// Check inputs
+	controllerInput();
 
 	for (size_t i = 0; i < m_UIButtons.size(); ++i)
 	{

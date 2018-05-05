@@ -2,6 +2,8 @@
 
 #include "Screen.h"
 #include "TextLabel.h"
+#include "ScreenManager.h"
+
 #include <vector>
 class Entity;
 class GameplayScreen : public Screen
@@ -13,5 +15,6 @@ public:
 private:
 	std::vector<Entity*> m_playerList;
 	std::vector<TextLabel> m_playerScores;
+
 };
 

@@ -25,3 +25,13 @@ void Screen::createTextLabel(std::string labelText, glm::vec2 position, std::vec
 	label.setColor(glm::vec3(0.8f, 0.8f, 0.8f));
 	screen->push_back(label);
 }
+
+bool Screen::checkForScreenTransition()
+{
+	return m_bChangeScreen;
+}
+
+screenState Screen::getTransitionScreen()
+{
+	return m_screenToTransitionTo;
+}
