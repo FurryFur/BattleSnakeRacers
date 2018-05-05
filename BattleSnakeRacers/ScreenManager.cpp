@@ -3,6 +3,7 @@
 #include "Screen.h"
 #include "GameplayScreen.h"
 #include "MainMenuScreen.h"
+#include "ControlsScreen.h"
 
 std::unique_ptr<Screen> g_currentScreen;
 
@@ -17,6 +18,13 @@ void ScreenManager::update()
 			ScreenManager::switchScreen(std::unique_ptr<Screen>(new GameplayScreen));
 		else if (g_currentScreen->getTransitionScreen() == MAINMENU)
 			ScreenManager::switchScreen(std::unique_ptr<Screen>(new MainMenuScreen));
+		else if (g_currentScreen->getTransitionScreen() == CONTROLS)
+			ScreenManager::switchScreen(std::unique_ptr<Screen>(new ControlsScreen));
+		else if (g_currentScreen->getTransitionScreen() == QUIT)
+		{
+			// Quit the game
+		}
+
 	}
 }
 

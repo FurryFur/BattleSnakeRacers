@@ -4,12 +4,11 @@
 #include "TextLabel.h"
 #include <vector>
 class Entity;
-class MainMenuScreen : public Screen
+class ControlsScreen : public Screen
 {
 public:
-	MainMenuScreen();
-	~MainMenuScreen() override;
+	ControlsScreen();
+	~ControlsScreen() override;
 	void buttonPressed() override;
-private:
 };
 

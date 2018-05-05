@@ -1,4 +1,4 @@
-#include "MainMenuScreen.h"
+#include "ControlsScreen.h"
 
 #include "RenderSystem.h"
 #include "PrimitivePrefabs.h"
@@ -10,7 +10,7 @@
 
 #include <GLFW\glfw3.h>
 
-MainMenuScreen::MainMenuScreen()
+ControlsScreen::ControlsScreen()
 {
 	auto renderSystem = std::make_unique<RenderSystem>(m_scene);
 
@@ -39,19 +39,25 @@ MainMenuScreen::MainMenuScreen()
 	Entity& cameraEntity = Prefabs::createCamera(m_scene, { 0, 23 * 8, 26 }, { 0, 0, 5 }, { 0, 1, 0 });
 	renderSystem->setCamera(&cameraEntity);
 
-	// Create the main menu Start button
-	createTextLabel("Start", glm::vec2(637.0f, 312.0f), &m_UIButtons);
-	// Create the main menu controls button
-	createTextLabel("Controls", glm::vec2(632.0f, 212.0f), &m_UIButtons);
 	// Create the main menu quit button
-	createTextLabel("Quit", glm::vec2(637.0f, 112.0f), &m_UIButtons);
+	createTextLabel("Back", glm::vec2(112.0f, 112.0f), &m_UIButtons);
 
 	// Create the main menu title text
-	createTextLabel("Battle Snake", glm::vec2(280.0f, 550.0f), &m_UITexts, 2.0f, glm::vec3(1.0f, 1.0f, 1.0));
+	createTextLabel("Welcome to Battle Snake Racers!", glm::vec2(40.0f, 760.0f), &m_UITexts, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
 	// Create the main menu sub title text
-	createTextLabel("Racers", glm::vec2(700.0f, 500.0f), &m_UITexts, 0.8f, glm::vec3(1.0f, 1.0f, 1.0));
-	// Create the main menu credits text
-	createTextLabel("Made by: Lance Chaney, Jack Mair, Hugo Adams, Blair Corban", glm::vec2(400.0f, 10.0f), &m_UITexts, 0.5f, glm::vec3(1.0f, 1.0f, 1.0));
+	createTextLabel("Your goal is to fight to the death on the race course, the first to 10 points wins!", glm::vec2(40.0f, 700.0f), &m_UITexts, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+	// Create the main menu title text
+	createTextLabel("Earn points by being the last racer to survive each round!", glm::vec2(40.0f, 670.0f), &m_UITexts, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+	// Create the main menu sub title text
+	createTextLabel("Controls:", glm::vec2(40.0f, 610.0f), &m_UITexts, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+	// Create the main menu title text
+	createTextLabel("Left Analog: move    A : accelerate    X: brake", glm::vec2(40.0f, 580.0f), &m_UITexts, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+	// Create the main menu sub title text
+	createTextLabel("Collect pickups to grow your tail.", glm::vec2(40.0f, 520.0f), &m_UITexts, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+	// Create the main menu title text
+	createTextLabel("Avoid rival’s snake tails, falling off the track, and falling off the back of the camera.", glm::vec2(40.0f, 460.0f), &m_UITexts, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
+	// Create the main menu sub title text
+	createTextLabel("Good luck racers!", glm::vec2(40.0f, 400.0f), &m_UITexts, 0.5f, glm::vec3(0.0f, 0.0f, 0.0f));
 
 	m_activeSystems.push_back(std::move(renderSystem));
 	m_iActiveMenuButtonNumber = 0;
@@ -59,27 +65,16 @@ MainMenuScreen::MainMenuScreen()
 	m_bUIActive = true;
 }
 
-MainMenuScreen::~MainMenuScreen()
+ControlsScreen::~ControlsScreen()
 {
 }
 
-void MainMenuScreen::buttonPressed()
+void ControlsScreen::buttonPressed()
 {
-	// Start Pressed
+	// Back Pressed
 	if (m_iActiveMenuButtonNumber == 0)
 	{
-		m_screenToTransitionTo = GAMEPLAY;
+		m_screenToTransitionTo = MAINMENU;
 		m_bChangeScreen = true;
-	}
-	// Controls Pressed
-	else if (m_iActiveMenuButtonNumber == 1)
-	{
-		m_screenToTransitionTo = CONTROLS;
-		m_bChangeScreen = true;
-	}
-	// Quit Pressed
-	else if (m_iActiveMenuButtonNumber == 2)
-	{
-
 	}
 }
