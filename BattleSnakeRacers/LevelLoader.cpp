@@ -254,7 +254,7 @@ void TranslateCharLevel(std::string _path, Scene& scene)
 							enb.transform.position.x += ((fscale * -25.0f) + (yoff * 50.0f * fscale));
 							enb.transform.position.z += ((fscale * -25.0f) + (xoff * 50.0f * fscale));
 							enb.transform.position.y = 0;
-							if (cLPrg != LevelRes[j + xoff][i + yoff])
+							if (cLPrg != LevelRes[i + xoff][j + yoff])
 							{
 								enb.levelProg.isRespawn = true;
 								enb.levelProg.respawnDirection = LevelRes[i + xoff][j + yoff];
