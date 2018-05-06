@@ -9,7 +9,7 @@ PlayerSpawnSystem::PlayerSpawnSystem(Scene& _scene, std::vector<Entity*>& _playe
 	:System{_scene}
 , m_playerList{ _playerList }
 {
-	
+	m_spawnPoint = glm::vec3(0);
 }
 
 
@@ -85,7 +85,7 @@ void PlayerSpawnSystem::update()
 			}
 		}
 
-		if (counter >= m_playerList.size() - 1)
+		if (counter >= m_playerList.size() - 1 )//|| m_spawnPoint != glm::vec3(0))
 		{
 			respawn();
 		}
@@ -94,10 +94,45 @@ void PlayerSpawnSystem::update()
 
 void PlayerSpawnSystem::respawn()
 {
+	float rotation;
+	bool xSpread;
+	switch (spawnDir)
+	{
+	case '>':
+		rotation = 0;
+		xSpread = false;
+		break;
+	case 'v':
+		rotation = 90;
+		xSpread = true;
+		break;
+	case '<':
+		rotation = 180;
+		xSpread = false;
+		break;
+	case '^':
+		rotation = 270;
+		xSpread = true;
+		break;
+	default:
+		rotation = 0;
+		break;
+	}
+
+	rotation = glm::radians(rotation);
+
 	for (int i = 0; i < m_playerList.size(); ++i)
 	{
 		m_playerList[i]->transform.position = m_spawnPoint;
-		m_playerList[i]->transform.position.z = m_spawnPoint.z - 2 + i;
+		if (xSpread)
+		{
+			m_playerList[i]->transform.position.x = m_spawnPoint.x - 10 + i* 5;
+		}
+		else
+		{
+			m_playerList[i]->transform.position.z = m_spawnPoint.z - 10 + i* 5;
+		}
+
 		m_playerList[i]->playerStats.isDead = false;
 		m_playerList[i]->playerStats.lap = 0;
 		m_playerList[i]->playerStats.highestProgress = 0;
