@@ -28,18 +28,22 @@ void CameraSystem::update()
 
 		if (m_playerList.size() > 0) {
 			// Find bounding rect around players in xz plane
-			const vec3& playerPos = m_playerList[0]->transform.position;
-			vec3 topLeft = playerPos;
-			vec3 bottomRight = topLeft;
-			vec3 topRight = topLeft;
-			vec3 bottomLeft = topLeft;
+			bool isFrstNonDeadPlayer = true;
+			vec3 topLeft, topRight, bottomLeft, bottomRight;
 			for (auto player : m_playerList) {
-				const vec3& playerPos = player->transform.position;
-				topLeft = glm::min(topLeft, playerPos);
-				bottomRight = glm::max(bottomRight, playerPos);
-				bottomRight.y = 0; // Ensure all vehicles are projected down to the XZ plane
-				topRight = vec3{ bottomRight.x, 0, topLeft.z };
-				bottomLeft = vec3{ topLeft.x, 0, bottomRight.z };
+				if (!player->playerStats.isDead) {
+					const vec3& playerPos = player->transform.position;
+					if (isFrstNonDeadPlayer) {
+						topLeft = topRight = bottomLeft = bottomRight = playerPos;
+						isFrstNonDeadPlayer = false;
+					}
+
+					topLeft = glm::min(topLeft, playerPos);
+					bottomRight = glm::max(bottomRight, playerPos);
+					bottomRight.y = 0; // Ensure all vehicles are projected down to the XZ plane
+					topRight = vec3{ bottomRight.x, 0, topLeft.z };
+					bottomLeft = vec3{ topLeft.x, 0, bottomRight.z };
+				}
 			}
 
 			vec3 centerOfAllPlayers = (topLeft + topRight + bottomLeft + bottomRight) / 4.0f;

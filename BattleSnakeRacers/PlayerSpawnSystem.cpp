@@ -95,7 +95,7 @@ void PlayerSpawnSystem::update()
 void PlayerSpawnSystem::respawn()
 {
 	float rotation;
-	bool xSpread;
+	bool xSpread = false;
 	switch (spawnDir)
 	{
 	case '>':

@@ -7,7 +7,7 @@
 #include "Log.h"
 
 Entity::Entity(std::vector<EntityEventListener*>& eventListeners)
-	: m_componentTypeMask{ 0 }
+	: m_componentMask{ 0 }
 	, m_eventListeners{ eventListeners }
 	, transform{}
 	, physics{}
@@ -26,9 +26,9 @@ Entity::Entity(std::vector<EntityEventListener*>& eventListeners)
 
 void Entity::destroy()
 {
-	triggerAboutToRemoveComponentsEvent(m_componentTypeMask);
+	triggerAboutToRemoveComponentsEvent(m_componentMask);
 
-	m_componentTypeMask = 0;
+	m_componentMask = 0;
 }
 
 bool Entity::operator==(const Entity& rhs) const
@@ -36,81 +36,81 @@ bool Entity::operator==(const Entity& rhs) const
 	return this == &rhs;
 }
 
-bool Entity::hasComponents(size_t componentTypeMask) const
+bool Entity::hasComponents(size_t componentMask) const
 {
-	return (m_componentTypeMask & componentTypeMask) == componentTypeMask;
+	return (m_componentMask & componentMask) == componentMask;
 }
 
-bool Entity::hasComponentsAny(size_t componentTypeMask) const
+bool Entity::hasComponentsAny(size_t componentMask) const
 {
-	return (m_componentTypeMask & componentTypeMask) > 0;
+	return (m_componentMask & componentMask) > 0;
 }
 
 bool Entity::hasComponents() const
 {
-	return m_componentTypeMask != 0;
+	return m_componentMask != 0;
 }
 
-bool Entity::matches(size_t lhscomponentTypeMask, size_t rhscomponentTypeMask)
+bool Entity::matches(size_t lhscomponentMask, size_t rhscomponentMask)
 {
-	return (lhscomponentTypeMask & rhscomponentTypeMask) == rhscomponentTypeMask;
+	return (lhscomponentMask & rhscomponentMask) == rhscomponentMask;
 }
 
-bool Entity::matchesAny(size_t lhscomponentTypeMask, size_t rhscomponentTypeMask)
+bool Entity::matchesAny(size_t lhscomponentMask, size_t rhscomponentMask)
 {
-	return (lhscomponentTypeMask & rhscomponentTypeMask) > 0;
+	return (lhscomponentMask & rhscomponentMask) > 0;
 }
 
-void Entity::triggerAddedComponentsEvent(size_t componentTypeMask)
+void Entity::triggerAddedComponentsEvent(size_t componentMask)
 {
 	for (auto eventListener : m_eventListeners) {
-		eventListener->onAddedComponents(*this, componentTypeMask);
+		eventListener->onAddedComponents(*this, componentMask);
 	}
 }
 
-void Entity::triggerAboutToRemoveComponentsEvent(size_t componentTypeMask)
+void Entity::triggerAboutToRemoveComponentsEvent(size_t componentMask)
 {
 	for (auto eventListener : m_eventListeners) {
-		eventListener->onBeforeRemoveComponents(*this, componentTypeMask);
+		eventListener->onBeforeRemoveComponents(*this, componentMask);
 	}
 }
 
-void Entity::addComponents(size_t componentTypeMask)
+void Entity::addComponents(size_t componentMask)
 {
-	m_componentTypeMask |= componentTypeMask;
+	m_componentMask |= componentMask;
 
-	//if (matches(componentTypeMask, COMPONENT_TRANSFORM)) {
+	//if (matches(componentMask, COMPONENT_TRANSFORM)) {
 	//	transform = {};
 	//}
-	//if (matches(componentTypeMask, COMPONENT_PHYSICS)) {
+	//if (matches(componentMask, COMPONENT_PHYSICS)) {
 	//	physics = {};
 	//}
-	//if (matches(componentTypeMask, COMPONENT_MODEL)) {
+	//if (matches(componentMask, COMPONENT_MODEL)) {
 	//	model = {};
 	//}
-	//if (matches(componentTypeMask, COMPONENT_CAMERA)) {
+	//if (matches(componentMask, COMPONENT_CAMERA)) {
 	//	camera = {};
 	//}
-	//if (matches(componentTypeMask, COMPONENT_MOVEMENT)) {
+	//if (matches(componentMask, COMPONENT_MOVEMENT)) {
 	//	movement = {};
 	//}
-	//if (matches(componentTypeMask, COMPONENT_INPUT)) {
+	//if (matches(componentMask, COMPONENT_INPUT)) {
 	//	input = {};
 	//}
-	//if (matches(componentTypeMask, COMPONENT_INPUT_MAP)) {
+	//if (matches(componentMask, COMPONENT_INPUT_MAP)) {
 	//	inputMap = {};
 	//}
 
-	triggerAddedComponentsEvent(componentTypeMask);
+	triggerAddedComponentsEvent(componentMask);
 }
 
-void Entity::removeComponents(size_t componentTypeMask)
+void Entity::removeComponents(size_t componentMask)
 {
-	triggerAboutToRemoveComponentsEvent(componentTypeMask);
-	m_componentTypeMask &= (~componentTypeMask);
+	triggerAboutToRemoveComponentsEvent(componentMask);
+	m_componentMask &= (~componentMask);
 }
 
-size_t Entity::assembleComponentTypeMask(size_t componentTypeMask)
+size_t Entity::assembleComponentMask(size_t componentMask)
 {
-	return componentTypeMask;
+	return componentMask;
 }

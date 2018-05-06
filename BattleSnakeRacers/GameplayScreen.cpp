@@ -14,6 +14,8 @@
 #include "PlayerSpawnSystem.h"
 #include "Utils.h"
 #include "CollisionSystem.h"
+#include "TrackSystem.h"
+#include "CameraKillSystem.h"
 
 #include <cmath>
 #include <list>
@@ -26,6 +28,7 @@ GameplayScreen::GameplayScreen()
 	m_activeSystems.push_back(std::make_unique<CollisionSystem>(m_scene));
 	m_activeSystems.push_back(std::make_unique<PhysicsSystem>(m_scene));
 	
+	//auto trackSystem = std::make_unique<TrackSystem>(m_scene);
 	auto renderSystem = std::make_unique<RenderSystem>(m_scene);
 
 	// Create environment map / skybox
@@ -119,10 +122,14 @@ GameplayScreen::GameplayScreen()
 	m_playerList.push_back (&player3);
 	m_playerList.push_back (&player4);
 
+	//trackSystem->initializeTrackSystem();
+
+	//m_activeSystems.push_back(std::move(trackSystem));
 	m_activeSystems.push_back(std::make_unique<PickupSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<CameraSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<SnakeTailSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<PlayerSpawnSystem>(m_scene, m_playerList));
+	m_activeSystems.push_back(std::make_unique<CameraKillSystem>(m_scene, m_playerList, &cameraEntity));
 	m_activeSystems.push_back(std::move(renderSystem));
 
 	// Create text labels for each players score

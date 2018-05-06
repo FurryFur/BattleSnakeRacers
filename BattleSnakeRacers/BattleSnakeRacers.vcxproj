@@ -164,6 +164,7 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
     <ClCompile Include="AIUtils.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
+    <ClCompile Include="CameraKillSystem.cpp" />
     <ClCompile Include="CameraSystem.cpp" />
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
@@ -196,12 +197,14 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="System.cpp" />
     <ClCompile Include="TextLabel.cpp" />
+    <ClCompile Include="TrackSystem.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIUtils.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="CameraComponent.h" />
+    <ClInclude Include="CameraKillSystem.h" />
     <ClInclude Include="CameraSystem.h" />
     <ClInclude Include="Clock.h" />
     <ClInclude Include="CollisionComponents.h" />
@@ -250,6 +253,7 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
     <ClInclude Include="System.h" />
     <ClInclude Include="TextLabel.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="TrackSystem.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="UniformBlockFormat.h" />
     <ClInclude Include="Utils.h" />

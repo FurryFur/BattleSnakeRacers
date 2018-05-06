@@ -171,7 +171,7 @@ void RenderSystem::renderModel(const ModelComponent& model, const glm::mat4& tra
 	
 	uniformBlock.model = transform;
 	uniformBlock.view = s_renderState.cameraEntity->camera.getView();
-	uniformBlock.projection = glm::perspective(glm::radians(60.0f), aspectRatio, 0.5f, 10000.0f);
+	uniformBlock.projection = s_renderState.cameraEntity->camera.getProjection();
 	uniformBlock.cameraPos = glm::vec4(s_renderState.cameraEntity->camera.getPosition(), 1.0f);
 
 	// Loop over all the meshes in the model

@@ -210,7 +210,7 @@ void TranslateCharLevel(std::string _path, Scene& scene)
 				}
 
 				
-				Entity& en = scene.createEntity(COMPONENT_MODEL | COMPONENT_TRANSFORM);
+				Entity& en = scene.createEntity(COMPONENT_MODEL, COMPONENT_TRANSFORM);
 				NDArray<char, 20, 20> track;
 				if (isStraight)
 				{	//straightline
