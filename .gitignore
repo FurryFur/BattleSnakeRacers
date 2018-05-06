@@ -261,3 +261,6 @@ __pycache__/
 
 # Windows thumbnail cache
 Thumbs.db
+
+# Log files
+Log.txt
