@@ -7,13 +7,14 @@ using namespace glm;
 
 TrackSystem::TrackSystem(Scene& scene)
 	: System(scene)
+	, m_gridSpacing{ 50 }
 {
 }
 
 void TrackSystem::update()
 {
 	for (size_t i = 0; i < m_trackList.size() - 1; ++i) {
-		//RenderSystem::drawDebugArrow(m_trackList[i] + vec3{ 0, 5, 0 }, m_trackList[i + 1] + vec3{ 0, 5, 0 });
+		RenderSystem::drawDebugArrow(m_trackList[i] + vec3{ 0, 5, 0 }, m_trackList[i] + vec3{ m_gridSpacing, 5, 0 });
 	}
 }
 

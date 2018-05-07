@@ -11,6 +11,9 @@ public:
 	const glm::mat4& getView() const;
 	const glm::mat4& getProjection() const;
 	const glm::vec3& getPosition() const;
+	glm::vec3 CameraComponent::getForward() const;
+	glm::vec3 CameraComponent::getRight() const;
+	glm::vec3 CameraComponent::getUp() const;
 
 private:
 	glm::mat4 m_viewMat;

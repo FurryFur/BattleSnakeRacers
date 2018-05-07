@@ -4,14 +4,12 @@
 
 #include <vector>
 
-class Entity;
 class Scene;
+class Entity;
 
-class CameraSystem : public System
-{
+class OffTrackKillSystem : public System {
 public:
-	CameraSystem(Scene&, std::vector<Entity*>& playerList);
-	~CameraSystem();
+	OffTrackKillSystem(Scene&, const std::vector<Entity*>& playerList, float killY = -50);
 
 	// Inherited via System
 	virtual void update() override;
@@ -19,7 +17,6 @@ public:
 	virtual void endFrame() override;
 
 private:
-	std::vector<Entity*>& m_playerList;
-	bool m_isFirstUpdate;
+	const std::vector<Entity*>& m_playerList;
+	const float m_killY;
 };
-
