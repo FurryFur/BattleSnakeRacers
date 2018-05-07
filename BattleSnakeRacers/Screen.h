@@ -39,6 +39,7 @@ public:
 	bool getP2State();
 	bool getP3State();
 	bool getP4State();
+	int getLevelIDNum();
 protected:
 	Screen() {};
 
@@ -56,8 +57,10 @@ protected:
 	bool m_bChangeScreen;
 	bool m_bUIActive; // a bool to flag if the UI is active or not;
 
-	bool m_bP2Ready;
-	bool m_bP3Ready;
-	bool m_bP4Ready;
+	bool m_p2Ready;
+	bool m_p3Ready;
+	bool m_p4Ready;
+
+	int m_levelIDNum;
 };
 

@@ -177,6 +177,7 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
     <ClCompile Include="GLUtils.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
+    <ClCompile Include="LevelSelectScreen.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenuScreen.cpp" />
@@ -217,6 +218,7 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
     <ClInclude Include="GameplayScreen.h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="LevelProgComponent.h" />
+    <ClInclude Include="LevelSelectScreen.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="MainMenuScreen.h" />
     <ClInclude Include="ModelComponent.h" />
