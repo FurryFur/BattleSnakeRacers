@@ -63,6 +63,7 @@ ControlsScreen::ControlsScreen()
 	m_iActiveMenuButtonNumber = 0;
 	m_UIButtons.at(m_iActiveMenuButtonNumber).setColor(glm::vec3(1.0f, 1.0f, 0.0f));
 	m_bUIActive = true;
+	m_screenState = CONTROLS;
 }
 
 ControlsScreen::~ControlsScreen()
