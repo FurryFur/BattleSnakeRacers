@@ -21,7 +21,16 @@
 #include <cmath>
 #include <list>
 
-GameplayScreen::GameplayScreen()
+TextLabel createPlayerTextLabel(int playerNum)
+{
+	std::string label = "Player " + toString(playerNum) + ": 05";
+	TextLabel playerScore(label, "Assets/Fonts/NYCTALOPIATILT.TTF");
+	playerScore.setPosition(glm::vec2(30.0f, 770.0f - ((playerNum - 1) * 30)));
+	playerScore.setScale(0.4f);
+	return playerScore;
+}
+
+GameplayScreen::GameplayScreen(bool activePlayers[4])
 {
 	// Screen Manager
 	m_screenState = GAMEPLAY;
@@ -75,41 +84,65 @@ GameplayScreen::GameplayScreen()
 	player1.inputMap.turnAxisMap = 0; // Left stick x axis
 	player1.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
 	player1.inputMap.brakeBtnMap = 2;
+	m_playerList.push_back(&player1);
+	TextLabel player1Score = createPlayerTextLabel(1);
+	player1Score.setColor(glm::vec3(1.0f, 0.0f, 0.0f));
+	player1.playerStats.scoreLabel = &player1Score;
+	m_playerScores.push_back(player1Score);
 
 	// Setup player2
-	Entity& player2 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
-	player2.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
-	player2.transform.position.z = -10;
-	player2.sphereCollision.radius = 2;
-	player2.inputMap.gamepadIdx = 1; // First gamepad plugged in
-	player2.inputMap.turnAxisMap = 0; // Left stick x axis
-	player2.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
-	player2.inputMap.brakeBtnMap = 2;
+	if (activePlayers[1])
+	{
+		Entity& player2 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
+		player2.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
+		player2.transform.position.z = -10;
+		player2.sphereCollision.radius = 2;
+		player2.inputMap.gamepadIdx = 1; // First gamepad plugged in
+		player2.inputMap.turnAxisMap = 0; // Left stick x axis
+		player2.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
+		player2.inputMap.brakeBtnMap = 2;
+		m_playerList.push_back(&player2);
+		TextLabel player2Score = createPlayerTextLabel(2);
+		player2Score.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
+		player2.playerStats.scoreLabel = &player2Score;
+		m_playerScores.push_back(player2Score);
+	}
 
 	// Setup player3
-	Entity& player3 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
-	player3.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
-	player3.transform.position.z = -5;
-	player3.sphereCollision.radius = 2;
-	player3.inputMap.gamepadIdx = 2; // First gamepad plugged in
-	player3.inputMap.turnAxisMap = 0; // Left stick x axis
-	player3.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
-	player3.inputMap.brakeBtnMap = 2;
+	if (activePlayers[2])
+	{
+		Entity& player3 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
+		player3.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
+		player3.transform.position.z = -5;
+		player3.sphereCollision.radius = 2;
+		player3.inputMap.gamepadIdx = 2; // First gamepad plugged in
+		player3.inputMap.turnAxisMap = 0; // Left stick x axis
+		player3.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
+		player3.inputMap.brakeBtnMap = 2;
+		m_playerList.push_back(&player3);
+		TextLabel player3Score = createPlayerTextLabel(3);
+		player3Score.setColor(glm::vec3(0.0f, 0.0f, 1.0f));
+		player3.playerStats.scoreLabel = &player3Score;
+		m_playerScores.push_back(player3Score);
+	}
 
 	// Setup player4
-	Entity& player4 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
-	player4.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
-	player4.transform.position.z = 0;
-	player4.sphereCollision.radius = 2;
-	player4.inputMap.gamepadIdx = 3; // First gamepad plugged in
-	player4.inputMap.turnAxisMap = 0; // Left stick x axis
-	player4.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
-	player4.inputMap.brakeBtnMap = 2;
-	
-	m_playerList.push_back (&player1);
-	m_playerList.push_back (&player2);
-	m_playerList.push_back (&player3);
-	m_playerList.push_back (&player4);
+	if (activePlayers[3])
+	{
+		Entity& player4 = Prefabs::createModel(m_scene, "Assets/Models/truck/truck1.FBX", playerTransform);
+		player4.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
+		player4.transform.position.z = 0;
+		player4.sphereCollision.radius = 2;
+		player4.inputMap.gamepadIdx = 3; // First gamepad plugged in
+		player4.inputMap.turnAxisMap = 0; // Left stick x axis
+		player4.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
+		player4.inputMap.brakeBtnMap = 2;
+		m_playerList.push_back(&player4);
+		TextLabel player4Score = createPlayerTextLabel(4);
+		player4Score.setColor(glm::vec3(1.0f, 1.0f, 0.0f));
+		player4.playerStats.scoreLabel = &player4Score;
+		m_playerScores.push_back(player4Score);
+	}
 
 	trackSystem->initializeTrackSystem();
 
@@ -121,38 +154,6 @@ GameplayScreen::GameplayScreen()
 	m_activeSystems.push_back(std::make_unique<PlayerSpawnSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<CameraKillSystem>(m_scene, m_playerList, &cameraEntity));
 	m_activeSystems.push_back(std::move(renderSystem));
-
-	// Create text labels for each players score
-	for (size_t i = 0; i < m_playerList.size(); ++i)
-	{
-		std::string label = "Player " + toString(i + 1) + ": 05";
-		TextLabel playerScore(label, "Assets/Fonts/NYCTALOPIATILT.TTF");
-		playerScore.setPosition(glm::vec2(30.0f, 770.0f - (i * 30)));
-		playerScore.setScale(0.4f);
-
-		if (i == 0)
-		{
-			playerScore.setColor(glm::vec3(1.0f, 0.5f, 0.8f));
-			player1.playerStats.scoreLabel = &playerScore;
-		}
-		else if (i == 1)
-		{
-			playerScore.setColor(glm::vec3(0.5f, 0.8f, 1.0f));
-			player2.playerStats.scoreLabel = &playerScore;
-		}
-		else if (i == 2)
-		{
-			playerScore.setColor(glm::vec3(1.0f, 1.0f, 0.2f));
-			player3.playerStats.scoreLabel = &playerScore;
-		}
-		else
-		{
-			playerScore.setColor(glm::vec3(0.5f, 1.0f, 0.8f));
-			player4.playerStats.scoreLabel = &playerScore;
-		}
-
-		m_playerScores.push_back(playerScore);
-	}
 }
 
 GameplayScreen::~GameplayScreen()

@@ -147,3 +147,8 @@ int Screen::getLevelIDNum()
 {
 	return m_levelIDNum;
 }
+
+std::string Screen::getDataForNextScreen()
+{
+	return m_dataForNextScreen;
+}
