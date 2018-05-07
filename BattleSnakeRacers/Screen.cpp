@@ -130,15 +130,20 @@ ScreenState Screen::getTransitionScreen()
 
 bool Screen::getP2State()
 {
-	return m_bP2Ready;
+	return m_p2Ready;
 }
 
 bool Screen::getP3State()
 {
-	return m_bP3Ready;
+	return m_p3Ready;
 }
 
 bool Screen::getP4State()
 {
-	return m_bP4Ready;
+	return m_p4Ready;
+}
+
+int Screen::getLevelIDNum()
+{
+	return m_levelIDNum;
 }

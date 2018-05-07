@@ -132,14 +132,14 @@ void PlayerSelectScreen::checkPlayerReadyInput()
 		// Check if the player pressed the start button
 		if (btns[7] == 1)
 		{
-			m_bP2Ready = true;
+			m_p2Ready = true;
 			m_p2PressStart.setText("P2 Joined!");
 			m_p2PressStart.setColor(glm::vec3(1.0f, 1.0f, 1.0f));
 		}
 		// Check if the player pressed the b button
 		else if (btns[1] == 1)
 		{
-			m_bP2Ready = false;
+			m_p2Ready = false;
 			m_p2PressStart.setText("P2 press start to join.");
 			m_p2PressStart.setColor(glm::vec3(1.0f, 1.0f, 0.0f));
 		}
@@ -154,14 +154,14 @@ void PlayerSelectScreen::checkPlayerReadyInput()
 		// Check if the player pressed the start button
 		if (btns[7] == 1)
 		{
-			m_bP3Ready = true;
+			m_p3Ready = true;
 			m_p3PressStart.setText("P2 Joined!");
 			m_p3PressStart.setColor(glm::vec3(1.0f, 1.0f, 1.0f));
 		}
 		// Check if the player pressed the b button
 		else if (btns[1] == 1)
 		{
-			m_bP3Ready = false;
+			m_p3Ready = false;
 			m_p3PressStart.setText("P2 press start to join.");
 			m_p3PressStart.setColor(glm::vec3(1.0f, 1.0f, 0.0f));
 		}
@@ -176,14 +176,14 @@ void PlayerSelectScreen::checkPlayerReadyInput()
 		// Check if the player pressed the start button
 		if (btns[7] == 1)
 		{
-			m_bP4Ready = true;
+			m_p4Ready = true;
 			m_p4PressStart.setText("P2 Joined!");
 			m_p4PressStart.setColor(glm::vec3(1.0f, 1.0f, 1.0f));
 		}
 		// Check if the player pressed the b button
 		else if (btns[1] == 1)
 		{
-			m_bP4Ready = false;
+			m_p4Ready = false;
 			m_p4PressStart.setText("P2 press start to join.");
 			m_p4PressStart.setColor(glm::vec3(1.0f, 1.0f, 0.0f));
 		}
@@ -193,7 +193,7 @@ void PlayerSelectScreen::checkPlayerReadyInput()
 // Check to see if enough players have joined the game for it to start
 bool PlayerSelectScreen::checkEnoughPlayersJoined()
 {
-	if (m_bP2Ready || m_bP3Ready || m_bP4Ready)
+	if (m_p2Ready || m_p3Ready || m_p4Ready)
 	{
 		m_centreText.setText("P1 press start to race!");
 		m_centreText.setColor(glm::vec3(1.0f, 1.0f, 0.0f));
