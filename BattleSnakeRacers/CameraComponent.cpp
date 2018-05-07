@@ -26,6 +26,21 @@ void CameraComponent::setPerspective(float fov, float aspectRatio, float nearPla
 	m_projectionMat = glm::perspective(fov, aspectRatio, nearPlane, farPlane);
 }
 
+glm::vec3 CameraComponent::getForward() const
+{
+	return glm::vec4{ 0, 0, -1, 0 } * m_viewMat;
+}
+
+glm::vec3 CameraComponent::getRight() const
+{
+	return glm::vec4{ 1, 0, 0, 0 } * m_viewMat;
+}
+
+glm::vec3 CameraComponent::getUp() const
+{
+	return glm::vec4{ 0, 1, 0, 0 } * m_viewMat;
+}
+
 const glm::mat4& CameraComponent::getView() const
 {
 	return m_viewMat;

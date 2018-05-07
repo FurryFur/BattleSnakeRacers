@@ -2,14 +2,17 @@
 
 #include "Entity.h"
 #include "RenderSystem.h"
+#include "Clock.h"
 
 #include <glm\glm.hpp>
+#include <glm\gtx\compatibility.hpp>
 
 using namespace glm;
 
 CameraSystem::CameraSystem(Scene& scene, std::vector<Entity*>& playerList)
 	: System(scene)
 	, m_playerList{ playerList }
+	, m_isFirstUpdate{ true }
 {
 }
 
@@ -53,6 +56,13 @@ void CameraSystem::update()
 			vec3 dirCameraToBottomLeft = normalize(bottomLeft - cameraPos);
 			vec3 dirCameraToBottomRight = normalize(bottomRight - cameraPos);
 			vec3 cameraForward = (dirCameraToTopLeft + dirCameraToTopRight + dirCameraToBottomLeft + dirCameraToBottomRight) / 4.0f;
+
+			// Lerp camera position
+			if (!m_isFirstUpdate) { // Prevents weird behavior on first frame, probably due to large delta time
+				cameraPos = glm::lerp(cameraEntity.camera.getPosition(), cameraPos, Clock::getDeltaTime() * 10.0f);
+				cameraForward = glm::lerp(cameraEntity.camera.getForward(), cameraForward, Clock::getDeltaTime() * 10.0f);
+			}
+
 			vec3 cameraLookAt = cameraPos + cameraForward;
 
 			//RenderSystem::drawDebugArrow(cameraPos + dirCameraToTopLeft * 2.0f, dirCameraToTopLeft, 50);
@@ -62,6 +72,8 @@ void CameraSystem::update()
 			//RenderSystem::drawDebugArrow(cameraPos + cameraForward * 2.0f, cameraForward, 50);
 
 			cameraEntity.camera.setLookAt(cameraPos, cameraLookAt, vec3{ 0, 1, 0 });
+
+			m_isFirstUpdate = false;
 		}
 	}
 }
