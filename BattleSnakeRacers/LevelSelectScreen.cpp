@@ -45,6 +45,7 @@ LevelSelectScreen::LevelSelectScreen()
 	createTextLabel("Back", glm::vec2(640.0f, 112.0f), &m_UIButtons);
 	createTextLabel("Select A LeveL: ", glm::vec2(40.0f, 760.0f), &m_UITexts, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
 	createTextLabel("Level 1", glm::vec2(280.0f, 680.0f), &m_UITexts, 1.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+	createTextLabel("Level 1 Description", glm::vec2(280.0f, 300.0f), &m_UITexts, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
 	createTextLabel("<<", glm::vec2(30.0f, 300.0f), &m_UITexts, 1.5f, glm::vec3(1.0f, 1.0f, 0.0f));
 	createTextLabel(">>", glm::vec2(1270.0f, 300.0f), &m_UITexts, 1.5f, glm::vec3(1.0f, 1.0f, 0.0f));
 
@@ -155,14 +156,17 @@ void LevelSelectScreen::updateLevelText()
 	if (m_levelIDNum == 0)
 	{
 		m_UITexts.at(1).setText("Boa Bay");
+		m_UITexts.at(2).setText("Boa Bay");
 	}
 	else if (m_levelIDNum == 1)
 	{
 		m_UITexts.at(1).setText("Cobra Canyon");
+		m_UITexts.at(2).setText("Cobra Canyon");
 	}
 	else
 	{
 		m_UITexts.at(1).setText("Viper Valley");
+		m_UITexts.at(2).setText("Viper Valley");
 	}
 }
 
