@@ -40,6 +40,7 @@ public:
 	bool getP3State();
 	bool getP4State();
 	int getLevelIDNum();
+	std::string getDataForNextScreen();
 protected:
 	Screen() {};
 
@@ -55,6 +56,7 @@ protected:
 	ScreenState m_screenState; // The current screen state of the screen;
 	ScreenState m_screenToTransitionTo;
 	bool m_bChangeScreen;
+	std::string m_dataForNextScreen;
 	bool m_bUIActive; // a bool to flag if the UI is active or not;
 
 	bool m_p2Ready;

@@ -6,6 +6,7 @@
 #include "ControlsScreen.h"
 #include "PlayerSelectScreen.h"
 #include "LevelSelectScreen.h"
+#include "EndScreen.h"
 
 std::unique_ptr<Screen> g_currentScreen;
 bool g_playersInGame[4]; // The active players chonsen during player select
@@ -41,6 +42,11 @@ void ScreenManager::update()
 		}
 		else if (g_currentScreen->getTransitionScreen() == CONTROLS)
 			ScreenManager::switchScreen(std::unique_ptr<Screen>(new ControlsScreen));
+		else if (g_currentScreen->getTransitionScreen() == VICTORY)
+		{
+			std::string last = g_currentScreen->getDataForNextScreen();
+			ScreenManager::switchScreen(std::unique_ptr<Screen>(new EndScreen(last)));
+		}
 		else if (g_currentScreen->getTransitionScreen() == QUIT)
 		{
 			// Quit the game
