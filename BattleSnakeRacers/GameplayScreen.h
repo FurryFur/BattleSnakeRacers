@@ -9,7 +9,7 @@ class Entity;
 class GameplayScreen : public Screen
 {
 public:
-	GameplayScreen();
+	GameplayScreen(bool activePlayers[4]);
 	~GameplayScreen() override;
 	void update() override;
 private:
