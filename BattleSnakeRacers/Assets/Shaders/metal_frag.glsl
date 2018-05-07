@@ -29,7 +29,7 @@ uniform samplerCube radianceSampler;
 uniform samplerCube irradianceSampler;
 
 vec3 lightDir = vec3(1, 1, -1);
-const vec3 LiDirect = vec3(0.64, 0.39, 0.31);
+const vec3 LiDirect = vec3(0.5, 0.5, 0.5);
 const int pmremMipCount = 11;
 const float spotlightCuttoff = 0.5;
 const float spotPow = 4;
