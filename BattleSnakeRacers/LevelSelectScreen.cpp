@@ -31,7 +31,14 @@ LevelSelectScreen::LevelSelectScreen()
 	createTextLabel("Back", glm::vec2(640.0f, 112.0f), &m_UIButtons);
 	createTextLabel("Select A LeveL: ", glm::vec2(40.0f, 760.0f), &m_UITexts, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
 	createTextLabel("Level 1", glm::vec2(280.0f, 680.0f), &m_UITexts, 1.5f, glm::vec3(1.0f, 1.0f, 1.0f));
-	createTextLabel("Level 1 Description", glm::vec2(280.0f, 300.0f), &m_UITexts, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+	createTextLabel("Line 1 Description", glm::vec2(230.0f, 500.0f), &m_UITexts, 0.3f, glm::vec3(1.0f, 1.0f, 1.0f));
+	createTextLabel("Line 2 Description", glm::vec2(230.0f, 470.0f), &m_UITexts, 0.3f, glm::vec3(1.0f, 1.0f, 1.0f));
+	createTextLabel("Line 3 Description", glm::vec2(230.0f, 440.0f), &m_UITexts, 0.3f, glm::vec3(1.0f, 1.0f, 1.0f));
+	createTextLabel("Line 4 Description", glm::vec2(230.0f, 410.0f), &m_UITexts, 0.3f, glm::vec3(1.0f, 1.0f, 1.0f));
+	createTextLabel("Line 5 Description", glm::vec2(230.0f, 380.0f), &m_UITexts, 0.3f, glm::vec3(1.0f, 1.0f, 1.0f));
+	createTextLabel("Line 6 Description", glm::vec2(230.0f, 350.0f), &m_UITexts, 0.3f, glm::vec3(1.0f, 1.0f, 1.0f));
+	createTextLabel("Line 7 Description", glm::vec2(230.0f, 320.0f), &m_UITexts, 0.3f, glm::vec3(1.0f, 1.0f, 1.0f));
+	createTextLabel("Line 8 Description", glm::vec2(230.0f, 290.0f), &m_UITexts, 0.3f, glm::vec3(1.0f, 1.0f, 1.0f));
 	createTextLabel("<<", glm::vec2(30.0f, 300.0f), &m_UITexts, 1.5f, glm::vec3(1.0f, 1.0f, 0.0f));
 	createTextLabel(">>", glm::vec2(1270.0f, 300.0f), &m_UITexts, 1.5f, glm::vec3(1.0f, 1.0f, 0.0f));
 
@@ -142,17 +149,38 @@ void LevelSelectScreen::updateLevelText()
 	if (m_levelIDNum == 0)
 	{
 		m_UITexts.at(1).setText("Boa Bay");
-		m_UITexts.at(2).setText("Boa Bay");
+		m_UITexts.at(2).setText("Before The Collapse, Boa Bay was once a shining tourist trap of the Great City.");
+		m_UITexts.at(3).setText("Now it is nothing more than a glob of polluted water and dirty beach towels,");
+		m_UITexts.at(4).setText("forever left out to save sewage stained loungers.");
+		m_UITexts.at(5).setText("");
+		m_UITexts.at(6).setText("Watch out for the mutant population of the city. Rumours claim they have taken");
+		m_UITexts.at(7).setText("over the bay and set up a permanent beach rave. They say the water here is");
+		m_UITexts.at(8).setText("great for growing their tails.");
+		m_UITexts.at(9).setText("");
 	}
 	else if (m_levelIDNum == 1)
 	{
 		m_UITexts.at(1).setText("Cobra Canyon");
-		m_UITexts.at(2).setText("Cobra Canyon");
+		m_UITexts.at(2).setText("The Great City will always need power, even after an apocalyptic event.");
+		m_UITexts.at(3).setText("Cobra Canyon is where that power is generated. The lava pumped up from");
+		m_UITexts.at(4).setText("the belly of the earth heating its great steam machines above.");
+		m_UITexts.at(5).setText("");
+		m_UITexts.at(6).setText("The locals welcome the Race Cars here, they know the numerous crashes offer");
+		m_UITexts.at(7).setText("an abundance of scrap metal they use to repair their ancient machines.");
+		m_UITexts.at(8).setText("");
+		m_UITexts.at(9).setText("");
 	}
 	else
 	{
 		m_UITexts.at(1).setText("Viper Valley");
-		m_UITexts.at(2).setText("Viper Valley");
+		m_UITexts.at(2).setText("As the earth heated up after The Collapse, the polar caps melted at an");
+		m_UITexts.at(3).setText("even more exaggerated rate than before. Soon, only one ice cube remained.");
+		m_UITexts.at(4).setText("Lucky this ice cube was a perfect shape for a race track.");
+		m_UITexts.at(5).setText("");
+		m_UITexts.at(6).setText("Now civilians flock from the great city to watch the most daring racers");
+		m_UITexts.at(7).setText("battle their way to victory.");
+		m_UITexts.at(8).setText("");
+		m_UITexts.at(9).setText("");
 	}
 }
 
