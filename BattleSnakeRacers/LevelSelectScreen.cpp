@@ -15,22 +15,8 @@ LevelSelectScreen::LevelSelectScreen()
 	auto renderSystem = std::make_unique<RenderSystem>(m_scene);
 
 	// Create environment map / skybox
-	Entity& skybox = Prefabs::createSkybox(m_scene, {
-		"Assets/Textures/envmap_violentdays/violentdays_rt.tga",
-		"Assets/Textures/envmap_violentdays/violentdays_lf.tga",
-		"Assets/Textures/envmap_violentdays/violentdays_up.tga",
-		"Assets/Textures/envmap_violentdays/violentdays_dn.tga",
-		"Assets/Textures/envmap_violentdays/violentdays_bk.tga",
-		"Assets/Textures/envmap_violentdays/violentdays_ft.tga",
-		});
-	Texture irradianceMap = GLUtils::loadCubeMapFaces({
-		"Assets/Textures/envmap_violentdays/violentdays_irr_c00.bmp",
-		"Assets/Textures/envmap_violentdays/violentdays_irr_c01.bmp",
-		"Assets/Textures/envmap_violentdays/violentdays_irr_c02.bmp",
-		"Assets/Textures/envmap_violentdays/violentdays_irr_c03.bmp",
-		"Assets/Textures/envmap_violentdays/violentdays_irr_c04.bmp",
-		"Assets/Textures/envmap_violentdays/violentdays_irr_c05.bmp",
-		});
+	Entity& skybox = Prefabs::createSkybox(m_scene, GLUtils::loadDDSTexture("Assets/Textures/envmap_violentdays/violentdays.dds"));
+	Texture irradianceMap = GLUtils::loadDDSTexture("Assets/Textures/envmap_violentdays/violentdays_iem.dds");
 	Texture radianceMap = GLUtils::loadDDSTexture("Assets/Textures/envmap_violentdays/violentdays_pmrem.dds");
 	renderSystem->setRadianceMap(radianceMap.id);
 	renderSystem->setIrradianceMap(irradianceMap.id);

@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Entity.h"
 #include "ModelUtils.h"
+#include "Texture.h"
 
 #include <glm\gtc\matrix_transform.hpp>
 
@@ -89,7 +90,7 @@ namespace Prefabs {
 		return entity;
 	}
 
-	Entity& createSkybox(Scene& scene, const std::vector<std::string>& faceFilenames)
+	Entity& createSkybox(Scene& scene, const Texture& skyboxTexture)
 	{
 		Entity& entity = scene.createEntity(COMPONENT_MODEL);
 
@@ -98,7 +99,7 @@ namespace Prefabs {
 		// Replace default material
 		entity.model.materials.at(0) = {};
 		entity.model.materials.at(0).shader = &GLUtils::getSkyboxShader();
-		entity.model.materials.at(0).colorMaps.push_back(GLUtils::loadCubeMapFaces(faceFilenames));
+		entity.model.materials.at(0).colorMaps.push_back(skyboxTexture);
 		entity.model.materials.at(0).willDrawDepth = false;
 
 		return entity;

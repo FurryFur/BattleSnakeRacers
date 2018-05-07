@@ -28,6 +28,7 @@ struct VertexFormat;
 struct Mesh;
 struct InputComponent;
 struct InputMapComponent;
+struct Texture;
 
 namespace Prefabs {
 	// Creates a unit square facing down the positive z axis with the 
@@ -53,7 +54,7 @@ namespace Prefabs {
 
 	// Creates a skybox.
 	// Can be used to set the environment map for the renderer.
-	Entity& createSkybox(Scene&, const std::vector<std::string>& faceFilenames);
+	Entity& createSkybox(Scene&, const Texture&);
 
 	// Creates an entity from a 3D model file.
 	// The entity returned is a simple entity with only a model and a lookAt component.
