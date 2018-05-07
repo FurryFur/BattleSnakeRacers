@@ -54,7 +54,7 @@ void PickupSystem::update()
 						m_playerList[i]->playerStats.snakeTails.push_back(&snakeTail);
 
 						//Set the players position and velocity to the snake tale
-						snakeTail.transform.position = snakeTail.snakeTail.entityToFollow->transform.position;
+						snakeTail.transform.position = entity.transform.position;
 						snakeTail.physics.velocity = snakeTail.snakeTail.entityToFollow->physics.velocity;
 
 						// Set the owner of the snake tail to the player
