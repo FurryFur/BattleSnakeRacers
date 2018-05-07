@@ -113,12 +113,32 @@ void Screen::checkControllerInputForUI()
 	}
 }
 
+ScreenState Screen::getCurrentScreenState()
+{
+	return m_screenState;
+}
+
 bool Screen::checkForScreenTransition()
 {
 	return m_bChangeScreen;
 }
 
-screenState Screen::getTransitionScreen()
+ScreenState Screen::getTransitionScreen()
 {
 	return m_screenToTransitionTo;
+}
+
+bool Screen::getP2State()
+{
+	return m_bP2Ready;
+}
+
+bool Screen::getP3State()
+{
+	return m_bP3Ready;
+}
+
+bool Screen::getP4State()
+{
+	return m_bP4Ready;
 }

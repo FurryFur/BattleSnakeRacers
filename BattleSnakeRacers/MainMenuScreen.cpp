@@ -57,6 +57,7 @@ MainMenuScreen::MainMenuScreen()
 	m_iActiveMenuButtonNumber = 0;
 	m_UIButtons.at(m_iActiveMenuButtonNumber).setColor(glm::vec3(1.0f, 1.0f, 0.0f));
 	m_bUIActive = true;
+	m_screenState = MAINMENU;
 }
 
 MainMenuScreen::~MainMenuScreen()
@@ -68,8 +69,8 @@ void MainMenuScreen::buttonPressed()
 	// Start Pressed
 	if (m_iActiveMenuButtonNumber == 0)
 	{
-		m_screenToTransitionTo = GAMEPLAY;
-		//m_screenToTransitionTo = PLAYERSELECT;
+		//m_screenToTransitionTo = GAMEPLAY;
+		m_screenToTransitionTo = PLAYERSELECT;
 		m_bChangeScreen = true;
 	}
 	// Controls Pressed

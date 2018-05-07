@@ -7,6 +7,7 @@
 #include "PlayerSelectScreen.h"
 
 std::unique_ptr<Screen> g_currentScreen;
+bool g_playersInGame[4];
 
 void ScreenManager::update()
 {
@@ -21,6 +22,18 @@ void ScreenManager::update()
 			ScreenManager::switchScreen(std::unique_ptr<Screen>(new MainMenuScreen));
 		else if (g_currentScreen->getTransitionScreen() == PLAYERSELECT)
 			ScreenManager::switchScreen(std::unique_ptr<Screen>(new PlayerSelectScreen));
+		else if (g_currentScreen->getTransitionScreen() == LEVELSELECT)
+		{
+			// Update the active players when leaving the player select screen
+			if (g_currentScreen->getCurrentScreenState() == PLAYERSELECT)
+			{
+				g_playersInGame[0] = true;
+				g_playersInGame[1] = g_currentScreen->getP2State();
+				g_playersInGame[2] = g_currentScreen->getP3State();
+				g_playersInGame[3] = g_currentScreen->getP4State();
+			}
+			ScreenManager::switchScreen(std::unique_ptr<Screen>(new ControlsScreen));
+		}
 		else if (g_currentScreen->getTransitionScreen() == CONTROLS)
 			ScreenManager::switchScreen(std::unique_ptr<Screen>(new ControlsScreen));
 		else if (g_currentScreen->getTransitionScreen() == QUIT)

@@ -6,7 +6,7 @@
 #include <vector>
 #include <memory>
 
-enum screenState
+enum ScreenState
 {
 	NOSTATE = 0,
 	MAINMENU,
@@ -26,13 +26,19 @@ public:
 	Screen& operator=(const Screen&) = delete;
 	virtual void update();
 
-	// Controlling UI functions
+	// UI functions
 	void setNewActiveButton(bool moveForward);
 	virtual void buttonPressed();
 	void checkControllerInputForUI();
+	ScreenState getCurrentScreenState();
 	void createTextLabel(std::string labelText, glm::vec2 position, std::vector<TextLabel>* screen, float scale = 1.0f, glm::vec3 color = glm::vec3(0.8f, 0.8f, 0.8f));
 	bool checkForScreenTransition(); // Checks to see if the screen should be transitioned
-	screenState getTransitionScreen(); // Gets the screen the screen manager should transition to
+	ScreenState getTransitionScreen(); // Gets the screen the screen manager should transition to
+
+	// Returns if each player is party of the game or not
+	bool getP2State();
+	bool getP3State();
+	bool getP4State();
 protected:
 	Screen() {};
 
@@ -45,8 +51,13 @@ protected:
 	bool m_bMenuButtonPressed; // bool to flag if a menu button has been pressed
 	bool m_bMenuAxisPressed; // bool to flag if the axis on the controller has been 'pressed'
 
-	screenState m_screenToTransitionTo;
+	ScreenState m_screenState; // The current screen state of the screen;
+	ScreenState m_screenToTransitionTo;
 	bool m_bChangeScreen;
 	bool m_bUIActive; // a bool to flag if the UI is active or not;
+
+	bool m_bP2Ready;
+	bool m_bP3Ready;
+	bool m_bP4Ready;
 };
 
