@@ -7,6 +7,7 @@
 #include "CameraSystem.h"
 #include "Utils.h"
 #include "KeyObserver.h"
+#include "Audio.h"
 
 #include <GLFW\glfw3.h>
 
@@ -70,4 +71,8 @@ void MainMenuScreen::buttonPressed()
 	{
 
 	}
+
+	// Play a sound
+	Audio& audio = Audio::getInstance();
+	audio.playSFX(BUTTON_CLICKED);
 }

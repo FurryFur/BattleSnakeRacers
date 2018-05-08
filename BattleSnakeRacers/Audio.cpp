@@ -25,19 +25,37 @@ bool Audio::InitFmod() {
 const bool Audio::LoadAudio() {
 	FMOD_RESULT result;
 	result = m_audioMgr->createSound("Assets/Audio/80s-Space-Game-Loop_v001.mp3", FMOD_DEFAULT, 0, &m_80sMusic);
-	result = m_audioMgr->createSound("Assets/Audio/accelerate.wav", FMOD_DEFAULT, 0, &m_accelerate);
 	result = m_audioMgr->createSound("Assets/Audio/Cool-Adventure-Intro.mp3", FMOD_DEFAULT, 0, &m_adventureMusic);
 	result = m_audioMgr->createSound("Assets/Audio/background_music.mp3", FMOD_DEFAULT, 0, &m_bgMusic);
 	result = m_audioMgr->createSound("Assets/Audio/Frantic-Gameplay.mp3", FMOD_DEFAULT, 0, &m_franticMusic);
-	result = m_audioMgr->createSound("Assets/Audio/loopingLinearEngine.mp3", FMOD_DEFAULT, 0, &m_engineLoop);
 	result = m_audioMgr->createSound("Assets/Audio/Racing-Menu.mp3", FMOD_DEFAULT, 0, &m_racingMusic);
+
+	result = m_audioMgr->createSound("Assets/Audio/accelerate.wav", FMOD_DEFAULT, 0, &m_accelerate);
+	result = m_audioMgr->createSound("Assets/Audio/loopingLinearEngine.mp3", FMOD_DEFAULT, 0, &m_engineLoop);
+
+	result = m_audioMgr->createSound("Assets/Audio/SoundFX/ButtonClicked.wav", FMOD_DEFAULT, 0, &m_buttonClick);
+	result = m_audioMgr->createSound("Assets/Audio/SoundFX/PlayerJoined.wav", FMOD_DEFAULT, 0, &m_playerJoined);
+	result = m_audioMgr->createSound("Assets/Audio/SoundFX/Collision.wav", FMOD_DEFAULT, 0, &m_playerCollision);
+	result = m_audioMgr->createSound("Assets/Audio/SoundFX/SnakeCollision.wav", FMOD_DEFAULT, 0, &m_playerSnakeTailCollide);
+	result = m_audioMgr->createSound("Assets/Audio/SoundFX/Die.wav", FMOD_DEFAULT, 0, &m_playerFalling);
+	result = m_audioMgr->createSound("Assets/Audio/SoundFX/PickUp.wav", FMOD_DEFAULT, 0, &m_pickupCollected);
+	result = m_audioMgr->createSound("Assets/Audio/SoundFX/Respawn.wav", FMOD_DEFAULT, 0, &m_respawnPlayers);
+
 	m_bgMusic->setMode(FMOD_LOOP_NORMAL);
 	m_racingMusic->setMode(FMOD_LOOP_NORMAL);
 	m_80sMusic->setMode(FMOD_LOOP_NORMAL);
 	m_adventureMusic->setMode(FMOD_LOOP_NORMAL);
 	m_franticMusic->setMode(FMOD_LOOP_NORMAL);
 	m_engineLoop->setMode(FMOD_LOOP_NORMAL);
+	
 	m_buttonClick->setMode(FMOD_LOOP_OFF);
+	m_playerJoined->setMode(FMOD_LOOP_OFF);
+	m_playerCollision->setMode(FMOD_LOOP_OFF);
+	m_playerSnakeTailCollide->setMode(FMOD_LOOP_OFF);
+	m_playerFalling->setMode(FMOD_LOOP_OFF);
+	m_pickupCollected->setMode(FMOD_LOOP_OFF);
+	m_respawnPlayers->setMode(FMOD_LOOP_OFF);
+
 	return true;
 }
 
@@ -68,28 +86,26 @@ void  Audio::playTrack3Music()
 	m_audioMgr->playSound(m_racingMusic, 0, false, &m_bgMusicChannel);
 }
 
-void Audio::playButtonClick()
-{
-	// Play the click music
-	m_audioMgr->playSound(m_buttonClick, 0, false, &m_sfxChannel);
-}
-
 void Audio::playSFX(Sound sound)
 {
-	if(sound == PLAYER_CRASH)
-		m_audioMgr->playSound(m_enemyDead, 0, false, &m_sfxChannel);
-	else if (sound == PLAYER_ACCELERATE)
+	if (sound == PLAYER_ACCELERATE)
 		m_audioMgr->playSound(m_accelerate, 0, false, &m_sfxChannel);
 	else if (sound == PLAYER_ENGINE)
-		m_audioMgr->playSound(m_engineLoop, 0, false, &m_enemyChannel);
-	else if (sound == SCORE_PICKUP)
-		m_audioMgr->playSound(m_scorePickup, 0, false, &m_sfxChannel);
-	else if (sound == NEXT_LEVEL)
-		m_audioMgr->playSound(m_nextLevel, 0, false, &m_sfxChannel);
-	else if (sound == PLAYER_DEAD)
-		m_audioMgr->playSound(m_playerDead, 0, false, &m_sfxChannel);
-	else if (sound == PLAYER_SPAWNING)
-		m_audioMgr->playSound(m_playerSpawning, 0, false, &m_sfxChannel);
+		m_audioMgr->playSound(m_engineLoop, 0, false, &m_sfxChannel);
+	else if (sound == BUTTON_CLICKED)
+		m_audioMgr->playSound(m_buttonClick, 0, false, &m_sfxChannel);
+	else if (sound == PLAYER_JOINED)
+		m_audioMgr->playSound(m_playerJoined, 0, false, &m_sfxChannel);
+	else if (sound == PLAYER_COLLISION)
+		m_audioMgr->playSound(m_playerCollision, 0, false, &m_sfxChannel);
+	else if (sound == PLAYER_SNAKE_COLLIDE)
+		m_audioMgr->playSound(m_playerSnakeTailCollide, 0, false, &m_sfxChannel);
+	else if (sound == PLAYER_FALLING)
+		m_audioMgr->playSound(m_playerFalling, 0, false, &m_sfxChannel);
+	else if (sound == PICKUP_COLLECTED)
+		m_audioMgr->playSound(m_pickupCollected, 0, false, &m_sfxChannel);
+	else if (sound == RESPAWN_PLAYERS)
+		m_audioMgr->playSound(m_respawnPlayers, 0, false, &m_sfxChannel);
 }
 
 Audio& Audio::getInstance()

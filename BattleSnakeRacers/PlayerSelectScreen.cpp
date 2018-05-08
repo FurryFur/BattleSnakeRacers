@@ -8,6 +8,7 @@
 #include "Utils.h"
 #include "KeyObserver.h"
 #include "PhysicsSystem.h"
+#include "Audio.h"
 
 
 #include <GLFW\glfw3.h>
@@ -88,6 +89,10 @@ void PlayerSelectScreen::buttonPressed()
 		m_screenToTransitionTo = MAINMENU;
 		m_bChangeScreen = true;
 	}
+
+	// Play a sound
+	Audio& audio = Audio::getInstance();
+	audio.playSFX(BUTTON_CLICKED);
 }
 
 void PlayerSelectScreen::checkControllerInput()
@@ -141,12 +146,15 @@ void PlayerSelectScreen::checkPlayerReadyInput()
 
 			if (!m_isP2Joined)
 			{
-				Entity& player2Model = Prefabs::createModel(m_scene, "Assets/Models/Plane/PUSHILIN_Plane.obj");
+				Entity& player2Model = Prefabs::createModel(m_scene, "Assets/Models/UFO/PUSHILIN_flying_saucer.obj");
 				player2Model.addComponents(COMPONENT_PHYSICS, COMPONENT_TRANSFORM);
 				player2Model.transform.scale = glm::vec3(7.0f, 7.0f, 7.0f);
 				player2Model.transform.position = glm::vec3(40, 110, -5);
 				player2Model.physics.angularVelocity = glm::vec3(3.0f, 0.5f, 0.0f);
 				m_isP2Joined = true;
+				// Play a sound
+				Audio& audio = Audio::getInstance();
+				audio.playSFX(PLAYER_JOINED);
 			}
 
 			
@@ -171,25 +179,28 @@ void PlayerSelectScreen::checkPlayerReadyInput()
 		if (btns[7] == GLFW_PRESS)
 		{
 			m_p3Ready = true;
-			m_p3PressStart.setText("P2 Joined!");
+			m_p3PressStart.setText("P3 Joined!");
 			m_p3PressStart.setColor(glm::vec3(1.0f, 1.0f, 1.0f));
 			m_p3PressStart.setPosition(glm::vec2(250.0f, 50.0f));
 			
 			if (!m_isP3Joined)
 			{
-				Entity& player3Model = Prefabs::createModel(m_scene, "Assets/Models/Plane/PUSHILIN_Plane.obj");
+				Entity& player3Model = Prefabs::createModel(m_scene, "Assets/Models/Police/PUSHILIN_Police_car.obj");
 				player3Model.addComponents(COMPONENT_PHYSICS, COMPONENT_TRANSFORM);
 				player3Model.transform.scale = glm::vec3(7.0f, 7.0f, 7.0f);
 				player3Model.transform.position = glm::vec3(-40, 110, 40);
 				player3Model.physics.angularVelocity = glm::vec3(3.0f, 0.5f, 0.0f);
 				m_isP3Joined = true;
+				// Play a sound
+				Audio& audio = Audio::getInstance();
+				audio.playSFX(PLAYER_JOINED);
 			}
 		}
 		// Check if the player pressed the b button
 		else if (btns[1] == GLFW_PRESS)
 		{
 			m_p3Ready = false;
-			m_p3PressStart.setText("P2 press start to join.");
+			m_p3PressStart.setText("P3 press start to join.");
 			m_p3PressStart.setColor(glm::vec3(1.0f, 1.0f, 0.0f));
 			m_p3PressStart.setPosition(glm::vec2(200.0f, 50.0f));
 		}
@@ -205,25 +216,28 @@ void PlayerSelectScreen::checkPlayerReadyInput()
 		if (btns[7] == GLFW_PRESS)
 		{
 			m_p4Ready = true;
-			m_p4PressStart.setText("P2 Joined!");
+			m_p4PressStart.setText("P4 Joined!");
 			m_p4PressStart.setColor(glm::vec3(1.0f, 1.0f, 1.0f));
 			m_p4PressStart.setPosition(glm::vec2(950.0f, 50.0f));
 
 			if (!m_isP4Joined)
 			{
-				Entity& player4Model = Prefabs::createModel(m_scene, "Assets/Models/Plane/PUSHILIN_Plane.obj");
+				Entity& player4Model = Prefabs::createModel(m_scene, "Assets/Models/Taxi/PUSHILIN_Taxi.obj");
 				player4Model.addComponents(COMPONENT_PHYSICS, COMPONENT_TRANSFORM);
 				player4Model.transform.scale = glm::vec3(7.0f, 7.0f, 7.0f);
 				player4Model.transform.position = glm::vec3(40, 110, 40);
 				player4Model.physics.angularVelocity = glm::vec3(3.0f, 0.5f, 0.0f);
 				m_isP4Joined = true;
+				// Play a sound
+				Audio& audio = Audio::getInstance();
+				audio.playSFX(PLAYER_JOINED);
 			}
 		}
 		// Check if the player pressed the b button
 		else if (btns[1] == GLFW_PRESS)
 		{
 			m_p4Ready = false;
-			m_p4PressStart.setText("P2 press start to join.");
+			m_p4PressStart.setText("P4 press start to join.");
 			m_p4PressStart.setColor(glm::vec3(1.0f, 1.0f, 0.0f));
 			m_p4PressStart.setPosition(glm::vec2(840.0f, 50.0f));
 			
