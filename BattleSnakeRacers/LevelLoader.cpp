@@ -94,8 +94,9 @@ NDArray<char, 20, 20> ItemFile(std::string _path)
 }
 
 
-void TranslateCharLevel(std::string _path, Scene& scene)
+glm::vec3 TranslateCharLevel(std::string _path, Scene& scene)
 {
+	glm::vec3 retval;
 	NDArray<char, 20, 20> straightTrack = ItemFile("Assets/Maps/straight road item.txt");
 	NDArray<char, 20, 20> curveTrack = ItemFile("Assets/Maps/boxcorner road item.txt");
 
@@ -254,6 +255,10 @@ void TranslateCharLevel(std::string _path, Scene& scene)
 							enb.transform.position.x += ((fscale * -25.0f) + (yoff * 50.0f * fscale));
 							enb.transform.position.z += ((fscale * -25.0f) + (xoff * 50.0f * fscale));
 							enb.transform.position.y = 0;
+							if (cLPrg == 'A')
+							{
+								retval = enb.transform.position;
+							}
 							if (cLPrg != LevelRes[i + xoff][j + yoff])
 							{
 								enb.levelProg.isRespawn = true;
@@ -308,11 +313,12 @@ void TranslateCharLevel(std::string _path, Scene& scene)
 			}
 		}
 	}
+	return retval;
 }
 
-void CreateLevel(Scene& scene, std::string path)
+glm::vec3 CreateLevel(Scene& scene, std::string path)
 {
-	TranslateCharLevel(path, scene);
+	return TranslateCharLevel(path, scene);
 }
 
 std::string GetFilePath(std::string _file)

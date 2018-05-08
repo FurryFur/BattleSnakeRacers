@@ -14,8 +14,9 @@
 #pragma once
 
 #include <fstream>
+#include <glm\glm.hpp>
 
 class Scene;
 
 //pass scene in 
-void CreateLevel(Scene& scene, std::string _path);
+glm::vec3 CreateLevel(Scene& scene, std::string _path);
