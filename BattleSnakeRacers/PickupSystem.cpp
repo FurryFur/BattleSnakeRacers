@@ -47,7 +47,7 @@ void PickupSystem::update()
 
 						// Play a sound
 						Audio& audio = Audio::getInstance();
-						audio.playSFX(SCORE_PICKUP);
+						audio.playSFX(PICKUP_COLLECTED);
 
 						// No current snake tails, follow the player
 						if (m_playerList[i]->playerStats.snakeTails.size() == 0)
