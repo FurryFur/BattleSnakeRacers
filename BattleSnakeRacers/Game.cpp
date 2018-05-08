@@ -47,3 +47,22 @@ void Game::executeOneFrame()
 	Clock::update();
 	ScreenManager::update();
 }
+
+void Game::killPlayer(Entity& player)
+{
+	player.playerStats.progression = 0;
+	player.playerStats.highestProgress = 0;
+	player.playerStats.lap = 0;
+	player.playerStats.setDeathState(true);
+	player.removeComponents(COMPONENT_INPUT, COMPONENT_TRANSFORM, COMPONENT_MODEL);
+
+	player.physics = {};
+	player.movement = {};
+	player.input = {};
+}
+
+void Game::resetPlayer(Entity& player)
+{
+	player.playerStats.setDeathState(false);
+	player.addComponents(COMPONENT_INPUT, COMPONENT_TRANSFORM, COMPONENT_MODEL);
+}

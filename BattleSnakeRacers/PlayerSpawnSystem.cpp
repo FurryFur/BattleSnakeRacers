@@ -2,7 +2,7 @@
 
 #include "Entity.h"
 #include "PrimitivePrefabs.h"
-
+#include "Game.h"
 #include <iostream>
 
 PlayerSpawnSystem::PlayerSpawnSystem(Scene& _scene, std::vector<Entity*>& _playerList)
@@ -110,8 +110,8 @@ void PlayerSpawnSystem::update()
 
 void PlayerSpawnSystem::respawn()
 {
-	m_numPlayersDead = 0;
 	updateScores();
+
 	float rotation;
 	bool xSpread = false;
 	switch (spawnDir)
@@ -142,18 +142,7 @@ void PlayerSpawnSystem::respawn()
 
 	for (int i = 0; i < m_playerList.size(); ++i)
 	{
-		if (m_playerList[i]->hasComponents(COMPONENT_TRANSFORM) == false)
-		{
-			m_playerList[i]->addComponents(COMPONENT_TRANSFORM);
-		}
-		if (m_playerList[i]->hasComponents(COMPONENT_MODEL) == false)
-		{
-			m_playerList[i]->addComponents(COMPONENT_MODEL);
-		}
-		if (m_playerList[i]->hasComponents(COMPONENT_INPUT) == false)
-		{
-			m_playerList[i]->addComponents(COMPONENT_INPUT);
-		}
+		Game::resetPlayer(*m_playerList[i]);
 		m_playerList[i]->transform.position = m_spawnPoint;
 		if (xSpread)
 		{
@@ -177,6 +166,14 @@ void PlayerSpawnSystem::respawn()
 			m_scene.destroyEntity(*m_playerList[i]->playerStats.snakeTails.at(j));
 		}
 		m_playerList[i]->playerStats.snakeTails.clear();
+	}
+
+	// Reset spawn controller values
+	m_numPlayersDead = 0;
+
+	for (int i = 0; i < 4; ++i)
+	{
+		m_playerDied[i] = 0;
 	}
 }
 

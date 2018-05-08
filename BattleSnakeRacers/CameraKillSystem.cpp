@@ -3,6 +3,7 @@
 #include "GlobalConstants.h"
 #include "Entity.h"
 #include "Log.h"
+#include "Game.h"
 
 #include <glm\glm.hpp>
 
@@ -69,8 +70,7 @@ void CameraKillSystem::update()
 
 		// Check if player is off screen
 		if (ndcPos.x < -1 || ndcPos.x > 1 || ndcPos.y < -1 || ndcPos.y > 1) {
-			lastPlayer->playerStats.setDeathState(true);
-			lastPlayer->removeComponents(COMPONENT_TRANSFORM, COMPONENT_MODEL);
+			Game::killPlayer(*lastPlayer);
 		}
 	}
 }

@@ -8,6 +8,7 @@
 #include "Entity.h"
 #include "AIUtils.h"
 #include "Audio.h"
+#include "Game.h"
 
 #include <iostream>
 
@@ -50,40 +51,10 @@ void SnakeTailSystem::update()
 					&& (m_playerList[i]->transform.position.z <= entity.transform.position.z + 2))
 				{
 					// Kill the player
-					m_playerList[i]->playerStats.setDeathState(true);
-
+					Game::killPlayer(*m_playerList[i]);
 					// Play a sound
 					Audio& audio = Audio::getInstance();
 					audio.playSFX(PLAYER_SNAKE_COLLIDE);
-
-					// Update the players score
-					// Determine the current number of dead players
-					/*int deadPlayerCount = 0;
-					for (int i = 0; i < m_playerList.size(); ++i)
-					{
-						if (m_playerList[i]->playerStats.getDeathState() == true)
-							++deadPlayerCount;
-					}
-
-					// Update the players score dependant on the number of players in game
-					if (m_playerList.size() == 4)
-					{
-						if (deadPlayerCount == 1)
-							m_playerList[i]->playerStats.currentScore -= 2;
-						else if (deadPlayerCount == 2)
-							m_playerList[i]->playerStats.currentScore -= 1;
-						else
-							m_playerList[i]->playerStats.currentScore += 1;
-					}
-					else if (m_playerList.size() == 3)
-					{
-						if (deadPlayerCount == 1)
-							m_playerList[i]->playerStats.currentScore -= 1;
-					}
-					else if (m_playerList.size() == 2)
-					{
-						m_playerList[i]->playerStats.currentScore -= 1;
-					}*/
 				}
 			}
 		}

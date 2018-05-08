@@ -1,6 +1,7 @@
 #include "OffTrackKillSystem.h"
 
 #include "GlobalConstants.h"
+#include "Game.h"
 
 #include <glm\glm.hpp>
 
@@ -49,8 +50,7 @@ void OffTrackKillSystem::update()
 
 			// Kill players beyond a certain -y value
 			if (player.transform.position.y <= m_killY) {
-				player.playerStats.setDeathState(true);
-				player.removeComponents(COMPONENT_TRANSFORM, COMPONENT_MODEL);
+				Game::killPlayer(*m_playerList[i]);
 			}
 		}
 	}
