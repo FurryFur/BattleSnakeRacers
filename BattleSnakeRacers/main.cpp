@@ -14,7 +14,6 @@
 
 #include "Game.h"
 #include "Log.h"
-#include "Audio.h"
 
 #include <GLFW\glfw3.h>
 
@@ -23,9 +22,6 @@ int main()
 	g_log.setOutputFile("Log.txt");
 	Game::init();
 	GLFWwindow* window = Game::getWindowContext();
-	Audio& audio = Audio::getInstance();
-	audio.playMenuMusic();
-
 	while (!glfwWindowShouldClose(window)) {
 		Game::executeOneFrame();
 		glfwPollEvents();

@@ -14,6 +14,7 @@
 std::unique_ptr<Screen> g_currentScreen;
 std::array<bool, 4> g_playersInGame; // The active players chonsen during player select
 int g_levelIDNumber; // The level ID number chosen
+Audio& audio = Audio::getInstance();
 
 void ScreenManager::update()
 {
@@ -24,17 +25,18 @@ void ScreenManager::update()
 	{
 		if (g_currentScreen->getTransitionScreen() == GAMEPLAY) {
 			if (g_currentScreen->getCurrentScreenState() == LEVELSELECT)
-				g_levelIDNumber = g_currentScreen->getLevelIDNum();
-			ScreenManager::switchScreen(std::unique_ptr<Screen>(new GameplayScreen(g_playersInGame)));
+			
+			g_levelIDNumber = g_currentScreen->getLevelIDNum();
 
 			// Change the music to be gameplay music when in game
-			Audio& audio = Audio::getInstance();
 			if (g_levelIDNumber == 0)
 				audio.playTrack1Music();
-			if (g_levelIDNumber == 1)
+			else if (g_levelIDNumber == 1)
 				audio.playTrack2Music();
-			if (g_levelIDNumber == 2)
+			else if (g_levelIDNumber == 2)
 				audio.playTrack3Music();
+
+			ScreenManager::switchScreen(std::unique_ptr<Screen>(new GameplayScreen(g_playersInGame)));
 		}
 		else if (g_currentScreen->getTransitionScreen() == MAINMENU)
 			ScreenManager::switchScreen(std::unique_ptr<Screen>(new MainMenuScreen));
@@ -58,18 +60,11 @@ void ScreenManager::update()
 		{
 			std::string last = g_currentScreen->getDataForNextScreen();
 			ScreenManager::switchScreen(std::unique_ptr<Screen>(new EndScreen(last)));
+			audio.playMenuMusic();
 		}
 		else if (g_currentScreen->getTransitionScreen() == QUIT)
 		{
 			// Quit the game
-		}
-
-
-		// Change the background music to be menu music when in menus
-		if (g_currentScreen->getCurrentScreenState() == GAMEPLAY)
-		{
-			Audio& audio = Audio::getInstance();
-			audio.playMenuMusic();
 		}
 	}
 }
