@@ -39,7 +39,8 @@ void PickupSystem::update()
 
 						// Spawn a tail for the player
 						TransformComponent snakeTailTransform{};
-						Entity& snakeTail = Prefabs::createCube(m_scene, snakeTailTransform);
+						Entity& snakeTail = Prefabs::createModel(m_scene, "Assets/Models/hotdog/model.obj", snakeTailTransform);
+						snakeTail.transform.scale = glm::vec3(4.0f, 4.0f, 4.0f);
 						snakeTail.addComponents(COMPONENT_SNAKETAIL, COMPONENT_PHYSICS, COMPONENT_CONTROL);
 
 						// No current snake tails, follow the player
@@ -54,7 +55,8 @@ void PickupSystem::update()
 						m_playerList[i]->playerStats.snakeTails.push_back(&snakeTail);
 
 						//Set the players position and velocity to the snake tale
-						snakeTail.transform.position = entity.transform.position;
+						snakeTail.transform.position = snakeTail.snakeTail.entityToFollow->transform.position;
+						//snakeTail.transform.position = entity.transform.position;
 						snakeTail.physics.velocity = snakeTail.snakeTail.entityToFollow->physics.velocity;
 
 						// Set the owner of the snake tail to the player

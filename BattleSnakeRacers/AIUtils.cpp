@@ -49,17 +49,19 @@ glm::vec3 seek(glm::vec3 targetPosition, glm::vec3 currentPosition, glm::vec3 cu
 
 // Returns a force to move towards the target position, slows down with arrival when close.
 glm::vec3 seekWithArrival(glm::vec3 targetPosition, glm::vec3 currentPosition, glm::vec3 currentVelocity, float maxMoveSpeed)
-{
+{	
 	// Determine the desired veloctiy to reach the target.
 	glm::vec3 displacement = (targetPosition - currentPosition);
 	float displacementMag = glm::length(displacement);
 
 	// Apply arrival behaviour as the entity gets close to the target.
 	glm::vec3 desiredVelocity;
-	if (displacementMag < 10.0f)
-		desiredVelocity = displacement / displacementMag * maxMoveSpeed * (displacementMag / 5.0f);
+	if (displacementMag < 10.0f && displacementMag > 0.0f)
+		desiredVelocity = (displacement / displacementMag) * maxMoveSpeed * (displacementMag / 5.0f);
+	else if (displacementMag == 0.0f)
+		desiredVelocity = glm::vec3(0,0,0);
 	else
-		desiredVelocity = displacement / displacementMag * maxMoveSpeed;
+		desiredVelocity = (displacement / displacementMag) * maxMoveSpeed;
 
 	// Determine the steering vector from the current veloctiy to the desired velocity.
 	glm::vec3 steering = desiredVelocity - currentVelocity;

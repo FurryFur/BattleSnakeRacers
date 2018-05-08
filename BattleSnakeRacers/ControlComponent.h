@@ -14,7 +14,8 @@
 #pragma once
 
 struct ControlComponent {
-	float maxAcceleration = 20.0f;    // This sets the maximum turning / acceleration speed
-	float accelerationWeight = 20.0f; // This scales how fast the entity will turn / accelerate
-	float maxMoveSpeed = 30.0f;
+	ControlComponent();
+	float maxAcceleration;    // This sets the maximum turning / acceleration speed
+	float accelerationWeight; // This scales how fast the entity will turn / accelerate
+	float maxMoveSpeed;
 };

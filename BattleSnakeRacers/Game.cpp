@@ -5,6 +5,7 @@
 #include "Clock.h"
 #include "GameplayScreen.h"
 #include "MainMenuScreen.h"
+#include "ModelUtils.h"
 
 #include <GLFW\glfw3.h>
 
@@ -32,7 +33,7 @@ void Game::init()
 // Load game specific models and textures into GPU memory here
 void Game::preloadModelsAndTextures()
 {
-
+	ModelUtils::loadModel("Assets/Models/hotdog/model.obj");
 }
 
 

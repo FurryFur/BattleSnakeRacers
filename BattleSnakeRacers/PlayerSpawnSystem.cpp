@@ -119,6 +119,7 @@ void PlayerSpawnSystem::respawn()
 		break;
 	}
 
+	rotation += 90;
 	rotation = glm::radians(rotation);
 
 	for (int i = 0; i < m_playerList.size(); ++i)
@@ -133,6 +134,7 @@ void PlayerSpawnSystem::respawn()
 			m_playerList[i]->transform.position.z = m_spawnPoint.z - 10 + i* 5;
 		}
 
+		m_playerList[i]->transform.eulerAngles.y = rotation;
 		m_playerList[i]->playerStats.isDead = false;
 		m_playerList[i]->playerStats.lap = 0;
 		m_playerList[i]->playerStats.highestProgress = 0;

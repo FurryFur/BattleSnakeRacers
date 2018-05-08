@@ -29,8 +29,10 @@ void SnakeTailSystem::update()
 		if (entity.snakeTail.entityToFollow != NULL)
 		{
 			// Update the snake tails position to follow its leader
-			glm::vec3 acceleration = seekWithArrival(entity.snakeTail.entityToFollow->transform.position, entity.transform.position, entity.physics.velocity, entity.controlVars.maxMoveSpeed);
+			glm::vec3 acceleration = seekWithArrival(entity.snakeTail.entityToFollow->transform.position, entity.transform.position, entity.physics.velocity, entity.controlVars.maxMoveSpeed);//
+			//glm::vec3 acceleration = followLeader(entity.snakeTail.entityToFollow->transform.position, entity.snakeTail.entityToFollow->physics.velocity, entity.snakeTail.entityToFollow->physics.velocity, entity.transform.position, entity.physics.velocity, entity.controlVars.maxMoveSpeed);
 			steer(entity, acceleration);
+			entity.transform.eulerAngles.y = glm::atan(-entity.physics.velocity.z, entity.physics.velocity.x);
 		}
 
 		// Check if the snake tail collides with anyother player

@@ -168,6 +168,7 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
     <ClCompile Include="CameraSystem.cpp" />
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="CollisionSystem.cpp" />
+    <ClCompile Include="ControlComponent.cpp" />
     <ClCompile Include="ControlsScreen.cpp" />
     <ClCompile Include="EndScreen.cpp" />
     <ClCompile Include="Entity.cpp" />
