@@ -5,11 +5,13 @@
 #include "ScreenManager.h"
 
 #include <vector>
+#include <array>
+
 class Entity;
 class GameplayScreen : public Screen
 {
 public:
-	GameplayScreen(bool activePlayers[4]);
+	GameplayScreen(std::array<bool, 4> activePlayers);
 	~GameplayScreen() override;
 	void update() override;
 private:

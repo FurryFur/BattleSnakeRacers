@@ -30,7 +30,7 @@ TextLabel createPlayerTextLabel(int playerNum)
 	return playerScore;
 }
 
-GameplayScreen::GameplayScreen(bool activePlayers[4])
+GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers)
 {
 	// Screen Manager
 	m_screenState = GAMEPLAY;
@@ -77,7 +77,8 @@ GameplayScreen::GameplayScreen(bool activePlayers[4])
 	playerTransform.eulerAngles.y += 1.5708f;
 	Entity& player1 = Prefabs::createModel(m_scene, "Assets/Models/Plane/PUSHILIN_Plane.obj", playerTransform);
 	player1.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
-	player1.transform.position.z = -15;
+	player1.preTransform.eulerAngles.y = -glm::half_pi<float>();
+	player1.transform.position.z = -25;
 	player1.transform.scale = glm::vec3(2.0f, 2.0f, 2.0f);
 	player1.sphereCollision.radius = 2;
 	player1.inputMap.gamepadIdx = 0; // First gamepad plugged in
@@ -95,7 +96,7 @@ GameplayScreen::GameplayScreen(bool activePlayers[4])
 	{
 		Entity& player2 = Prefabs::createModel(m_scene, "Assets/Models/UFO/PUSHILIN_flying_saucer.obj", playerTransform);
 		player2.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
-		player2.transform.position.z = -10;
+		player2.transform.position.z = -20;
 		//player2.transform.scale = glm::vec3(1.0f, 1.0f, 1.0f);
 		player2.sphereCollision.radius = 2;
 		player2.inputMap.gamepadIdx = 1; // First gamepad plugged in
@@ -114,7 +115,8 @@ GameplayScreen::GameplayScreen(bool activePlayers[4])
 	{
 		Entity& player3 = Prefabs::createModel(m_scene, "Assets/Models/Police/PUSHILIN_Police_car.obj", playerTransform);
 		player3.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
-		player3.transform.position.z = -5;
+		player3.preTransform.eulerAngles.y = -glm::half_pi<float>();
+		player3.transform.position.z = -15;
 		player3.transform.scale = glm::vec3(2.0f, 2.0f, 2.0f);
 		player3.sphereCollision.radius = 2;
 		player3.inputMap.gamepadIdx = 2; // First gamepad plugged in
@@ -133,7 +135,8 @@ GameplayScreen::GameplayScreen(bool activePlayers[4])
 	{
 		Entity& player4 = Prefabs::createModel(m_scene, "Assets/Models/Taxi/PUSHILIN_Taxi.obj", playerTransform);
 		player4.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
-		player4.transform.position.z = 0;
+		player4.preTransform.eulerAngles.y = -glm::half_pi<float>();
+		player4.transform.position.z = -10;
 		player4.transform.scale = glm::vec3(2.0f, 2.0f, 2.0f);
 		player4.sphereCollision.radius = 2;
 		player4.inputMap.gamepadIdx = 3; // First gamepad plugged in

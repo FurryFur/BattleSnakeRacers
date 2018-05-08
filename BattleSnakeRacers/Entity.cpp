@@ -10,6 +10,7 @@ Entity::Entity(std::vector<EntityEventListener*>& eventListeners)
 	: m_componentMask{ 0 }
 	, m_eventListeners{ eventListeners }
 	, transform{}
+	, preTransform{}
 	, physics{}
 	, model{}
 	, movement{}

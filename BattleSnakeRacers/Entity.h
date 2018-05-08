@@ -42,6 +42,7 @@ class Entity {
 
 public:
 	TransformComponent transform;
+	TransformComponent preTransform; // Can be used to get models into the desired orientation without affecting forward vectors, etc.
 	PhysicsComponent physics;
 	ModelComponent model;
 	MovementComponent movement;

@@ -137,7 +137,7 @@ void RenderSystem::update()
 
 		// Render the 
 
-		renderModel(entity.model, GLMUtils::transformToMat(entity.transform));
+		renderModel(entity.model, GLMUtils::transformToMat(entity.transform) * GLMUtils::transformToMat(entity.preTransform));
 	}
 }
 

@@ -8,8 +8,10 @@
 #include "LevelSelectScreen.h"
 #include "EndScreen.h"
 
+#include <array>
+
 std::unique_ptr<Screen> g_currentScreen;
-bool g_playersInGame[4]; // The active players chonsen during player select
+std::array<bool, 4> g_playersInGame; // The active players chonsen during player select
 int g_levelIDNumber; // The level ID number chosen
 
 void ScreenManager::update()
