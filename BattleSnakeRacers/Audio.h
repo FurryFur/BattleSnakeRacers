@@ -15,8 +15,7 @@
 #pragma once
 
 #include <fmod.hpp>
-
-class NetworkServerSystem;
+#include <memory>
 
 enum Sound
 {
@@ -33,9 +32,15 @@ enum Sound
 
 class Audio
 {
-public:
+private:
+
 	Audio();
+
+public:
+
 	~Audio();
+
+	static Audio& getInstance();
 
 	void playMenuMusic();
 	void playTrack1Music();
@@ -46,9 +51,12 @@ public:
 	// Play a game play Sound effect
 	void playSFX(Sound sound);
 
-	void setNetworkAudioServer(NetworkServerSystem* audioServer);
+protected:
+
+	static std::unique_ptr<Audio> m_audio;
 
 private:
+
 	bool InitFmod();
 	const bool LoadAudio();
 
@@ -72,7 +80,5 @@ private:
 	FMOD::Sound* m_accelerate;
 	FMOD::Sound* m_80sMusic;
 	FMOD::Sound* m_scorePickup;
-
-	NetworkServerSystem* m_networkAudioServer;
 };
 
