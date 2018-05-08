@@ -11,7 +11,7 @@ class Entity;
 class GameplayScreen : public Screen
 {
 public:
-	GameplayScreen(std::array<bool, 4> activePlayers);
+	GameplayScreen(std::array<bool, 4> activePlayers, int level);
 	~GameplayScreen() override;
 	void update() override;
 private:

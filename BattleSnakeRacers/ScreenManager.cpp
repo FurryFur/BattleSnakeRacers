@@ -36,7 +36,7 @@ void ScreenManager::update()
 			else if (g_levelIDNumber == 2)
 				audio.playTrack3Music();
 
-			ScreenManager::switchScreen(std::unique_ptr<Screen>(new GameplayScreen(g_playersInGame)));
+			ScreenManager::switchScreen(std::unique_ptr<Screen>(new GameplayScreen(g_playersInGame,g_levelIDNumber + 1)));
 		}
 		else if (g_currentScreen->getTransitionScreen() == MAINMENU)
 			ScreenManager::switchScreen(std::unique_ptr<Screen>(new MainMenuScreen));

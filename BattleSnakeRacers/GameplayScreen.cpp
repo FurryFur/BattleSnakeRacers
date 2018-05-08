@@ -30,7 +30,7 @@ TextLabel createPlayerTextLabel(int playerNum)
 	return playerScore;
 }
 
-GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers)
+GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 {
 	// Screen Manager
 	m_screenState = GAMEPLAY;
@@ -61,7 +61,8 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers)
 	groundTransform.position.y = -1;
 	groundTransform.scale *= 100;
 	Prefabs::createQuad(m_scene, groundTransform);*/
-	CreateLevel(m_scene,"Assets/Maps/Level2.txt");
+	std::string kyle = "Assetd/Maps/Level" + toString(level) + ".txt";
+	CreateLevel(m_scene, kyle);
 	
 	TransformComponent pickupTransform{};
 	pickupTransform.scale.x = 3;
