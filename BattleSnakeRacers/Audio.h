@@ -20,9 +20,9 @@ class NetworkServerSystem;
 
 enum Sound
 {
-	ENEMY_DEAD,
-	ENEMY_HIT,
-	ENEMY_SHOOT,
+	PLAYER_CRASH,
+	PLAYER_ACCELERATE,
+	PLAYER_ENGINE,
 	SCORE_PICKUP,
 	NEXT_LEVEL,
 	PLAYER_DEAD,
@@ -37,7 +37,10 @@ public:
 	Audio();
 	~Audio();
 
-	void playBgMusic();
+	void playMenuMusic();
+	void playTrack1Music();
+	void playTrack2Music();
+	void playTrack3Music();
 	void playButtonClick();
 
 	// Play a game play Sound effect
@@ -57,15 +60,17 @@ private:
 
 	FMOD::Sound* m_bgMusic;
 	FMOD::Sound* m_buttonClick;
-
+	FMOD::Sound* m_franticMusic;
+	FMOD::Sound* m_racingMusic;
+	FMOD::Sound* m_engineLoop;
 	FMOD::Sound* m_enemyDead;
 	FMOD::Sound* m_enemyHit;
 	FMOD::Sound* m_nextLevel;
 	FMOD::Sound* m_playerDead;
-	FMOD::Sound* m_playerShoot;
+	FMOD::Sound* m_adventureMusic;
 	FMOD::Sound* m_playerSpawning;
-	FMOD::Sound* m_playerDescending;
-	FMOD::Sound* m_enemyShoot;
+	FMOD::Sound* m_accelerate;
+	FMOD::Sound* m_80sMusic;
 	FMOD::Sound* m_scorePickup;
 
 	NetworkServerSystem* m_networkAudioServer;
