@@ -27,7 +27,6 @@ enum Sound
 	PLAYER_DEAD,
 	PLAYER_SHOOT,
 	PLAYER_SPAWNING,
-	PLAYER_DESCENDING,
 };
 
 class Audio

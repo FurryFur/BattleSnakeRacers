@@ -20,6 +20,7 @@ void PhysicsSystem::update()
 		float defaultDrag = 0.1f;
 		entity.physics.velocity += (entity.physics.acceleration - entity.physics.velocity * defaultDrag) * Clock::getDeltaTime();
 		entity.transform.position += entity.physics.velocity * Clock::getDeltaTime();
+		entity.transform.eulerAngles += entity.physics.angularVelocity * Clock::getDeltaTime();
 
 		entity.physics.acceleration = { 0, 0, 0 };
 

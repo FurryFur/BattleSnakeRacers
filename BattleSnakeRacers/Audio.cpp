@@ -88,12 +88,8 @@ void Audio::playSFX(Sound sound)
 		m_audioMgr->playSound(m_nextLevel, 0, false, &m_sfxChannel);
 	else if (sound == PLAYER_DEAD)
 		m_audioMgr->playSound(m_playerDead, 0, false, &m_sfxChannel);
-	else if (sound == PLAYER_SHOOT)
-		m_audioMgr->playSound(m_adventureMusic, 0, false, &m_bulletChannel);
 	else if (sound == PLAYER_SPAWNING)
 		m_audioMgr->playSound(m_playerSpawning, 0, false, &m_sfxChannel);
-	else if (sound == PLAYER_DESCENDING)
-		m_audioMgr->playSound(m_accelerate, 0, false, &m_sfxChannel);
 }
 
 Audio& Audio::getInstance()

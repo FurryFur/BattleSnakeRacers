@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "Clock.h"
 #include "PrimitivePrefabs.h"
+#include "Audio.h"
 
 #include <iostream>
 
@@ -42,6 +43,10 @@ void PickupSystem::update()
 						Entity& snakeTail = Prefabs::createModel(m_scene, "Assets/Models/hotdog/model.obj", snakeTailTransform);
 						snakeTail.transform.scale = glm::vec3(4.0f, 4.0f, 4.0f);
 						snakeTail.addComponents(COMPONENT_SNAKETAIL, COMPONENT_PHYSICS, COMPONENT_CONTROL);
+
+						// Play a sound
+						Audio& audio = Audio::getInstance();
+						audio.playSFX(SCORE_PICKUP);
 
 						// No current snake tails, follow the player
 						if (m_playerList[i]->playerStats.snakeTails.size() == 0)

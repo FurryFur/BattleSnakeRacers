@@ -23,6 +23,7 @@ private:
 	TextLabel m_p2PressStart;
 	TextLabel m_p3PressStart;
 	TextLabel m_p4PressStart;
+	bool m_isP2Joined, m_isP3Joined, m_isP4Joined;
 
 	bool m_bGameCanStart;
 };
