@@ -23,8 +23,10 @@ int main()
 	g_log.setOutputFile("Log.txt");
 	Game::init();
 	GLFWwindow* window = Game::getWindowContext();
+	Audio& audio = Audio::getInstance();
+	audio.playMenuMusic();
 
-	while (!glfwWindowShouldClose(window)) {		
+	while (!glfwWindowShouldClose(window)) {
 		Game::executeOneFrame();
 		glfwPollEvents();
 	}
