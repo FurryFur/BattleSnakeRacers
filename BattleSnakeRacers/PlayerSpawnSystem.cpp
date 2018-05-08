@@ -110,6 +110,7 @@ void PlayerSpawnSystem::update()
 
 void PlayerSpawnSystem::respawn()
 {
+	m_numPlayersDead = 0;
 	updateScores();
 	float rotation;
 	bool xSpread = false;
@@ -225,4 +226,12 @@ void PlayerSpawnSystem::updateScores()
 			}
 		}
 	}
+
+	for (int i = 0; i < m_playerList.size(); i++)
+	{
+		/*std::string kyle = "";
+		kyle += static_cast<char>(m_playerList[i]->playerStats.currentScore +48);
+		m_playerList[i]->playerStats.scoreLabel->setText(kyle);*/
+	}
 }
+	

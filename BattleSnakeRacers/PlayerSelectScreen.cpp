@@ -7,17 +7,27 @@
 #include "CameraSystem.h"
 #include "Utils.h"
 #include "KeyObserver.h"
+#include "PhysicsSystem.h"
+
 
 #include <GLFW\glfw3.h>
+#include <memory>
 
 PlayerSelectScreen::PlayerSelectScreen()
 	: m_centreText{ "" , "Assets/Fonts/NYCTALOPIATILT.TTF"}
 	, m_p1Ready{ "" , "Assets/Fonts/NYCTALOPIATILT.TTF" }
-	,m_p2PressStart{ "" , "Assets/Fonts/NYCTALOPIATILT.TTF" }
-	,m_p3PressStart{ "" , "Assets/Fonts/NYCTALOPIATILT.TTF" }
-	,m_p4PressStart{ "" , "Assets/Fonts/NYCTALOPIATILT.TTF" }
+	, m_p2PressStart{ "" , "Assets/Fonts/NYCTALOPIATILT.TTF" }
+	, m_p3PressStart{ "" , "Assets/Fonts/NYCTALOPIATILT.TTF" }
+	, m_p4PressStart{ "" , "Assets/Fonts/NYCTALOPIATILT.TTF" }
+	, m_isP2Joined{ false }
+	, m_isP3Joined{ false }
+	, m_isP4Joined{ false }
 {
+
+
+	m_activeSystems.push_back(std::make_unique<PhysicsSystem>(m_scene));
 	auto renderSystem = std::make_unique<RenderSystem>(m_scene);
+
 
 	// Create environment map / skybox
 	Entity& skybox = Prefabs::createSkybox(m_scene, GLUtils::loadDDSTexture("Assets/Textures/envmap_violentdays/violentdays.dds"));
@@ -38,10 +48,17 @@ PlayerSelectScreen::PlayerSelectScreen()
 
 	m_centreText = createUniqueTextLabel("Atleast 2 players needed to Play!", glm::vec2(400.0f, 400.0f), 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
 
-	m_p1Ready = createUniqueTextLabel("P1 Joined!", glm::vec2(200.0f, 600.0f), 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
-	m_p2PressStart = createUniqueTextLabel("P2 press start to join.", glm::vec2(840.0f, 600.0f), 0.5f, glm::vec3(1.0f, 1.0f, 0.0f));
-	m_p3PressStart = createUniqueTextLabel("P3 press start to join.", glm::vec2(200.0f, 150.0f), 0.5f, glm::vec3(1.0f, 1.0f, 0.0f));
-	m_p4PressStart = createUniqueTextLabel("P4 press start to join.", glm::vec2(840.0f, 150.0f), 0.5f, glm::vec3(1.0f, 1.0f, 0.0f));
+
+	m_p1Ready = createUniqueTextLabel("P1 Joined!", glm::vec2(250.0f, 450.0f), 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+	m_p2PressStart = createUniqueTextLabel("P2 press start to join.", glm::vec2(840.0f, 450.0f), 0.5f, glm::vec3(1.0f, 1.0f, 0.0f));
+	m_p3PressStart = createUniqueTextLabel("P3 press start to join.", glm::vec2(200.0f, 50.0f), 0.5f, glm::vec3(1.0f, 1.0f, 0.0f));
+	m_p4PressStart = createUniqueTextLabel("P4 press start to join.", glm::vec2(840.0f, 50.0f), 0.5f, glm::vec3(1.0f, 1.0f, 0.0f));
+
+	Entity& player1Model = Prefabs::createModel(m_scene, "Assets/Models/Plane/PUSHILIN_Plane.obj");
+	player1Model.addComponents(COMPONENT_PHYSICS, COMPONENT_TRANSFORM);
+	player1Model.transform.scale = glm::vec3(7.0f, 7.0f, 7.0f);
+	player1Model.transform.position = glm::vec3(-40, 110, -5);
+	player1Model.physics.angularVelocity = glm::vec3(3.0f, 0.5f, 0.0f);
 
 	m_activeSystems.push_back(std::move(renderSystem));
 	m_iActiveMenuButtonNumber = 0;
@@ -109,28 +126,41 @@ void PlayerSelectScreen::checkPlayerReadyInput()
 {
 	// Player 2
 	int count;
-
 	// Update input from buttons
 	const unsigned char* p2Btns = glfwGetJoystickButtons(1, &count);
-
 	if (count > 0) {
 		std::vector<unsigned char> btns(p2Btns, p2Btns + count);
 		// Check if the player pressed the start button
-		if (btns[7] == 1)
+		if (btns[7] == GLFW_PRESS)
 		{
+
 			m_p2Ready = true;
 			m_p2PressStart.setText("P2 Joined!");
 			m_p2PressStart.setColor(glm::vec3(1.0f, 1.0f, 1.0f));
+			m_p2PressStart.setPosition(glm::vec2(950.0f, 450.0f));
+
+			if (!m_isP2Joined)
+			{
+				Entity& player2Model = Prefabs::createModel(m_scene, "Assets/Models/Plane/PUSHILIN_Plane.obj");
+				player2Model.addComponents(COMPONENT_PHYSICS, COMPONENT_TRANSFORM);
+				player2Model.transform.scale = glm::vec3(7.0f, 7.0f, 7.0f);
+				player2Model.transform.position = glm::vec3(40, 110, -5);
+				player2Model.physics.angularVelocity = glm::vec3(3.0f, 0.5f, 0.0f);
+				m_isP2Joined = true;
+			}
+
+			
 		}
 		// Check if the player pressed the b button
-		else if (btns[1] == 1)
+		else if (btns[1] == GLFW_PRESS)
 		{
 			m_p2Ready = false;
 			m_p2PressStart.setText("P2 press start to join.");
 			m_p2PressStart.setColor(glm::vec3(1.0f, 1.0f, 0.0f));
+			m_p2PressStart.setPosition(glm::vec2(840.0f, 450.0f));
+			//m_isP2Joined = false;
 		}
 	}
-
 	// Player 3
 	// Update input from buttons
 	const unsigned char* p3Btns = glfwGetJoystickButtons(2, &count);
@@ -138,18 +168,30 @@ void PlayerSelectScreen::checkPlayerReadyInput()
 	if (count > 0) {
 		std::vector<unsigned char> btns(p3Btns, p3Btns + count);
 		// Check if the player pressed the start button
-		if (btns[7] == 1)
+		if (btns[7] == GLFW_PRESS)
 		{
 			m_p3Ready = true;
 			m_p3PressStart.setText("P2 Joined!");
 			m_p3PressStart.setColor(glm::vec3(1.0f, 1.0f, 1.0f));
+			m_p3PressStart.setPosition(glm::vec2(250.0f, 50.0f));
+			
+			if (!m_isP3Joined)
+			{
+				Entity& player3Model = Prefabs::createModel(m_scene, "Assets/Models/Plane/PUSHILIN_Plane.obj");
+				player3Model.addComponents(COMPONENT_PHYSICS, COMPONENT_TRANSFORM);
+				player3Model.transform.scale = glm::vec3(7.0f, 7.0f, 7.0f);
+				player3Model.transform.position = glm::vec3(-40, 110, 40);
+				player3Model.physics.angularVelocity = glm::vec3(3.0f, 0.5f, 0.0f);
+				m_isP3Joined = true;
+			}
 		}
 		// Check if the player pressed the b button
-		else if (btns[1] == 1)
+		else if (btns[1] == GLFW_PRESS)
 		{
 			m_p3Ready = false;
 			m_p3PressStart.setText("P2 press start to join.");
 			m_p3PressStart.setColor(glm::vec3(1.0f, 1.0f, 0.0f));
+			m_p3PressStart.setPosition(glm::vec2(200.0f, 50.0f));
 		}
 	}
 
@@ -160,18 +202,31 @@ void PlayerSelectScreen::checkPlayerReadyInput()
 	if (count > 0) {
 		std::vector<unsigned char> btns(p4Btns, p4Btns + count);
 		// Check if the player pressed the start button
-		if (btns[7] == 1)
+		if (btns[7] == GLFW_PRESS)
 		{
 			m_p4Ready = true;
 			m_p4PressStart.setText("P2 Joined!");
 			m_p4PressStart.setColor(glm::vec3(1.0f, 1.0f, 1.0f));
+			m_p4PressStart.setPosition(glm::vec2(950.0f, 50.0f));
+
+			if (!m_isP4Joined)
+			{
+				Entity& player4Model = Prefabs::createModel(m_scene, "Assets/Models/Plane/PUSHILIN_Plane.obj");
+				player4Model.addComponents(COMPONENT_PHYSICS, COMPONENT_TRANSFORM);
+				player4Model.transform.scale = glm::vec3(7.0f, 7.0f, 7.0f);
+				player4Model.transform.position = glm::vec3(40, 110, 40);
+				player4Model.physics.angularVelocity = glm::vec3(3.0f, 0.5f, 0.0f);
+				m_isP4Joined = true;
+			}
 		}
 		// Check if the player pressed the b button
-		else if (btns[1] == 1)
+		else if (btns[1] == GLFW_PRESS)
 		{
 			m_p4Ready = false;
 			m_p4PressStart.setText("P2 press start to join.");
 			m_p4PressStart.setColor(glm::vec3(1.0f, 1.0f, 0.0f));
+			m_p4PressStart.setPosition(glm::vec2(840.0f, 50.0f));
+			
 		}
 	}
 }
@@ -195,6 +250,7 @@ bool PlayerSelectScreen::checkEnoughPlayersJoined()
 
 void PlayerSelectScreen::update()
 {
+
 	for (auto& system : m_activeSystems) {
 		system->beginFrame();
 	}
@@ -202,7 +258,7 @@ void PlayerSelectScreen::update()
 	for (auto& system : m_activeSystems) {
 		system->update();
 	}
-
+	
 	// Check inputs
 	if (m_bUIActive)
 	{
