@@ -72,7 +72,8 @@ EndScreen::EndScreen(std::string _dataIn)
 		createTextLabel(p4.substr(0, 1), glm::vec2(320, 700), &m_UITexts, 1.0f, glm::vec3(1, 1, 1));
 	}
 
-	createTextLabel("Continue", glm::vec2(620, 200), &m_UITexts, 2.0f, glm::vec3(1, 1, 1));
+	createTextLabel("Level Select", glm::vec2(620, 200), &m_UIButtons, 1.0f, glm::vec3(1, 1, 1));
+	createTextLabel("Main Menu", glm::vec2(620, 150), &m_UIButtons, 1.0f, glm::vec3(1, 1, 1));
 
 	m_activeSystems.push_back(std::move(renderSystem));
 	m_iActiveMenuButtonNumber = 0;
@@ -81,8 +82,6 @@ EndScreen::EndScreen(std::string _dataIn)
 	m_screenState = VICTORY;
 }
 
-
-
 EndScreen::~EndScreen()
 {
 
@@ -90,9 +89,15 @@ EndScreen::~EndScreen()
 
 void EndScreen::buttonPressed()
 {
+	// Start Pressed
 	if (m_iActiveMenuButtonNumber == 0)
 	{
-		//m_screenToTransitionTo = GAMEPLAY;
+		m_screenToTransitionTo = LEVELSELECT;
+		m_bChangeScreen = true;
+	}
+	// Back Pressed
+	else if (m_iActiveMenuButtonNumber == 1)
+	{
 		m_screenToTransitionTo = MAINMENU;
 		m_bChangeScreen = true;
 	}

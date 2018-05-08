@@ -1,7 +1,5 @@
 #include "CollisionSystem.h"
 
-#include "Audio.h"
-
 #include <glm\glm.hpp>
 
 using namespace glm;
@@ -31,9 +29,6 @@ void CollisionSystem::update()
 					const float springConstant = 1000;
 					entity1.physics.acceleration += contactInfo.contactNormals[0] * contactInfo.penetrationDistance * springConstant;
 					entity2.physics.acceleration += contactInfo.contactNormals[1] * contactInfo.penetrationDistance * springConstant;
-
-					Audio& audio = Audio::getInstance();
-					audio.playSFX(PLAYER_CRASH);
 				}
 			}
 		}

@@ -34,6 +34,7 @@ GameplayScreen::GameplayScreen(bool activePlayers[4])
 {
 	// Screen Manager
 	m_screenState = GAMEPLAY;
+
 	// Init systems
 	m_activeSystems.push_back(std::make_unique<InputSystem>(m_scene));
 	m_activeSystems.push_back(std::make_unique<MovementSystem>(m_scene));
