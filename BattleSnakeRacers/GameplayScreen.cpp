@@ -192,6 +192,12 @@ void GameplayScreen::update()
 		kyle += static_cast<char>(m_playerList[i]->playerStats.currentScore + '0');
 		m_playerScores[i].setText(kyle);
 		m_playerScores.at(i).Render();
+
+		if (m_playerList[i]->playerStats.currentScore >= 10)
+		{
+			this->m_screenToTransitionTo = VICTORY;
+			m_bChangeScreen = true;
+		}
 	}
 
 	for (auto& system : m_activeSystems) {
