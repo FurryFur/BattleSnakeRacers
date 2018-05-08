@@ -142,6 +142,14 @@ void PlayerSpawnSystem::respawn()
 
 	for (int i = 0; i < m_playerList.size(); ++i)
 	{
+		if (m_playerList[i]->hasComponents(COMPONENT_TRANSFORM) == false)
+		{
+			m_playerList[i]->addComponents(COMPONENT_TRANSFORM);
+		}
+		if (m_playerList[i]->hasComponents(COMPONENT_MODEL) == false)
+		{
+			m_playerList[i]->addComponents(COMPONENT_MODEL);
+		}
 		m_playerList[i]->transform.position = m_spawnPoint;
 		if (xSpread)
 		{
@@ -151,11 +159,12 @@ void PlayerSpawnSystem::respawn()
 		{
 			m_playerList[i]->transform.position.z = m_spawnPoint.z - 10 + i* 5;
 		}
-
+		
 		m_playerList[i]->transform.eulerAngles.y = rotation;
 		m_playerList[i]->playerStats.setDeathState(false);
 		m_playerList[i]->playerStats.lap = 0;
 		m_playerList[i]->playerStats.highestProgress = 0;
+		m_playerList[i]->playerStats.snakeTails.clear();
 	}
 }
 
@@ -225,13 +234,6 @@ void PlayerSpawnSystem::updateScores()
 				break;
 			}
 		}
-	}
-
-	for (int i = 0; i < m_playerList.size(); i++)
-	{
-		/*std::string kyle = "";
-		kyle += static_cast<char>(m_playerList[i]->playerStats.currentScore +48);
-		m_playerList[i]->playerStats.scoreLabel->setText(kyle);*/
 	}
 }
 	
