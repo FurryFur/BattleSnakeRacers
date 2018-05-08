@@ -164,6 +164,11 @@ void PlayerSpawnSystem::respawn()
 		m_playerList[i]->playerStats.setDeathState(false);
 		m_playerList[i]->playerStats.lap = 0;
 		m_playerList[i]->playerStats.highestProgress = 0;
+
+		for (int j = 0; j < m_playerList[i]->playerStats.snakeTails.size(); ++j)
+		{
+			m_scene.destroyEntity(*m_playerList[i]->playerStats.snakeTails.at(j));
+		}
 		m_playerList[i]->playerStats.snakeTails.clear();
 	}
 }
