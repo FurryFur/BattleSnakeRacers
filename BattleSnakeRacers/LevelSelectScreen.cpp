@@ -7,6 +7,7 @@
 #include "CameraSystem.h"
 #include "Utils.h"
 #include "KeyObserver.h"
+#include "Audio.h"
 
 #include <GLFW\glfw3.h>
 
@@ -146,6 +147,10 @@ void LevelSelectScreen::buttonPressed()
 		m_screenToTransitionTo = PLAYERSELECT;
 		m_bChangeScreen = true;
 	}
+	// Play a sound
+	Audio& audio = Audio::getInstance();
+	audio.playSFX(BUTTON_CLICKED);
+
 }
 
 void LevelSelectScreen::updateLevelText()

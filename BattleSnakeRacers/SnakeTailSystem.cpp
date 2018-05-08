@@ -7,6 +7,7 @@
 #include "PrimitivePrefabs.h"
 #include "Entity.h"
 #include "AIUtils.h"
+#include "Audio.h"
 
 #include <iostream>
 
@@ -50,6 +51,10 @@ void SnakeTailSystem::update()
 				{
 					// Kill the player
 					m_playerList[i]->playerStats.setDeathState(true);
+
+					// Play a sound
+					Audio& audio = Audio::getInstance();
+					audio.playSFX(PLAYER_SNAKE_COLLIDE);
 
 					// Update the players score
 					// Determine the current number of dead players

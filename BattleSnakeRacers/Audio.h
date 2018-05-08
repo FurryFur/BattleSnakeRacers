@@ -46,7 +46,6 @@ public:
 	void playTrack1Music();
 	void playTrack2Music();
 	void playTrack3Music();
-	void playButtonClick();
 
 	// Play a game play Sound effect
 	void playSFX(Sound sound);

@@ -34,11 +34,11 @@ const bool Audio::LoadAudio() {
 	result = m_audioMgr->createSound("Assets/Audio/loopingLinearEngine.mp3", FMOD_DEFAULT, 0, &m_engineLoop);
 
 	result = m_audioMgr->createSound("Assets/Audio/SoundFX/ButtonClicked.wav", FMOD_DEFAULT, 0, &m_buttonClick);
-	result = m_audioMgr->createSound("Assets/Audio/SoundFX/PlayerJoined.mp3", FMOD_DEFAULT, 0, &m_playerJoined);
+	result = m_audioMgr->createSound("Assets/Audio/SoundFX/PlayerJoined.wav", FMOD_DEFAULT, 0, &m_playerJoined);
 	result = m_audioMgr->createSound("Assets/Audio/SoundFX/Collision.wav", FMOD_DEFAULT, 0, &m_playerCollision);
-	result = m_audioMgr->createSound("Assets/Audio/SoundFX/SnakeCollision.mp3", FMOD_DEFAULT, 0, &m_playerSnakeTailCollide);
+	result = m_audioMgr->createSound("Assets/Audio/SoundFX/SnakeCollision.wav", FMOD_DEFAULT, 0, &m_playerSnakeTailCollide);
 	result = m_audioMgr->createSound("Assets/Audio/SoundFX/Die.wav", FMOD_DEFAULT, 0, &m_playerFalling);
-	result = m_audioMgr->createSound("Assets/Audio/SoundFX/PickUp.mp3", FMOD_DEFAULT, 0, &m_pickupCollected);
+	result = m_audioMgr->createSound("Assets/Audio/SoundFX/PickUp.wav", FMOD_DEFAULT, 0, &m_pickupCollected);
 	result = m_audioMgr->createSound("Assets/Audio/SoundFX/Respawn.wav", FMOD_DEFAULT, 0, &m_respawnPlayers);
 
 	m_bgMusic->setMode(FMOD_LOOP_NORMAL);
@@ -84,12 +84,6 @@ void  Audio::playTrack3Music()
 	// Play the track3 music
 	m_bgMusicChannel->stop();
 	m_audioMgr->playSound(m_racingMusic, 0, false, &m_bgMusicChannel);
-}
-
-void Audio::playButtonClick()
-{
-	// Play the click music
-	m_audioMgr->playSound(m_buttonClick, 0, false, &m_sfxChannel);
 }
 
 void Audio::playSFX(Sound sound)

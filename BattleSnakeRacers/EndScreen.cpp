@@ -6,6 +6,7 @@
 #include "CameraSystem.h"
 #include "GLUtils.h"
 #include "TextLabel.h"
+#include "Audio.h"
 
 using namespace std;
 EndScreen::EndScreen(std::string _dataIn)
@@ -101,4 +102,8 @@ void EndScreen::buttonPressed()
 		m_screenToTransitionTo = MAINMENU;
 		m_bChangeScreen = true;
 	}
+
+	// Play a sound
+	Audio& audio = Audio::getInstance();
+	audio.playSFX(BUTTON_CLICKED);
 }

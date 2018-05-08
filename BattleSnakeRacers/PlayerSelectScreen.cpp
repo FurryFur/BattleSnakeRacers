@@ -8,6 +8,7 @@
 #include "Utils.h"
 #include "KeyObserver.h"
 #include "PhysicsSystem.h"
+#include "Audio.h"
 
 
 #include <GLFW\glfw3.h>
@@ -88,6 +89,10 @@ void PlayerSelectScreen::buttonPressed()
 		m_screenToTransitionTo = MAINMENU;
 		m_bChangeScreen = true;
 	}
+
+	// Play a sound
+	Audio& audio = Audio::getInstance();
+	audio.playSFX(BUTTON_CLICKED);
 }
 
 void PlayerSelectScreen::checkControllerInput()
@@ -147,6 +152,9 @@ void PlayerSelectScreen::checkPlayerReadyInput()
 				player2Model.transform.position = glm::vec3(40, 110, -5);
 				player2Model.physics.angularVelocity = glm::vec3(3.0f, 0.5f, 0.0f);
 				m_isP2Joined = true;
+				// Play a sound
+				Audio& audio = Audio::getInstance();
+				audio.playSFX(PLAYER_JOINED);
 			}
 
 			
@@ -183,6 +191,9 @@ void PlayerSelectScreen::checkPlayerReadyInput()
 				player3Model.transform.position = glm::vec3(-40, 110, 40);
 				player3Model.physics.angularVelocity = glm::vec3(3.0f, 0.5f, 0.0f);
 				m_isP3Joined = true;
+				// Play a sound
+				Audio& audio = Audio::getInstance();
+				audio.playSFX(PLAYER_JOINED);
 			}
 		}
 		// Check if the player pressed the b button
@@ -217,6 +228,9 @@ void PlayerSelectScreen::checkPlayerReadyInput()
 				player4Model.transform.position = glm::vec3(40, 110, 40);
 				player4Model.physics.angularVelocity = glm::vec3(3.0f, 0.5f, 0.0f);
 				m_isP4Joined = true;
+				// Play a sound
+				Audio& audio = Audio::getInstance();
+				audio.playSFX(PLAYER_JOINED);
 			}
 		}
 		// Check if the player pressed the b button
