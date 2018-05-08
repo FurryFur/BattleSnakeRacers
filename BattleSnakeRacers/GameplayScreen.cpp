@@ -161,11 +161,11 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 	trackSystem->initializeTrackSystem();
 
 	m_activeSystems.push_back(std::move(trackSystem));
-	m_activeSystems.push_back(std::make_unique<OffTrackKillSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<PickupSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<CameraSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<SnakeTailSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<PlayerSpawnSystem>(m_scene, m_playerList));
+	m_activeSystems.push_back(std::make_unique<OffTrackKillSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<CameraKillSystem>(m_scene, m_playerList, &cameraEntity));
 	m_activeSystems.push_back(std::move(renderSystem));
 }

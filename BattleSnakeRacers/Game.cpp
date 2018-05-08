@@ -6,7 +6,7 @@
 #include "MainMenuScreen.h"
 #include "ModelUtils.h"
 #include "Audio.h"
-//#include "GameplayScreen.h"
+#include "GameplayScreen.h"
 
 #include <GLFW\glfw3.h>
 
@@ -29,7 +29,7 @@ void Game::init()
 
 	Audio& audio = Audio::getInstance();
 	audio.playMenuMusic();
-	ScreenManager::switchScreen(std::unique_ptr<Screen>(new MainMenuScreen));
+	ScreenManager::switchScreen(std::unique_ptr<Screen>(new GameplayScreen({ true, true, false, false }, 2)));
 	//bool g_playersInGame[4] = { true,true,false,false };
 	//ScreenManager::switchScreen(std::unique_ptr<Screen>(new GameplayScreen(g_playersInGame)));
 }

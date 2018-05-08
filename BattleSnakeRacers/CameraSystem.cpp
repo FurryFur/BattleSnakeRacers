@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "RenderSystem.h"
 #include "Clock.h"
+#include "GlobalConstants.h"
 
 #include <glm\glm.hpp>
 #include <glm\gtx\compatibility.hpp>
@@ -50,7 +51,7 @@ void CameraSystem::update()
 			}
 
 			vec3 centerOfAllPlayers = (topLeft + topRight + bottomLeft + bottomRight) / 4.0f;
-			vec3 cameraPos = centerOfAllPlayers + vec3{ 0, 100, 10 };
+			vec3 cameraPos = centerOfAllPlayers + Constants::cameraOffset;
 			vec3 dirCameraToTopLeft = normalize(topLeft - cameraPos);
 			vec3 dirCameraToTopRight = normalize(topRight - cameraPos);
 			vec3 dirCameraToBottomLeft = normalize(bottomLeft - cameraPos);
