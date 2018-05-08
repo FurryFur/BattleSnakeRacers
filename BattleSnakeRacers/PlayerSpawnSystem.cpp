@@ -150,6 +150,10 @@ void PlayerSpawnSystem::respawn()
 		{
 			m_playerList[i]->addComponents(COMPONENT_MODEL);
 		}
+		if (m_playerList[i]->hasComponents(COMPONENT_INPUT) == false)
+		{
+			m_playerList[i]->addComponents(COMPONENT_INPUT);
+		}
 		m_playerList[i]->transform.position = m_spawnPoint;
 		if (xSpread)
 		{
@@ -159,6 +163,9 @@ void PlayerSpawnSystem::respawn()
 		{
 			m_playerList[i]->transform.position.z = m_spawnPoint.z - 10 + i* 5;
 		}
+		m_playerList[i]->transform.position.y = m_spawnPoint.y;
+		m_playerList[i]->physics.velocity = glm::vec3{ 0, 0, 0 };
+		m_playerList[i]->physics.angularVelocity = glm::vec3{ 0, 0, 0 };
 		
 		m_playerList[i]->transform.eulerAngles.y = rotation;
 		m_playerList[i]->playerStats.setDeathState(false);
