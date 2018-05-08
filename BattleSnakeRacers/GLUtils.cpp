@@ -54,7 +54,7 @@ GLFWwindow* GLUtils::initOpenGL()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	GLFWwindow* glContext = glfwCreateWindow(1400, 800, "Doge-otron 2017", nullptr, nullptr);
+	GLFWwindow* glContext = glfwCreateWindow(1400, 800, "Battle Snake Racers", nullptr, nullptr);
 	if (!glContext)
 	{
 		std::cerr << "Failed to create GLFW window\n";

@@ -7,6 +7,7 @@
 #include "PlayerSelectScreen.h"
 #include "LevelSelectScreen.h"
 #include "EndScreen.h"
+#include "Audio.h"
 
 std::unique_ptr<Screen> g_currentScreen;
 bool g_playersInGame[4]; // The active players chonsen during player select
@@ -23,6 +24,15 @@ void ScreenManager::update()
 			if (g_currentScreen->getCurrentScreenState() == LEVELSELECT)
 				g_levelIDNumber = g_currentScreen->getLevelIDNum();
 			ScreenManager::switchScreen(std::unique_ptr<Screen>(new GameplayScreen(g_playersInGame)));
+
+			// Change the music to be gameplay music when in game
+			Audio& audio = Audio::getInstance();
+			if (g_levelIDNumber == 0)
+				audio.playTrack1Music();
+			if (g_levelIDNumber == 1)
+				audio.playTrack2Music();
+			if (g_levelIDNumber == 2)
+				audio.playTrack3Music();
 		}
 		else if (g_currentScreen->getTransitionScreen() == MAINMENU)
 			ScreenManager::switchScreen(std::unique_ptr<Screen>(new MainMenuScreen));
@@ -52,6 +62,13 @@ void ScreenManager::update()
 			// Quit the game
 		}
 
+
+		// Change the background music to be menu music when in menus
+		if (g_currentScreen->getCurrentScreenState() == GAMEPLAY)
+		{
+			Audio& audio = Audio::getInstance();
+			audio.playMenuMusic();
+		}
 	}
 }
 

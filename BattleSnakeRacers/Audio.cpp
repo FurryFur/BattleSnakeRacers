@@ -1,5 +1,7 @@
 #include "Audio.h"
 
+std::unique_ptr<Audio> Audio::m_audio = nullptr;
+
 Audio::Audio()
 {
 	InitFmod();
@@ -30,6 +32,11 @@ const bool Audio::LoadAudio() {
 	result = m_audioMgr->createSound("Assets/Audio/loopingLinearEngine.mp3", FMOD_DEFAULT, 0, &m_engineLoop);
 	result = m_audioMgr->createSound("Assets/Audio/Racing-Menu.mp3", FMOD_DEFAULT, 0, &m_racingMusic);
 	m_bgMusic->setMode(FMOD_LOOP_NORMAL);
+	m_racingMusic->setMode(FMOD_LOOP_NORMAL);
+	m_80sMusic->setMode(FMOD_LOOP_NORMAL);
+	m_adventureMusic->setMode(FMOD_LOOP_NORMAL);
+	m_franticMusic->setMode(FMOD_LOOP_NORMAL);
+	m_engineLoop->setMode(FMOD_LOOP_NORMAL);
 	m_buttonClick->setMode(FMOD_LOOP_OFF);
 	return true;
 }
@@ -37,23 +44,27 @@ const bool Audio::LoadAudio() {
 void  Audio::playMenuMusic()
 {
 	// Play the background music
+	m_bgMusicChannel->stop();
 	m_audioMgr->playSound(m_bgMusic, 0, false, &m_bgMusicChannel);
 }
 
 void  Audio::playTrack1Music()
 {
 	// Play the track1 music
+	m_bgMusicChannel->stop();
 	m_audioMgr->playSound(m_adventureMusic, 0, false, &m_bgMusicChannel);
 }
 
 void  Audio::playTrack2Music()
 {
 	// Play the track2 music
+	m_bgMusicChannel->stop();
 	m_audioMgr->playSound(m_franticMusic, 0, false, &m_bgMusicChannel);
 }
 void  Audio::playTrack3Music()
 {
 	// Play the track3 music
+	m_bgMusicChannel->stop();
 	m_audioMgr->playSound(m_racingMusic, 0, false, &m_bgMusicChannel);
 }
 
@@ -85,8 +96,11 @@ void Audio::playSFX(Sound sound)
 		m_audioMgr->playSound(m_accelerate, 0, false, &m_sfxChannel);
 }
 
-void Audio::setNetworkAudioServer(NetworkServerSystem* audioServer)
+Audio& Audio::getInstance()
 {
-	m_networkAudioServer = audioServer;
+	if (!m_audio)
+		m_audio = std::unique_ptr<Audio>(new Audio);
+
+	return (*m_audio);
 }
 
