@@ -51,7 +51,7 @@ void MovementSystem::update()
 			continue;
 
 		// Only control the player if they are not dead
-		if (!entity.playerStats.isDead)
+		if (entity.playerStats.getDeathState() == false)
 		{
 			// Update facing direction
 			// TODO: Only do this if on the ground

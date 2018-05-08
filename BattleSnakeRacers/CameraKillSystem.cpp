@@ -27,7 +27,7 @@ void CameraKillSystem::update()
 	// Find the player in last place, this player is a candidate to be killed
 	Entity* lastPlayer = nullptr;
 	for (Entity* player : m_playerList) {
-		if (player->playerStats.isDead)
+		if (player->playerStats.getDeathState() == true)
 			continue;
 
 		if (!lastPlayer)
@@ -47,7 +47,7 @@ void CameraKillSystem::update()
 
 		// Check if player is off screen
 		if (ndcPos.x < -1 || ndcPos.x > 1 || ndcPos.y < -1 || ndcPos.y > 1) {
-			lastPlayer->playerStats.isDead = true;
+			lastPlayer->playerStats.setDeathState(true);
 			lastPlayer->removeComponents(COMPONENT_TRANSFORM, COMPONENT_MODEL);
 		}
 	}

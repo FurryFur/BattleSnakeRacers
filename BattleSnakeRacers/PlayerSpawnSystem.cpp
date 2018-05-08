@@ -30,7 +30,7 @@ void PlayerSpawnSystem::update()
 		int index = 0;
 		for (int i = 0; i < m_playerList.size(); ++i)
 		{
-			if (m_playerList[i]->playerStats.isDead == true)
+			if (m_playerList[i]->playerStats.getDeathState() == true)
 			{
 				counter++;
 			}
@@ -135,7 +135,7 @@ void PlayerSpawnSystem::respawn()
 		}
 
 		m_playerList[i]->transform.eulerAngles.y = rotation;
-		m_playerList[i]->playerStats.isDead = false;
+		m_playerList[i]->playerStats.setDeathState(false);
 		m_playerList[i]->playerStats.lap = 0;
 		m_playerList[i]->playerStats.highestProgress = 0;
 	}

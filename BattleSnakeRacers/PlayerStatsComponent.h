@@ -10,7 +10,7 @@ class Entity;
 struct PlayerStatsComponent {
 	
 	int currentScore = 5;
-	bool isDead;
+	//bool isDead;
 	unsigned int progression;//checking who is first on the map and their last respwan point
 	unsigned int highestProgress;//mainly just for finsihing a lap
 
@@ -18,4 +18,14 @@ struct PlayerStatsComponent {
 	TextLabel* scoreLabel;
 
 	std::vector<Entity*> snakeTails;
+	bool getDeathState()
+	{
+		return isDead;
+	}
+	void setDeathState(bool _b)
+	{
+		isDead = _b;
+	}
+private:
+	bool isDead;
 };

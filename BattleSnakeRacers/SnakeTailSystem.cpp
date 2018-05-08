@@ -49,14 +49,14 @@ void SnakeTailSystem::update()
 					&& (m_playerList[i]->transform.position.z <= entity.transform.position.z + 2))
 				{
 					// Kill the player
-					m_playerList[i]->playerStats.isDead = true;
+					m_playerList[i]->playerStats.setDeathState(true);
 
 					// Update the players score
 					// Determine the current number of dead players
 					int deadPlayerCount = 0;
 					for (int i = 0; i < m_playerList.size(); ++i)
 					{
-						if (m_playerList[i]->playerStats.isDead)
+						if (m_playerList[i]->playerStats.getDeathState() == true)
 							++deadPlayerCount;
 					}
 

@@ -34,7 +34,7 @@ void CameraSystem::update()
 			bool isFrstNonDeadPlayer = true;
 			vec3 topLeft, topRight, bottomLeft, bottomRight;
 			for (auto player : m_playerList) {
-				if (!player->playerStats.isDead) {
+				if (player->playerStats.getDeathState() == false) {
 					const vec3& playerPos = player->transform.position;
 					if (isFrstNonDeadPlayer) {
 						topLeft = topRight = bottomLeft = bottomRight = playerPos;

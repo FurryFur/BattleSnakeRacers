@@ -20,7 +20,7 @@ void OffTrackKillSystem::update()
 	// Loop through alive players
 	for (size_t i = 0; i < m_playerList.size(); ++i) {
 		Entity& player = *m_playerList[i];
-		if (!player.playerStats.isDead) {
+		if (player.playerStats.getDeathState() == false) {
 
 			// Find players nearest track tile
 			vec2 offsetFromNearestTile = vec2{ std::numeric_limits<decltype(vec3::x)>::max(), std::numeric_limits<decltype(vec3::z)>::max() };
@@ -49,7 +49,7 @@ void OffTrackKillSystem::update()
 
 			// Kill players beyond a certain -y value
 			if (player.transform.position.y <= m_killY) {
-				player.playerStats.isDead = true;
+				player.playerStats.setDeathState(true);
 				player.removeComponents(COMPONENT_TRANSFORM, COMPONENT_MODEL);
 			}
 		}
