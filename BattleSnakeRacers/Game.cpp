@@ -6,7 +6,7 @@
 #include "MainMenuScreen.h"
 #include "ModelUtils.h"
 #include "Audio.h"
-//#include "GameplayScreen.h"
+#include "GameplayScreen.h"
 
 #include <GLFW\glfw3.h>
 
