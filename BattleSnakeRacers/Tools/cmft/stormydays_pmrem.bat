@@ -1,19 +1,19 @@
-cmft   %* --inputFacePosX violentdays_rt.tga ^
-          --inputFaceNegX violentdays_lf.tga ^
-          --inputFacePosY violentdays_up.tga ^
-          --inputFaceNegY violentdays_dn.tga ^
-          --inputFacePosZ violentdays_bk.tga ^
-          --inputFaceNegZ violentdays_ft.tga ^
+cmft   %* --inputFacePosX stormydays_rt.tga  ^
+          --inputFaceNegX stormydays_lf.tga  ^
+          --inputFacePosY stormydays_up.tga  ^
+          --inputFaceNegY stormydays_dn.tga  ^
+          --inputFacePosZ stormydays_bk.tga  ^
+          --inputFaceNegZ stormydays_ft.tga  ^
           ::Filter options                   ^
           --filter radiance                  ^
-          --srcFaceSize 1024                 ^
+          --srcFaceSize 0                    ^
           --excludeBase false                ^
           --mipCount 9                       ^
           --glossScale 10                    ^
           --glossBias 1                      ^
           --lightingModel blinnbrdf          ^
           --edgeFixup none                   ^
-          --dstFaceSize 1024                 ^
+          --dstFaceSize 256                  ^
           ::Processing devices               ^
           --numCpuProcessingThreads 4        ^
           --useOpenCL true                   ^
@@ -28,5 +28,5 @@ cmft   %* --inputFacePosX violentdays_rt.tga ^
           --generateMipChain true            ^
           ::Output                           ^
           --outputNum 1                      ^
-          --output0 "violentdays_pmrem"      ^
+          --output0 "stormydays_pmrem"       ^
           --output0params dds,bgra8,cubemap
