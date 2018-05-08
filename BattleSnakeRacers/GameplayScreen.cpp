@@ -61,17 +61,36 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 	groundTransform.position.y = -1;
 	groundTransform.scale *= 100;
 	Prefabs::createQuad(m_scene, groundTransform);*/
-	std::string kyle = "Assetd/Maps/Level" + toString(level) + ".txt";
+	std::string kyle = "Assets/Maps/Level" + toString(level) + ".txt";
 	CreateLevel(m_scene, kyle);
 	
-	TransformComponent pickupTransform{};
+	float zpos = 0;
+	float xpos = 0;
+	if (level == 1)
+	{
+		zpos = 175;
+		xpos = 0;
+	}
+	else if (level == 2)
+	{
+		zpos = 125;
+		xpos = 0;
+	}
+	else
+	{
+		zpos = 0;
+		xpos = 125;
+	}
+	xpos -= 12.5;
+	zpos -= 12.5;
+	/*TransformComponent pickupTransform{};
 	pickupTransform.scale.x = 3;
 	pickupTransform.scale.y = 3;
 	pickupTransform.scale.z = 3;
 	Entity& pickup1 = Prefabs::createModel(m_scene, "Assets/Models/crystal/mese.obj", pickupTransform);
 	pickup1.transform.position = glm::vec3(-20, 1, -20);
 	pickup1.addComponents(COMPONENT_PICKUP);
-	pickup1.pickup.isActive = true;
+	pickup1.pickup.isActive = true;*/
 
 	// Setup player1
 	TransformComponent playerTransform{};
@@ -80,7 +99,8 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 	Entity& player1 = Prefabs::createModel(m_scene, "Assets/Models/Plane/PUSHILIN_Plane.obj", playerTransform);
 	player1.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
 	player1.preTransform.eulerAngles.y = -glm::half_pi<float>();
-	player1.transform.position.z = -25;
+	player1.transform.position.z = zpos + -25;
+	player1.transform.position.x = xpos;
 	player1.transform.scale = glm::vec3(2.0f, 2.0f, 2.0f);
 	player1.sphereCollision.radius = 2;
 	player1.inputMap.gamepadIdx = 0; // First gamepad plugged in
@@ -98,7 +118,8 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 	{
 		Entity& player2 = Prefabs::createModel(m_scene, "Assets/Models/UFO/PUSHILIN_flying_saucer.obj", playerTransform);
 		player2.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
-		player2.transform.position.z = -20;
+		player2.transform.position.z = -20+zpos;
+		player2.transform.position.x = xpos;
 		//player2.transform.scale = glm::vec3(1.0f, 1.0f, 1.0f);
 		player2.sphereCollision.radius = 2;
 		player2.inputMap.gamepadIdx = 1; // First gamepad plugged in
