@@ -26,5 +26,10 @@ private:
 	bool m_isP2Joined, m_isP3Joined, m_isP4Joined;
 
 	bool m_bGameCanStart;
+
+	Entity& player1Model;
+	Entity& player2Model;
+	Entity& player3Model;
+	Entity& player4Model;
 };
 
