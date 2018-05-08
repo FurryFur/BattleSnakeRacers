@@ -15,11 +15,14 @@ public:
 
 	void respawn();
 	void addSpawnPoint(glm::vec3);
+	void updateScores();
 private:
 	std::vector<Entity*>& m_playerList;
 	std::vector<glm::vec3> m_spawnPointList;
 	glm::vec3 m_spawnPoint;
 	char spawnDir;
-	unsigned int spawnpri;
-	
+	unsigned int m_spawnPri;
+
+	int m_playerDied[4];
+	int m_numPlayersDead;
 };

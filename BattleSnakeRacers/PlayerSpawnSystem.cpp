@@ -10,6 +10,18 @@ PlayerSpawnSystem::PlayerSpawnSystem(Scene& _scene, std::vector<Entity*>& _playe
 , m_playerList{ _playerList }
 {
 	m_spawnPoint = glm::vec3(0);
+	for (int i = 0; i < 4;i++)
+	{
+		if (i < m_playerList.size())
+		{
+			m_playerDied[i] = 0;
+		}
+		else
+		{
+			m_playerDied[i] = -1;
+		}
+	}
+	m_numPlayersDead = 0;
 }
 
 
@@ -23,7 +35,6 @@ void PlayerSpawnSystem::update()
 			continue;
 		}
 
-		int counter = 0;
 
 		int mostlaps = -1;
 		int mosthighprog = -1;
@@ -32,7 +43,11 @@ void PlayerSpawnSystem::update()
 		{
 			if (m_playerList[i]->playerStats.getDeathState() == true)
 			{
-				counter++;
+				if (m_playerDied[i] == 0)
+				{
+					m_numPlayersDead++;
+					m_playerDied[i] = m_numPlayersDead;
+				}
 			}
 			else
 			{
@@ -85,7 +100,8 @@ void PlayerSpawnSystem::update()
 			}
 		}
 
-		if (counter >= m_playerList.size() - 1 )//|| m_spawnPoint != glm::vec3(0))
+
+		if (m_numPlayersDead >= m_playerList.size() - 1 )//|| m_spawnPoint != glm::vec3(0))
 		{
 			respawn();
 		}
@@ -94,6 +110,8 @@ void PlayerSpawnSystem::update()
 
 void PlayerSpawnSystem::respawn()
 {
+	m_numPlayersDead = 0;
+	updateScores();
 	float rotation;
 	bool xSpread = false;
 	switch (spawnDir)
@@ -145,3 +163,75 @@ void PlayerSpawnSystem::addSpawnPoint(glm::vec3 pos)
 {
 	m_spawnPointList.push_back(pos);
 }
+
+void PlayerSpawnSystem::updateScores()
+{
+	if (m_playerList.size() == 2)
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			switch (m_playerDied[i])
+			{
+			case 0:
+				m_playerList[i]->playerStats.currentScore += 1;
+				break;
+			case 1:
+				m_playerList[i]->playerStats.currentScore += -1;
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	else if (m_playerList.size() == 3)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			switch (m_playerDied[i])
+			{
+			case 0:
+				m_playerList[i]->playerStats.currentScore += 1;
+				break;
+			case 1:
+				m_playerList[i]->playerStats.currentScore += 0;
+				break;
+			case 2:
+				m_playerList[i]->playerStats.currentScore += -1;
+				break;
+			default:
+				break;
+			}
+		}
+	}
+	else if (m_playerList.size() == 4)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			switch (m_playerDied[i])
+			{
+			case 0:
+				m_playerList[i]->playerStats.currentScore += 2;
+				break;
+			case 1:
+				m_playerList[i]->playerStats.currentScore += 1;
+				break;
+			case 2:
+				m_playerList[i]->playerStats.currentScore += -1;
+				break;
+			case 3:
+				m_playerList[i]->playerStats.currentScore += -2;
+				break;
+			default:
+				break;
+			}
+		}
+	}
+
+	for (int i = 0; i < m_playerList.size(); i++)
+	{
+		/*std::string kyle = "";
+		kyle += static_cast<char>(m_playerList[i]->playerStats.currentScore +48);
+		m_playerList[i]->playerStats.scoreLabel->setText(kyle);*/
+	}
+}
+	

@@ -53,7 +53,7 @@ void SnakeTailSystem::update()
 
 					// Update the players score
 					// Determine the current number of dead players
-					int deadPlayerCount = 0;
+					/*int deadPlayerCount = 0;
 					for (int i = 0; i < m_playerList.size(); ++i)
 					{
 						if (m_playerList[i]->playerStats.getDeathState() == true)
@@ -78,7 +78,7 @@ void SnakeTailSystem::update()
 					else if (m_playerList.size() == 2)
 					{
 						m_playerList[i]->playerStats.currentScore -= 1;
-					}
+					}*/
 				}
 			}
 		}

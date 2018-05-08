@@ -88,8 +88,8 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers)
 	m_playerList.push_back(&player1);
 	TextLabel player1Score = createPlayerTextLabel(1);
 	player1Score.setColor(glm::vec3(1.0f, 0.0f, 0.0f));
-	player1.playerStats.scoreLabel = &player1Score;
 	m_playerScores.push_back(player1Score);
+	//player1.playerStats.scoreLabel = &m_playerScores.back();
 
 	// Setup player2
 	if (activePlayers[1])
@@ -106,8 +106,9 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers)
 		m_playerList.push_back(&player2);
 		TextLabel player2Score = createPlayerTextLabel(2);
 		player2Score.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
-		player2.playerStats.scoreLabel = &player2Score;
 		m_playerScores.push_back(player2Score);
+		//player2.playerStats.scoreLabel = &m_playerScores.back();
+
 	}
 
 	// Setup player3
@@ -126,7 +127,7 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers)
 		m_playerList.push_back(&player3);
 		TextLabel player3Score = createPlayerTextLabel(3);
 		player3Score.setColor(glm::vec3(0.0f, 0.0f, 1.0f));
-		player3.playerStats.scoreLabel = &player3Score;
+		//player3.playerStats.scoreLabel = &player3Score;
 		m_playerScores.push_back(player3Score);
 	}
 
@@ -146,7 +147,7 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers)
 		m_playerList.push_back(&player4);
 		TextLabel player4Score = createPlayerTextLabel(4);
 		player4Score.setColor(glm::vec3(1.0f, 1.0f, 0.0f));
-		player4.playerStats.scoreLabel = &player4Score;
+		//player4.playerStats.scoreLabel = &player4Score;
 		m_playerScores.push_back(player4Score);
 	}
 
@@ -178,6 +179,11 @@ void GameplayScreen::update()
 
 	for (size_t i = 0; i < m_playerScores.size(); ++i)
 	{
+		std::string kyle = "Player ";
+		kyle += (char)(i + 1 + '0');
+		kyle += ": ";
+		kyle += static_cast<char>(m_playerList[i]->playerStats.currentScore + '0');
+		m_playerScores[i].setText(kyle);
 		m_playerScores.at(i).Render();
 	}
 
