@@ -276,7 +276,7 @@ glm::vec3 TranslateCharLevel(std::string _path, Scene& scene)
 						{
 							if (track[pui][puj] != 'x' && track[pui][puj] != ' ')
 							{
-								if (randomInt(1, 9) > track[pui][puj] - '0')
+								if (track[pui][puj] != '9')
 								{
 									continue;
 								}
