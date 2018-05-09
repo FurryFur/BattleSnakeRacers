@@ -4,10 +4,12 @@
 
 #include <vector>
 
+class CameraKillSystem;
+
 class PlayerSpawnSystem : public System
 {
 public:
-	PlayerSpawnSystem(Scene&, std::vector<Entity*>& _playerList);
+	PlayerSpawnSystem(Scene&, std::vector<Entity*>& _playerList, CameraKillSystem& cameraKillSystem);
 
 	void update() override;
 	void beginFrame() override {};
@@ -25,4 +27,6 @@ private:
 
 	int m_playerDied[4];
 	int m_numPlayersDead;
+
+	CameraKillSystem& m_cameraKillSystem;
 };

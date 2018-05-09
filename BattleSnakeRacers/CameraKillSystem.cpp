@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Log.h"
 #include "Game.h"
+#include "Clock.h"
 
 #include <glm\glm.hpp>
 
@@ -21,8 +22,20 @@ void CameraKillSystem::setKillCamera(Entity* killCamera)
 	m_killCamera = killCamera;
 }
 
+void CameraKillSystem::disableFor(float seconds)
+{
+	disabledRemainingDuration = seconds;
+}
+
 void CameraKillSystem::update()
 {
+	// Count down the disabled timer if one is set
+	if (disabledRemainingDuration > 0) {
+		disabledRemainingDuration -= Clock::getDeltaTime();
+		return;
+	}
+
+	// Do nothing if no camera has been set
 	if (!m_killCamera)
 		return;
 
@@ -34,17 +47,6 @@ void CameraKillSystem::update()
 		if (player->playerStats.getDeathState() == true)
 			continue;
 
-		// Find bounding rect around players in xz plane
-		const vec3& playerPos = player->transform.position;
-		if (isFrstNonDeadPlayer) {
-			topLeft = topRight = bottomLeft = bottomRight = playerPos;
-			isFrstNonDeadPlayer = false;
-		}
-		topLeft = glm::min(topLeft, playerPos);
-		bottomRight = glm::max(bottomRight, playerPos);
-		bottomRight.y = 0; // Ensure all vehicles are projected down to the XZ plane
-		topRight = vec3{ bottomRight.x, 0, topLeft.z };
-
 		// Update last player found so far
 		if (!lastPlayer)
 			lastPlayer = player;
@@ -52,13 +54,6 @@ void CameraKillSystem::update()
 			lastPlayer = player;
 		}
 	}
-
-	// Disable camera kill if too far away from player center
-	vec3 centerOfAllPlayers = (topLeft + topRight + bottomLeft + bottomRight) / 4.0f;
-	vec3 targetCameraPos = centerOfAllPlayers + Constants::cameraOffset;
-	vec3 displacementToTarget = targetCameraPos - m_killCamera->camera.getPosition();
-	if (length(displacementToTarget) > 5.0f)
-		return;
 
 	if (lastPlayer) {
 		// Get last players position in normalized device coordinate space

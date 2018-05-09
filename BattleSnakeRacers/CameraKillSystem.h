@@ -14,6 +14,11 @@ public:
 
 	void setKillCamera(Entity* killCamera);
 
+	// Disable the camera kill system for a duration.
+	// Useful for respawning players so that the camera kill system
+	// doesn't kill them while lerping to the respawn location.
+	void disableFor(float seconds);
+
 	// Inherited via System
 	virtual void update() override;
 	virtual void beginFrame() override;
@@ -22,4 +27,7 @@ public:
 private:
 	Entity* m_killCamera;
 	const std::vector<Entity*>& m_playerList;
+
+	// Remaining duration to be disabled for in seconds
+	float disabledRemainingDuration;
 };
