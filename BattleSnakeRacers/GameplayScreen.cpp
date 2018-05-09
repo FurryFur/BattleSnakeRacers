@@ -56,23 +56,11 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 	renderSystem->setCamera(&cameraEntity);
 
 	// Create Ground
-	/*TransformComponent groundTransform{};
-	groundTransform.eulerAngles.x = M_PI / 2.0f;
-	groundTransform.position.y = -1;
-	groundTransform.scale *= 100;
-	Prefabs::createQuad(m_scene, groundTransform);*/
 	std::string kyle = "Assets/Maps/Level" + toString(level) + ".txt";
 	glm::vec3 startpos = CreateLevel(m_scene, kyle);
 	startpos.y = 0;
 	
-	/*TransformComponent pickupTransform{};
-	pickupTransform.scale.x = 3;
-	pickupTransform.scale.y = 3;
-	pickupTransform.scale.z = 3;
-	Entity& pickup1 = Prefabs::createModel(m_scene, "Assets/Models/crystal/mese.obj", pickupTransform);
-	pickup1.transform.position = glm::vec3(-20, 1, -20);
-	pickup1.addComponents(COMPONENT_PICKUP);
-	pickup1.pickup.isActive = true;*/
+
 
 	// Setup player1
 	TransformComponent playerTransform{};
@@ -195,6 +183,26 @@ void GameplayScreen::update()
 
 		if (m_playerList[i]->playerStats.currentScore >= 10)
 		{
+			m_dataForNextScreen = "";
+			for (int i = 0; i < 4; i++)
+			{
+				if (m_playerList.size() > i)
+				{
+					int scor = m_playerList[i]->playerStats.currentScore;
+					if (scor >= 10)
+					{
+						m_dataForNextScreen += 'W' + toString(scor);
+					}
+					else
+					{
+						m_dataForNextScreen += "L0" + toString(scor);
+					}
+				}
+				else
+				{
+					m_dataForNextScreen += "N00";
+				}
+			}
 			this->m_screenToTransitionTo = VICTORY;
 			m_bChangeScreen = true;
 		}
