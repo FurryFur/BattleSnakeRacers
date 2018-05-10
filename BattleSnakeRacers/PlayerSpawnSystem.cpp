@@ -122,7 +122,7 @@ void PlayerSpawnSystem::respawn()
 	switch (spawnDir)
 	{
 	case '>':
-		rotation = 0;
+		rotation = 180;
 		xSpread = false;
 		break;
 	case 'v':
@@ -130,7 +130,7 @@ void PlayerSpawnSystem::respawn()
 		xSpread = true;
 		break;
 	case '<':
-		rotation = 180;
+		rotation = 0;
 		xSpread = false;
 		break;
 	case '^':
@@ -142,7 +142,7 @@ void PlayerSpawnSystem::respawn()
 		break;
 	}
 
-	rotation += 90;
+	rotation -= 90;
 	rotation = glm::radians(rotation);
 
 	for (int i = 0; i < m_playerList.size(); ++i)
