@@ -7,6 +7,7 @@
 #include "ModelUtils.h"
 #include "Audio.h"
 #include "GameplayScreen.h"
+#include "TaskDeferrer.h"
 
 #include <GLFW\glfw3.h>
 
@@ -30,10 +31,9 @@ void Game::init()
 	Audio& audio = Audio::getInstance();
 	audio.playMenuMusic();
 	audio.playSFX(PICKUP_COLLECTED);
-	ScreenManager::switchScreen(std::unique_ptr<Screen>(new MainMenuScreen()));
-	//bool g_playersInGame[4] = { true,true,false,false };
-	//std::array<bool, 4> barray= { true,true,true,true };
-	//ScreenManager::switchScreen(std::unique_ptr<Screen>(new GameplayScreen(barray,3)));
+	//ScreenManager::switchScreen(std::unique_ptr<Screen>(new MainMenuScreen()));
+	std::array<bool, 4> barray= { true,true,false,false };
+	ScreenManager::switchScreen(std::unique_ptr<Screen>(new GameplayScreen(barray,3)));
 }
 
 // Load game specific models and textures into GPU memory here
@@ -46,6 +46,7 @@ void Game::preloadModelsAndTextures()
 void Game::executeOneFrame()
 {
 	Clock::update();
+	TaskDeferrer::update();
 	ScreenManager::update();
 }
 

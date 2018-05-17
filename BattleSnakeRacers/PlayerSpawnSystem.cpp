@@ -4,6 +4,7 @@
 #include "PrimitivePrefabs.h"
 #include "Game.h"
 #include "CameraKillSystem.h"
+#include "TaskDeferrer.h"
 
 #include <iostream>
 
@@ -106,7 +107,7 @@ void PlayerSpawnSystem::update()
 
 		if (m_numPlayersDead >= m_playerList.size() - 1 )//|| m_spawnPoint != glm::vec3(0))
 		{
-			respawn();
+			TaskDeferrer::after(5, std::bind(&PlayerSpawnSystem::respawn, this));
 		}
 	}
 }

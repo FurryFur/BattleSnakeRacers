@@ -17,6 +17,7 @@
 #include <GLFW\glfw3.h>
 
 double g_timeDilation = 1;
+double g_frameStartTime;
 double g_deltaTime;
 double g_uiDeltaTime;
 
@@ -24,11 +25,16 @@ void Clock::update()
 {
 	static double s_lastFrameTime = glfwGetTime();
 
-	double frameTime = glfwGetTime();
-	g_deltaTime = frameTime - s_lastFrameTime;
+	g_frameStartTime = glfwGetTime();
+	g_deltaTime = g_frameStartTime - s_lastFrameTime;
 	g_uiDeltaTime = g_deltaTime;
 	g_deltaTime *= g_timeDilation;
-	s_lastFrameTime = frameTime;
+	s_lastFrameTime = g_frameStartTime;
+}
+
+float Clock::getTime()
+{
+	return g_frameStartTime;
 }
 
 float Clock::getDeltaTime()

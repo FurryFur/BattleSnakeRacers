@@ -52,6 +52,12 @@
     <Filter Include="Source Files\Screens">
       <UniqueIdentifier>{07afd895-0ee4-466b-a8e3-21d3b60ce6dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Managers">
+      <UniqueIdentifier>{8e084020-63fb-4ab1-a6dc-5266dd656884}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Managers">
+      <UniqueIdentifier>{bec6cbb9-7497-4e08-afce-9fec2961e846}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -93,9 +99,6 @@
     <ClCompile Include="PhysicsSystem.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="Audio.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -105,9 +108,6 @@
     <ClCompile Include="TransformComponent.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="ScreenManager.cpp">
-      <Filter>Source Files\Screens</Filter>
-    </ClCompile>
     <ClCompile Include="System.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
@@ -116,9 +116,6 @@
     </ClCompile>
     <ClCompile Include="GameplayScreen.cpp">
       <Filter>Source Files\Screens</Filter>
-    </ClCompile>
-    <ClCompile Include="Clock.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LevelLoader.cpp">
       <Filter>Source Files</Filter>
@@ -179,6 +176,18 @@
     </ClCompile>
     <ClCompile Include="EndScreen.cpp">
       <Filter>Source Files\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Clock.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="TaskDeferrer.cpp">
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -251,9 +260,6 @@
     <ClInclude Include="PhysicsSystem.h">
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Audio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TransformComponent.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
@@ -275,9 +281,6 @@
     <ClInclude Include="Screen.h">
       <Filter>Header Files\Screens</Filter>
     </ClInclude>
-    <ClInclude Include="ScreenManager.h">
-      <Filter>Header Files\Screens</Filter>
-    </ClInclude>
     <ClInclude Include="System.h">
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
@@ -286,9 +289,6 @@
     </ClInclude>
     <ClInclude Include="GameplayScreen.h">
       <Filter>Header Files\Screens</Filter>
-    </ClInclude>
-    <ClInclude Include="Clock.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MovementComponent.h">
       <Filter>Header Files\Components</Filter>
@@ -367,6 +367,18 @@
     </ClInclude>
     <ClInclude Include="EndScreen.h">
       <Filter>Header Files\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Clock.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskDeferrer.h">
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

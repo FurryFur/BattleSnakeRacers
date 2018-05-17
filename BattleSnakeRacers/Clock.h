@@ -16,6 +16,7 @@
 
 namespace Clock {
 	void update();
+	float getTime();
 	float getDeltaTime();
 	float getUIDeltaTime();
 	void setTimeDilation(double timeDilation);

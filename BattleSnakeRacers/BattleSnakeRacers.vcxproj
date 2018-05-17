@@ -200,12 +200,14 @@ xcopy "$(ProjectDir)ext\assimp\lib_64\assimp-vc140-mt.dll" "$(OutDir)" /dsy</Com
     <ClCompile Include="SnakeTailSystem.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="System.cpp" />
+    <ClCompile Include="TaskDeferrer.cpp" />
     <ClCompile Include="TextLabel.cpp" />
     <ClCompile Include="TrackSystem.cpp" />
     <ClCompile Include="TransformComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AIUtils.h" />
+    <ClInclude Include="TaskDeferrer.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CameraKillSystem.h" />
