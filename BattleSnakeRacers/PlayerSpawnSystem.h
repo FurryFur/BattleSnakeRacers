@@ -27,6 +27,7 @@ private:
 
 	int m_playerDied[4];
 	int m_numPlayersDead;
+	bool m_waitingOnDeferredRespawn;
 
 	CameraKillSystem& m_cameraKillSystem;
 };

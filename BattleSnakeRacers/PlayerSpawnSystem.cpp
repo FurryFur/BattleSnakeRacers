@@ -105,9 +105,10 @@ void PlayerSpawnSystem::update()
 		}
 
 
-		if (m_numPlayersDead >= m_playerList.size() - 1 )//|| m_spawnPoint != glm::vec3(0))
+		if (!m_waitingOnDeferredRespawn && m_numPlayersDead >= m_playerList.size() - 1 )//|| m_spawnPoint != glm::vec3(0))
 		{
-			TaskDeferrer::after(5, std::bind(&PlayerSpawnSystem::respawn, this));
+			m_waitingOnDeferredRespawn = true;
+			TaskDeferrer::after(1.5, std::bind(&PlayerSpawnSystem::respawn, this));
 		}
 	}
 }
@@ -176,6 +177,7 @@ void PlayerSpawnSystem::respawn()
 
 	// Reset spawn controller values
 	m_numPlayersDead = 0;
+	m_waitingOnDeferredRespawn = false;
 
 	for (int i = 0; i < 4; ++i)
 	{
