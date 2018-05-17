@@ -26,7 +26,7 @@ EndScreen::EndScreen(std::string _dataIn)
 			break;
 		}
 	}
-	char pWin = '0' + ((index + 1) / 3);
+	char pWin = '1' + ((index + 1) / 3);
 	std::string winMsg = "Player ";
 	winMsg += pWin;
 	winMsg += " Wins!";
