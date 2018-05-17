@@ -100,6 +100,14 @@ glm::vec3 TranslateCharLevel(std::string _path, Scene& scene)
 	NDArray<char, 20, 20> straightTrack = ItemFile("Assets/Maps/straight road item.txt");
 	NDArray<char, 20, 20> curveTrack = ItemFile("Assets/Maps/boxcorner road item.txt");
 
+	std::string b = GetFilePath(_path);
+	std::string  cfileNum = b.substr(b.size() - 1, 1);
+
+	std::string str8file = "Assets/Models/Track/straight/straight" + cfileNum;
+	str8file += "/straightUp.obj";
+	std::string curvefile = "Assets/Models/Track/boxEdge/boxEdge" + cfileNum;
+	curvefile += "/boxEdge.obj";
+
 	std::string progression = GetFilePath(_path) + "Progression.txt";
 	std::string respawn = GetFilePath(_path) + "Respawn.txt";
 	NDArray<char, MaxMapWidth, MaxMapHeight> LevelProg, LevelRes, charLevel;
@@ -215,13 +223,13 @@ glm::vec3 TranslateCharLevel(std::string _path, Scene& scene)
 				NDArray<char, 20, 20> track;
 				if (isStraight)
 				{	//straightline
-					en.model = ModelUtils::loadModel("Assets/Models/Track/straightUp.obj");
+					en.model = ModelUtils::loadModel(str8file);
 					track = straightTrack;
 				}
 				else
 				{
 					//curved piece
-					en.model = ModelUtils::loadModel("Assets/Models/Track/box_edge.obj");
+					en.model = ModelUtils::loadModel(curvefile);
 					track = curveTrack;
 				}
 				

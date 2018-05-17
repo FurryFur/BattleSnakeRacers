@@ -31,8 +31,8 @@ void Game::init()
 	audio.playMenuMusic();
 	audio.playSFX(PICKUP_COLLECTED);
 	ScreenManager::switchScreen(std::unique_ptr<Screen>(new MainMenuScreen()));
-	//bool g_playersInGame[4] = { true,true,false,false };
-	//std::array<bool, 4> barray= { true,true,true,true };
+	//bool g_playersInGame[4] = { true,false,false,false };
+	//std::array<bool, 4> barray= { true,true,false,false };
 	//ScreenManager::switchScreen(std::unique_ptr<Screen>(new GameplayScreen(barray,3)));
 }
 
