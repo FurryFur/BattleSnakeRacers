@@ -56,23 +56,17 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 	renderSystem->setCamera(&cameraEntity);
 
 	// Create Ground
-	/*TransformComponent groundTransform{};
-	groundTransform.eulerAngles.x = M_PI / 2.0f;
-	groundTransform.position.y = -1;
-	groundTransform.scale *= 100;
-	Prefabs::createQuad(m_scene, groundTransform);*/
 	std::string kyle = "Assets/Maps/Level" + toString(level) + ".txt";
 	glm::vec3 startpos = CreateLevel(m_scene, kyle);
 	startpos.y = 0;
-	
-	/*TransformComponent pickupTransform{};
-	pickupTransform.scale.x = 3;
-	pickupTransform.scale.y = 3;
-	pickupTransform.scale.z = 3;
-	Entity& pickup1 = Prefabs::createModel(m_scene, "Assets/Models/crystal/mese.obj", pickupTransform);
-	pickup1.transform.position = glm::vec3(-20, 1, -20);
-	pickup1.addComponents(COMPONENT_PICKUP);
-	pickup1.pickup.isActive = true;*/
+
+	float yRot = 0;
+	if (level != 3)//level 1 || 2
+	{
+		//yRot = glm::radians(90.0f);
+		yRot = glm::radians(90.0f);
+	}
+
 
 	// Setup player1
 	TransformComponent playerTransform{};
@@ -82,7 +76,15 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 	player1.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
 	player1.preTransform.eulerAngles.y = -glm::half_pi<float>();
 	player1.transform.position = startpos;
-	player1.transform.position.z += -25;
+	if (level == 3)
+	{
+		player1.transform.position.z += -7.5;
+	}
+	else
+	{
+		player1.transform.position.x += -7.5;
+	}
+	player1.transform.eulerAngles.y += yRot;
 	player1.transform.scale = glm::vec3(2.0f, 2.0f, 2.0f);
 	player1.sphereCollision.radius = 2;
 	player1.inputMap.gamepadIdx = 0; // First gamepad plugged in
@@ -101,7 +103,15 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 		Entity& player2 = Prefabs::createModel(m_scene, "Assets/Models/UFO/PUSHILIN_flying_saucer.obj", playerTransform);
 		player2.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
 		player2.transform.position = startpos;
-		player2.transform.position.z += -20;
+		if (level == 3)
+		{
+			player2.transform.position.z += 7.5;
+		}
+		else
+		{
+			player2.transform.position.x += 7.5;
+		}
+		player2.transform.eulerAngles.y += yRot;
 		//player2.transform.scale = glm::vec3(1.0f, 1.0f, 1.0f);
 		player2.sphereCollision.radius = 2;
 		player2.inputMap.gamepadIdx = 1; // First gamepad plugged in
@@ -123,7 +133,15 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 		player3.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
 		player3.preTransform.eulerAngles.y = -glm::half_pi<float>();
 		player3.transform.position = startpos;
-		player3.transform.position.z += -15;
+		if (level == 3) 
+		{
+			player3.transform.position.z += -2.5;
+		}
+		else
+		{
+			player3.transform.position.x += -2.5f;
+		}
+		player3.transform.eulerAngles.y += yRot;
 		player3.transform.scale = glm::vec3(2.0f, 2.0f, 2.0f);
 		player3.sphereCollision.radius = 2;
 		player3.inputMap.gamepadIdx = 2; // First gamepad plugged in
@@ -144,7 +162,15 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 		player4.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
 		player4.preTransform.eulerAngles.y = -glm::half_pi<float>();
 		player4.transform.position = startpos;
-		player4.transform.position.z += -10;
+		if (level == 3)
+		{
+			player4.transform.position.z += 2.5;
+		}
+		else
+		{
+			player4.transform.position.x += 2.5;
+		}
+		player4.transform.eulerAngles.y += yRot;
 		player4.transform.scale = glm::vec3(2.0f, 2.0f, 2.0f);
 		player4.sphereCollision.radius = 2;
 		player4.inputMap.gamepadIdx = 3; // First gamepad plugged in
@@ -160,13 +186,15 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 
 	trackSystem->initializeTrackSystem();
 
+	auto cameraKillSystem = std::make_unique<CameraKillSystem>(m_scene, m_playerList, &cameraEntity);
+
 	m_activeSystems.push_back(std::move(trackSystem));
 	m_activeSystems.push_back(std::make_unique<PickupSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<CameraSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<SnakeTailSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<OffTrackKillSystem>(m_scene, m_playerList));
-	m_activeSystems.push_back(std::make_unique<PlayerSpawnSystem>(m_scene, m_playerList));
-	m_activeSystems.push_back(std::make_unique<CameraKillSystem>(m_scene, m_playerList, &cameraEntity));
+	m_activeSystems.push_back(std::make_unique<PlayerSpawnSystem>(m_scene, m_playerList, *cameraKillSystem));
+	m_activeSystems.push_back(std::move(cameraKillSystem));
 	m_activeSystems.push_back(std::move(renderSystem));
 }
 
@@ -192,6 +220,32 @@ void GameplayScreen::update()
 		kyle += static_cast<char>(m_playerList[i]->playerStats.currentScore + '0');
 		m_playerScores[i].setText(kyle);
 		m_playerScores.at(i).Render();
+
+		if (m_playerList[i]->playerStats.currentScore >= 10)
+		{
+			m_dataForNextScreen = "";
+			for (int i = 0; i < 4; i++)
+			{
+				if (m_playerList.size() > i)
+				{
+					int scor = m_playerList[i]->playerStats.currentScore;
+					if (scor >= 10)
+					{
+						m_dataForNextScreen += 'W' + toString(scor);
+					}
+					else
+					{
+						m_dataForNextScreen += "L0" + toString(scor);
+					}
+				}
+				else
+				{
+					m_dataForNextScreen += "N00";
+				}
+			}
+			this->m_screenToTransitionTo = VICTORY;
+			m_bChangeScreen = true;
+		}
 	}
 
 	for (auto& system : m_activeSystems) {

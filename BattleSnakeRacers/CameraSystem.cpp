@@ -60,8 +60,8 @@ void CameraSystem::update()
 
 			// Lerp camera position
 			if (!m_isFirstUpdate) { // Prevents weird behavior on first frame, probably due to large delta time
-				cameraPos = glm::lerp(cameraEntity.camera.getPosition(), cameraPos, Clock::getDeltaTime() * 10.0f);
-				cameraForward = glm::lerp(cameraEntity.camera.getForward(), cameraForward, Clock::getDeltaTime() * 10.0f);
+				cameraPos = glm::lerp(cameraEntity.camera.getPosition(), cameraPos, Clock::getDeltaTime() * 20.0f);
+				cameraForward = glm::lerp(cameraEntity.camera.getForward(), cameraForward, Clock::getDeltaTime() * 20.0f);
 			}
 
 			vec3 cameraLookAt = cameraPos + cameraForward;

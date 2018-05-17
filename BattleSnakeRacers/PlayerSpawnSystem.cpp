@@ -3,11 +3,14 @@
 #include "Entity.h"
 #include "PrimitivePrefabs.h"
 #include "Game.h"
+#include "CameraKillSystem.h"
+
 #include <iostream>
 
-PlayerSpawnSystem::PlayerSpawnSystem(Scene& _scene, std::vector<Entity*>& _playerList)
-	:System{_scene}
-, m_playerList{ _playerList }
+PlayerSpawnSystem::PlayerSpawnSystem(Scene& _scene, std::vector<Entity*>& _playerList, CameraKillSystem& cameraKillSystem)
+	: System{_scene}
+	, m_playerList{ _playerList }
+	, m_cameraKillSystem{ cameraKillSystem }
 {
 	m_spawnPoint = glm::vec3(0);
 	for (int i = 0; i < 4;i++)
@@ -110,6 +113,8 @@ void PlayerSpawnSystem::update()
 
 void PlayerSpawnSystem::respawn()
 {
+	m_cameraKillSystem.disableFor(5);
+
 	updateScores();
 
 	float rotation;
@@ -117,7 +122,7 @@ void PlayerSpawnSystem::respawn()
 	switch (spawnDir)
 	{
 	case '>':
-		rotation = 0;
+		rotation = 180;
 		xSpread = false;
 		break;
 	case 'v':
@@ -125,7 +130,7 @@ void PlayerSpawnSystem::respawn()
 		xSpread = true;
 		break;
 	case '<':
-		rotation = 180;
+		rotation = 0;
 		xSpread = false;
 		break;
 	case '^':
@@ -137,7 +142,7 @@ void PlayerSpawnSystem::respawn()
 		break;
 	}
 
-	rotation += 90;
+	rotation -= 90;
 	rotation = glm::radians(rotation);
 
 	for (int i = 0; i < m_playerList.size(); ++i)

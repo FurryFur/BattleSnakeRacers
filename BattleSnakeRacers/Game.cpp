@@ -32,7 +32,8 @@ void Game::init()
 	audio.playSFX(PICKUP_COLLECTED);
 	ScreenManager::switchScreen(std::unique_ptr<Screen>(new MainMenuScreen()));
 	//bool g_playersInGame[4] = { true,true,false,false };
-	//ScreenManager::switchScreen(std::unique_ptr<Screen>(new GameplayScreen(g_playersInGame)));
+	//std::array<bool, 4> barray= { true,true,true,true };
+	//ScreenManager::switchScreen(std::unique_ptr<Screen>(new GameplayScreen(barray,3)));
 }
 
 // Load game specific models and textures into GPU memory here
