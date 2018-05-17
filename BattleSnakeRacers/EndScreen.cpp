@@ -100,11 +100,6 @@ void EndScreen::update()
 		system->update();
 	}
 
-	if (!buttonReleasedOnce && !m_bMenuButtonPressed)
-	{
-		buttonReleasedOnce = true;
-	}
-
 	// Check inputs
 	if (m_bUIActive)
 	{
@@ -118,12 +113,17 @@ void EndScreen::update()
 	for (auto& system : m_activeSystems) {
 		system->endFrame();
 	}
+
+	if (!buttonReleasedOnce && !m_bMenuButtonPressed)
+	{
+		buttonReleasedOnce = true;
+	}
 }
 
 void EndScreen::buttonPressed()
 {
 	// Start Pressed
-	if (!buttonReleasedOnce)
+	if (buttonReleasedOnce)
 	{
 		if (m_iActiveMenuButtonNumber == 0)
 		{
