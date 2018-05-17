@@ -15,5 +15,7 @@ public:
 	void update() override;
 private:
 	bool m_horizontalAxisDown;
+	Entity* m_mapDiagrams;
+	TransformComponent mapTransform{};
 };
 
