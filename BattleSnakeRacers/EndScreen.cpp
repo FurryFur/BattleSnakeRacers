@@ -26,7 +26,7 @@ EndScreen::EndScreen(std::string _dataIn)
 			break;
 		}
 	}
-	char pWin = '0' + ((index + 1) / 3);
+	char pWin = '1' + ((index + 1) / 3);
 	std::string winMsg = "Player ";
 	winMsg += pWin;
 	winMsg += " Wins!";
@@ -82,6 +82,7 @@ EndScreen::EndScreen(std::string _dataIn)
 	m_UIButtons.at(m_iActiveMenuButtonNumber).setColor(glm::vec3(1.0f, 1.0f, 0.0f));
 	m_bUIActive = true;
 	m_screenState = VICTORY;
+	buttonReleasedOnce = false;
 }
 
 EndScreen::~EndScreen()
@@ -89,22 +90,55 @@ EndScreen::~EndScreen()
 
 }
 
+void EndScreen::update()
+{
+	for (auto& system : m_activeSystems) {
+		system->beginFrame();
+	}
+
+	for (auto& system : m_activeSystems) {
+		system->update();
+	}
+
+	// Check inputs
+	if (m_bUIActive)
+	{
+		checkControllerInputForUI();
+		for (int i = 0; i < m_UIButtons.size(); ++i)
+			m_UIButtons.at(i).Render();
+		for (int i = 0; i < m_UITexts.size(); ++i)
+			m_UITexts.at(i).Render();
+	}
+
+	for (auto& system : m_activeSystems) {
+		system->endFrame();
+	}
+
+	if (!buttonReleasedOnce && !m_bMenuButtonPressed)
+	{
+		buttonReleasedOnce = true;
+	}
+}
+
 void EndScreen::buttonPressed()
 {
 	// Start Pressed
-	if (m_iActiveMenuButtonNumber == 0)
+	if (buttonReleasedOnce)
 	{
-		m_screenToTransitionTo = LEVELSELECT;
-		m_bChangeScreen = true;
-	}
-	// Back Pressed
-	else if (m_iActiveMenuButtonNumber == 1)
-	{
-		m_screenToTransitionTo = MAINMENU;
-		m_bChangeScreen = true;
-	}
+		if (m_iActiveMenuButtonNumber == 0)
+		{
+			m_screenToTransitionTo = LEVELSELECT;
+			m_bChangeScreen = true;
+		}
+		// Back Pressed
+		else if (m_iActiveMenuButtonNumber == 1)
+		{
+			m_screenToTransitionTo = MAINMENU;
+			m_bChangeScreen = true;
+		}
 
-	// Play a sound
-	Audio& audio = Audio::getInstance();
-	audio.playSFX(BUTTON_CLICKED);
+		// Play a sound
+		Audio& audio = Audio::getInstance();
+		audio.playSFX(BUTTON_CLICKED);
+	}
 }

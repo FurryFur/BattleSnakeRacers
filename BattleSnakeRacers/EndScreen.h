@@ -8,5 +8,7 @@ public:
 	EndScreen(std::string);
 	~EndScreen() override;
 	void buttonPressed() override;
+	void update() override;
 private:
+	bool buttonReleasedOnce;
 };

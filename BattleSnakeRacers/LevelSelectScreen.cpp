@@ -23,8 +23,17 @@ LevelSelectScreen::LevelSelectScreen()
 	renderSystem->setIrradianceMap(irradianceMap.id);
 
 	// Setup the camera
-	Entity& cameraEntity = Prefabs::createCamera(m_scene, { 0, 23 * 8, 26 }, { 0, 0, 5 }, { 0, 1, 0 });
+	Entity& cameraEntity = Prefabs::createCamera(m_scene, { 0, 184, 26 }, { 0, 0, 5 }, { 0, 1, 0 });
 	renderSystem->setCamera(&cameraEntity);
+
+
+	// Create the map diagrams quad
+	Entity& mapDiagrams = Prefabs::createQuad(m_scene, mapTransform);
+	mapDiagrams.transform.eulerAngles = { 1.5708f, 0, 0 };
+	mapDiagrams.transform.position = { 1, 180, 25.5f };
+	mapDiagrams.model.materials.at(0).colorMaps.at(0) = GLUtils::loadTexture("Assets/Textures/map_diagrams/Track1.png"); \
+	m_mapDiagrams = &mapDiagrams;
+
 
 	// Create the start button
 	createTextLabel("Start", glm::vec2(620.0f, 150.0f), &m_UIButtons);
@@ -170,6 +179,8 @@ void LevelSelectScreen::updateLevelText()
 		m_UITexts.at(11).setText("over the bay and set up a permanent");
 		m_UITexts.at(12).setText("beach rave. They say the water here is");
 		m_UITexts.at(13).setText("great for growing their tails.");
+
+		m_mapDiagrams->model.materials.at(0).colorMaps.at(0) = GLUtils::loadTexture("Assets/Textures/map_diagrams/Track1.png");
 	}
 	else if (m_levelIDNum == 1)
 	{
@@ -186,6 +197,8 @@ void LevelSelectScreen::updateLevelText()
 		m_UITexts.at(11).setText("an abundance of scrap metal they use");
 		m_UITexts.at(12).setText("to repair their ancient machines.");
 		m_UITexts.at(13).setText("");
+
+		m_mapDiagrams->model.materials.at(0).colorMaps.at(0) = GLUtils::loadTexture("Assets/Textures/map_diagrams/Track2.png");
 	}
 	else
 	{
@@ -202,6 +215,8 @@ void LevelSelectScreen::updateLevelText()
 		m_UITexts.at(11).setText("to watch the most daring racers battle");
 		m_UITexts.at(12).setText("their way to victory in this icy arena.");
 		m_UITexts.at(13).setText("");
+
+		m_mapDiagrams->model.materials.at(0).colorMaps.at(0) = GLUtils::loadTexture("Assets/Textures/map_diagrams/Track3.png");
 	}
 }
 
