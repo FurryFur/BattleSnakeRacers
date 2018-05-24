@@ -69,7 +69,7 @@ void MainMenuScreen::buttonPressed()
 	// Quit Pressed
 	else if (m_iActiveMenuButtonNumber == 2)
 	{
-
+		exit(EXIT_SUCCESS);
 	}
 
 	// Play a sound
