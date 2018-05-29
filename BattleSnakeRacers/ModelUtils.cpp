@@ -26,16 +26,9 @@ std::vector<Texture> loadMaterialTextures(const aiMaterial* mat, aiTextureType t
 		aiString str;
 		mat->GetTexture(type, i, &str);
 
-		// Check if texture was loaded before and if so, continue to next iteration: skip loading a new texture
-		if (s_texturesLoaded.find(str.C_Str()) != s_texturesLoaded.end()) {
-			textures.push_back(s_texturesLoaded.at(str.C_Str()));
-			// A texture with the same filepath has already been loaded, continue to next one. (optimization)
-		} else {
-			// If texture hasn't been loaded already, load it
-			Texture texture = GLUtils::loadTexture(textureDir + "/" + str.C_Str());
-			s_texturesLoaded.insert(std::make_pair(str.C_Str(), texture));  // Store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
-			textures.push_back(std::move(texture));
-		}
+		Texture texture = GLUtils::loadTexture(textureDir + "/" + str.C_Str());
+		s_texturesLoaded.insert(std::make_pair(str.C_Str(), texture));  // Store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
+		textures.push_back(std::move(texture));
 	}
 	return textures;
 }
