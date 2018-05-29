@@ -205,6 +205,7 @@ void PlayerSpawnSystem::updateScores()
 				m_playerList[i]->playerStats.currentScore += -1;
 				break;
 			default:
+				m_playerList[i]->playerStats.currentScore += 1;
 				break;
 			}
 		}
@@ -225,6 +226,7 @@ void PlayerSpawnSystem::updateScores()
 				m_playerList[i]->playerStats.currentScore += 0;
 				break;
 			default:
+				m_playerList[i]->playerStats.currentScore += 1;
 				break;
 			}
 		}
@@ -254,6 +256,7 @@ void PlayerSpawnSystem::updateScores()
 				}
 				break;
 			default:
+				m_playerList[i]->playerStats.currentScore += 2;
 				break;
 			}
 		}
