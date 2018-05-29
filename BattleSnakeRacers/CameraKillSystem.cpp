@@ -51,7 +51,8 @@ void CameraKillSystem::update()
 		if (!lastPlayer)
 			lastPlayer = player;
 		else if (player->playerStats.lap < lastPlayer->playerStats.lap 
-			  || player->playerStats.progression < lastPlayer->playerStats.progression) {
+			  || (player->playerStats.lap == lastPlayer->playerStats.lap 
+			   && player->playerStats.progression < lastPlayer->playerStats.progression)) {
 			lastPlayer = player;
 		}
 	}
