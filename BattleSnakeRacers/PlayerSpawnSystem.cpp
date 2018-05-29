@@ -255,7 +255,7 @@ void PlayerSpawnSystem::updateScores()
 	}
 
 	// Make sure no player's score is below 0
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < m_playerList.size(); i++)
 	{
 		if (m_playerList[i]->playerStats.currentScore < 0)
 			m_playerList[i]->playerStats.currentScore = 0;
