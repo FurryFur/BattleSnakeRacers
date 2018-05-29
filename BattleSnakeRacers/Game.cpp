@@ -31,9 +31,9 @@ void Game::init()
 	Audio& audio = Audio::getInstance();
 	audio.playMenuMusic();
 	audio.playSFX(PICKUP_COLLECTED);
-	//ScreenManager::switchScreen(std::unique_ptr<Screen>(new MainMenuScreen()));
-	std::array<bool, 4> barray= { true,true,false,false };
-	ScreenManager::switchScreen(std::unique_ptr<Screen>(new GameplayScreen(barray,3)));
+	ScreenManager::switchScreen(std::unique_ptr<Screen>(new MainMenuScreen()));
+	//std::array<bool, 4> barray= { true,true,false,false };
+	//ScreenManager::switchScreen(std::unique_ptr<Screen>(new GameplayScreen(barray,3)));
 }
 
 // Load game specific models and textures into GPU memory here
