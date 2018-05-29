@@ -60,6 +60,8 @@ private:
 	const bool LoadAudio();
 
 	FMOD::System* m_audioMgr;
+	FMOD::ChannelGroup *channelMusic;
+	FMOD::ChannelGroup *channelEffects;
 	FMOD::Channel* m_bgMusicChannel;
 	FMOD::Channel* m_sfxChannel;
 

@@ -41,6 +41,9 @@ const bool Audio::LoadAudio() {
 	result = m_audioMgr->createSound("Assets/Audio/SoundFX/PickUp.wav", FMOD_DEFAULT, 0, &m_pickupCollected);
 	result = m_audioMgr->createSound("Assets/Audio/SoundFX/Respawn.wav", FMOD_DEFAULT, 0, &m_respawnPlayers);
 
+	result = m_audioMgr->createChannelGroup(NULL, &channelMusic);
+	result = m_audioMgr->createChannelGroup(NULL, &channelEffects);
+
 	m_bgMusic->setMode(FMOD_LOOP_NORMAL);
 	m_racingMusic->setMode(FMOD_LOOP_NORMAL);
 	m_80sMusic->setMode(FMOD_LOOP_NORMAL);
@@ -63,49 +66,49 @@ void  Audio::playMenuMusic()
 {
 	// Play the background music
 	m_bgMusicChannel->stop();
-	m_audioMgr->playSound(m_bgMusic, 0, false, &m_bgMusicChannel);
+	m_audioMgr->playSound(m_bgMusic, channelMusic, false, &m_bgMusicChannel);
 }
 
 void  Audio::playTrack1Music()
 {
 	// Play the track1 music
 	m_bgMusicChannel->stop();
-	m_audioMgr->playSound(m_adventureMusic, 0, false, &m_bgMusicChannel);
+	m_audioMgr->playSound(m_adventureMusic, channelMusic, false, &m_bgMusicChannel);
 }
 
 void  Audio::playTrack2Music()
 {
 	// Play the track2 music
 	m_bgMusicChannel->stop();
-	m_audioMgr->playSound(m_franticMusic, 0, false, &m_bgMusicChannel);
+	m_audioMgr->playSound(m_franticMusic, channelMusic, false, &m_bgMusicChannel);
 }
 void  Audio::playTrack3Music()
 {
 	// Play the track3 music
 	m_bgMusicChannel->stop();
-	m_audioMgr->playSound(m_racingMusic, 0, false, &m_bgMusicChannel);
+	m_audioMgr->playSound(m_racingMusic, channelMusic, false, &m_bgMusicChannel);
 }
 
 void Audio::playSFX(Sound sound)
 {
 	if (sound == PLAYER_ACCELERATE)
-		m_audioMgr->playSound(m_accelerate, 0, false, &m_sfxChannel);
+		m_audioMgr->playSound(m_accelerate, channelEffects, false, &m_sfxChannel);
 	else if (sound == PLAYER_ENGINE)
-		m_audioMgr->playSound(m_engineLoop, 0, false, &m_sfxChannel);
+		m_audioMgr->playSound(m_engineLoop, channelEffects, false, &m_sfxChannel);
 	else if (sound == BUTTON_CLICKED)
-		m_audioMgr->playSound(m_buttonClick, 0, false, &m_sfxChannel);
+		m_audioMgr->playSound(m_buttonClick, channelEffects, false, &m_sfxChannel);
 	else if (sound == PLAYER_JOINED)
-		m_audioMgr->playSound(m_playerJoined, 0, false, &m_sfxChannel);
+		m_audioMgr->playSound(m_playerJoined, channelEffects, false, &m_sfxChannel);
 	else if (sound == PLAYER_COLLISION)
-		m_audioMgr->playSound(m_playerCollision, 0, false, &m_sfxChannel);
+		m_audioMgr->playSound(m_playerCollision, channelEffects, false, &m_sfxChannel);
 	else if (sound == PLAYER_SNAKE_COLLIDE)
-		m_audioMgr->playSound(m_playerSnakeTailCollide, 0, false, &m_sfxChannel);
+		m_audioMgr->playSound(m_playerSnakeTailCollide, channelEffects, false, &m_sfxChannel);
 	else if (sound == PLAYER_FALLING)
-		m_audioMgr->playSound(m_playerFalling, 0, false, &m_sfxChannel);
+		m_audioMgr->playSound(m_playerFalling, channelEffects, false, &m_sfxChannel);
 	else if (sound == PICKUP_COLLECTED)
-		m_audioMgr->playSound(m_pickupCollected, 0, false, &m_sfxChannel);
+		m_audioMgr->playSound(m_pickupCollected, channelEffects, false, &m_sfxChannel);
 	else if (sound == RESPAWN_PLAYERS)
-		m_audioMgr->playSound(m_respawnPlayers, 0, false, &m_sfxChannel);
+		m_audioMgr->playSound(m_respawnPlayers, channelEffects, false, &m_sfxChannel);
 }
 
 Audio& Audio::getInstance()
