@@ -219,10 +219,10 @@ void PlayerSpawnSystem::updateScores()
 				m_playerList[i]->playerStats.currentScore += 1;
 				break;
 			case 1:
-				m_playerList[i]->playerStats.currentScore += 0;
+				m_playerList[i]->playerStats.currentScore += -1;
 				break;
 			case 2:
-				m_playerList[i]->playerStats.currentScore += -1;
+				m_playerList[i]->playerStats.currentScore += 0;
 				break;
 			default:
 				break;
@@ -239,17 +239,19 @@ void PlayerSpawnSystem::updateScores()
 				m_playerList[i]->playerStats.currentScore += 2;
 				break;
 			case 1:
-				// If at 9 points, do not get points for coming second
-				if (m_playerList[i]->playerStats.currentScore != 9)
-				{
-					m_playerList[i]->playerStats.currentScore += 1;
-				}
+				
+				m_playerList[i]->playerStats.currentScore += -2;
 				break;
 			case 2:
 				m_playerList[i]->playerStats.currentScore += -1;
 				break;
 			case 3:
-				m_playerList[i]->playerStats.currentScore += -2;
+				
+				// If at 9 points, do not get points for coming second
+				if (m_playerList[i]->playerStats.currentScore != 9)
+				{
+					m_playerList[i]->playerStats.currentScore += 1;
+				}
 				break;
 			default:
 				break;
