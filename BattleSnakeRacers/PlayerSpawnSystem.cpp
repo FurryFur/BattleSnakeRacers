@@ -239,7 +239,11 @@ void PlayerSpawnSystem::updateScores()
 				m_playerList[i]->playerStats.currentScore += 2;
 				break;
 			case 1:
-				m_playerList[i]->playerStats.currentScore += 1;
+				// If at 9 points, do not get points for coming second
+				if (m_playerList[i]->playerStats.currentScore != 9)
+				{
+					m_playerList[i]->playerStats.currentScore += 1;
+				}
 				break;
 			case 2:
 				m_playerList[i]->playerStats.currentScore += -1;
@@ -251,6 +255,13 @@ void PlayerSpawnSystem::updateScores()
 				break;
 			}
 		}
+	}
+
+	// Make sure no player's score is below 0
+	for (int i = 0; i < m_playerList.size(); i++)
+	{
+		if (m_playerList[i]->playerStats.currentScore < 0)
+			m_playerList[i]->playerStats.currentScore = 0;
 	}
 }
 	
