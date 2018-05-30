@@ -2,6 +2,7 @@
 
 #include "GlobalConstants.h"
 #include "Game.h"
+#include "Audio.h"
 
 #include <glm\glm.hpp>
 
@@ -46,6 +47,10 @@ void OffTrackKillSystem::update()
 				player.physics.acceleration += vec3{ 0, -50, 0 };
 				player.transform.eulerAngles.y += 1.0f;
 				player.removeComponents(COMPONENT_INPUT);
+
+				// Play a sound
+				Audio& audio = Audio::getInstance();
+				audio.playSFX(PLAYER_SNAKE_COLLIDE);
 			}
 			else {
 				if (player.physics.acceleration.y != 0)
