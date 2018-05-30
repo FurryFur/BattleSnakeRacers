@@ -38,8 +38,6 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 	// Init systems
 	m_activeSystems.push_back(std::make_unique<InputSystem>(m_scene));
 	m_activeSystems.push_back(std::make_unique<MovementSystem>(m_scene));
-	m_activeSystems.push_back(std::make_unique<CollisionSystem>(m_scene));
-	m_activeSystems.push_back(std::make_unique<PhysicsSystem>(m_scene));
 	
 	auto trackSystem = std::make_unique<TrackSystem>(m_scene);
 	auto renderSystem = std::make_unique<RenderSystem>(m_scene);
@@ -186,16 +184,19 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 
 	trackSystem->initializeTrackSystem();
 
+	auto playerCollisionSystem = std::make_unique<PlayerCollisionSystem>(m_scene, m_playerList);
 	auto cameraKillSystem = std::make_unique<CameraKillSystem>(m_scene, m_playerList, &cameraEntity);
 
+	m_activeSystems.push_back(std::move(playerCollisionSystem));
 	m_activeSystems.push_back(std::move(trackSystem));
 	m_activeSystems.push_back(std::make_unique<PickupSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<CameraSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<SnakeTailSystem>(m_scene, m_playerList));
-	m_activeSystems.push_back(std::make_unique<OffTrackKillSystem>(m_scene, m_playerList));
 	m_activeSystems.push_back(std::make_unique<PlayerSpawnSystem>(m_scene, m_playerList, *cameraKillSystem));
 	m_activeSystems.push_back(std::move(cameraKillSystem));
 	m_activeSystems.push_back(std::move(renderSystem));
+	m_activeSystems.push_back(std::make_unique<OffTrackKillSystem>(m_scene, m_playerList));
+	m_activeSystems.push_back(std::make_unique<PhysicsSystem>(m_scene));
 }
 
 GameplayScreen::~GameplayScreen()

@@ -6,31 +6,32 @@
 
 using namespace glm;
 
-CollisionSystem::CollisionSystem(Scene& scene)
+PlayerCollisionSystem::PlayerCollisionSystem(Scene& scene, std::vector<Entity*>& playerList)
 	: System(scene)
+	, m_playerList{ playerList }
 {
 }
 
-void CollisionSystem::update()
+void PlayerCollisionSystem::update()
 {
 	// Loop through every pair of objects
-	for (size_t i = 0; i < m_scene.getEntityCount(); ++i) {
-		for (size_t j = i + 1; j < m_scene.getEntityCount(); ++j) {
-			Entity& entity1 = m_scene.getEntity(i);
-			Entity& entity2 = m_scene.getEntity(j);
+	for (size_t i = 0; i < m_playerList.size(); ++i) {
+		for (size_t j = i + 1; j < m_playerList.size(); ++j) {
+			Entity& player1 = *m_playerList.at(i);
+			Entity& player2 = *m_playerList.at(j);
 
-			if (!entity1.hasComponents(COMPONENT_PHYSICS) || !entity2.hasComponents(COMPONENT_PHYSICS)
-			 || !entity1.hasComponents(COMPONENT_TRANSFORM) || !entity2.hasComponents(COMPONENT_TRANSFORM))
+			if (!player1.hasComponents(COMPONENT_PHYSICS) || !player2.hasComponents(COMPONENT_PHYSICS)
+			 || !player1.hasComponents(COMPONENT_TRANSFORM) || !player2.hasComponents(COMPONENT_TRANSFORM))
 				continue;
 
 			// TODO: Implement collision between differing types of collision bodies
-			if (entity1.hasComponents(COMPONENT_SPHERE_COLLISION) && entity2.hasComponents(COMPONENT_SPHERE_COLLISION)) {
-				ContactInfo contactInfo = doSphereCollisionDetection(entity1, entity2);
+			if (player1.hasComponents(COMPONENT_SPHERE_COLLISION) && player2.hasComponents(COMPONENT_SPHERE_COLLISION)) {
+				ContactInfo contactInfo = doSphereCollisionDetection(player1, player2);
 				if (contactInfo.isCollision) {
 					// TODO: Add restitution to collision types instead of hard coding spring constant here
 					const float springConstant = 1000;
-					entity1.physics.acceleration += contactInfo.contactNormals[0] * contactInfo.penetrationDistance * springConstant;
-					entity2.physics.acceleration += contactInfo.contactNormals[1] * contactInfo.penetrationDistance * springConstant;
+					player1.physics.acceleration += contactInfo.contactNormals[0] * contactInfo.penetrationDistance * springConstant;
+					player2.physics.acceleration += contactInfo.contactNormals[1] * contactInfo.penetrationDistance * springConstant;
 
 					// Play a sound
 					Audio& audio = Audio::getInstance();
@@ -41,20 +42,21 @@ void CollisionSystem::update()
 	}
 }
 
-void CollisionSystem::beginFrame()
+void PlayerCollisionSystem::beginFrame()
 {
 }
 
-void CollisionSystem::endFrame()
+void PlayerCollisionSystem::endFrame()
 {
 }
 
-ContactInfo CollisionSystem::doSphereCollisionDetection(Entity& entity1, Entity& entity2)
+ContactInfo PlayerCollisionSystem::doSphereCollisionDetection(Entity& entity1, Entity& entity2)
 {
 	ContactInfo contactInfo;
 	contactInfo.isCollision = false;
 
 	vec3 displacement = entity1.transform.position - entity2.transform.position;
+	displacement.y = 0; // Only do 2D collisions
 	float distance = glm::length(displacement);
 	float sumRadii = entity1.sphereCollision.radius + entity2.sphereCollision.radius;
 	if (distance < sumRadii) {
@@ -67,12 +69,12 @@ ContactInfo CollisionSystem::doSphereCollisionDetection(Entity& entity1, Entity&
 	return contactInfo;
 }
 
-ContactInfo CollisionSystem::doBoxCollisionDetection(Entity& entity1, Entity& entity2)
-{
-	return ContactInfo();
-}
-
-ContactInfo CollisionSystem::doCapsuleCollisionDetection(Entity& entity1, Entity& entity2)
-{
-	return ContactInfo();
-}
+//ContactInfo PlayerCollisionSystem::doBoxCollisionDetection(Entity& entity1, Entity& entity2)
+//{
+//	return ContactInfo();
+//}
+//
+//ContactInfo PlayerCollisionSystem::doCapsuleCollisionDetection(Entity& entity1, Entity& entity2)
+//{
+//	return ContactInfo();
+//}

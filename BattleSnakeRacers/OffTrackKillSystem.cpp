@@ -47,6 +47,10 @@ void OffTrackKillSystem::update()
 				player.transform.eulerAngles.y += 1.0f;
 				player.removeComponents(COMPONENT_INPUT);
 			}
+			else {
+				if (player.physics.acceleration.y != 0)
+					bool asdf = true;
+			}
 
 			// Kill players beyond a certain -y value
 			if (player.transform.position.y <= m_killY) {

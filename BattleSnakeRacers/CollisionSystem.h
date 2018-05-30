@@ -2,11 +2,13 @@
 
 #include "System.h"
 
+#include <vector>
+
 class Scene;
 
-class CollisionSystem : public System {
+class PlayerCollisionSystem : public System {
 public:
-	CollisionSystem(Scene&);
+	PlayerCollisionSystem(Scene&, std::vector<Entity*>& playerList);
 
 	// Inherited via System
 	virtual void update() override;
@@ -15,6 +17,8 @@ public:
 
 private:
 	ContactInfo doSphereCollisionDetection(Entity& entity1, Entity& entity2);
-	ContactInfo doBoxCollisionDetection(Entity& entity1, Entity& entity2);
-	ContactInfo doCapsuleCollisionDetection(Entity& entity1, Entity& entity2);
+	//ContactInfo doBoxCollisionDetection(Entity& entity1, Entity& entity2);
+	//ContactInfo doCapsuleCollisionDetection(Entity& entity1, Entity& entity2);
+
+	std::vector<Entity*>& m_playerList;
 };
