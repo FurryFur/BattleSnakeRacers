@@ -32,14 +32,14 @@ void CameraSystem::update()
 
 		if (m_playerList.size() > 0) {
 			// Find bounding rect around players in xz plane
-			bool isFrstNonDeadPlayer = true;
+			bool foundNonDeadPlayer = false;
 			vec3 topLeft, topRight, bottomLeft, bottomRight;
 			for (auto player : m_playerList) {
 				if (player->playerStats.getDeathState() == false) {
 					const vec3& playerPos = player->transform.position;
-					if (isFrstNonDeadPlayer) {
+					if (!foundNonDeadPlayer) {
 						topLeft = topRight = bottomLeft = bottomRight = playerPos;
-						isFrstNonDeadPlayer = false;
+						foundNonDeadPlayer = true;
 					}
 
 					topLeft = glm::min(topLeft, playerPos);
@@ -49,6 +49,10 @@ void CameraSystem::update()
 					bottomLeft = vec3{ topLeft.x, 0, bottomRight.z };
 				}
 			}
+
+			// Don't do anything if everyone is dead.
+			if (!foundNonDeadPlayer)
+				return;
 
 			vec3 centerOfAllPlayers = (topLeft + topRight + bottomLeft + bottomRight) / 4.0f;
 			vec3 cameraPos = centerOfAllPlayers + Constants::cameraOffset;
