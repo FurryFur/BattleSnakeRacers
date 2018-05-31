@@ -48,6 +48,8 @@ void Game::executeOneFrame()
 	Clock::update();
 	TaskDeferrer::update();
 	ScreenManager::update();
+	Audio& audio = Audio::getInstance();
+	audio.update();
 }
 
 void Game::killPlayer(Entity& player)
