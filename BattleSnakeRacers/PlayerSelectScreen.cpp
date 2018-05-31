@@ -24,7 +24,7 @@ PlayerSelectScreen::PlayerSelectScreen()
 	, m_isP3Joined{ false }
 	, m_isP4Joined{ false }
 	, player1Model{ Prefabs::createModel(m_scene, "Assets/Models/Plane/PUSHILIN_Plane.obj") }
-	, player2Model{ Prefabs::createModel(m_scene, "Assets/Models/UFO/PUSHILIN_flying_saucer.obj") }
+	, player2Model{ Prefabs::createModel(m_scene, "Assets/Models/DragCar/model.obj") }
 	, player3Model{ Prefabs::createModel(m_scene, "Assets/Models/Police/PUSHILIN_Police_car.obj") }
 	, player4Model{ Prefabs::createModel(m_scene, "Assets/Models/Taxi/PUSHILIN_Taxi.obj") }
 {
@@ -64,7 +64,7 @@ PlayerSelectScreen::PlayerSelectScreen()
 	player1Model.physics.angularVelocity = glm::vec3(3.0f, 0.5f, 0.0f);
 
 	player2Model.addComponents(COMPONENT_PHYSICS, COMPONENT_TRANSFORM);
-	player2Model.transform.scale = glm::vec3(7.0f, 7.0f, 7.0f);
+	player2Model.transform.scale = glm::vec3(18.0f, 18.0f, 18.0f);
 	player2Model.transform.position = glm::vec3(40, 110, -5);
 	player2Model.physics.angularVelocity = glm::vec3(3.0f, 0.5f, 0.0f);
 	player2Model.removeComponents(COMPONENT_MODEL);
@@ -125,13 +125,13 @@ void PlayerSelectScreen::checkControllerInput()
 	if (count > 0) {
 		std::vector<unsigned char> btns(p1Btns, p1Btns + count);
 		// Check if the player pressed the A button
-		if (!m_bMenuButtonPressed && btns[0] == 1)
+		if (!m_bMenuButtonPressed && btns[1] == 1)
 		{
 			m_UIButtons.at(m_iActiveMenuButtonNumber).setColor(glm::vec3(1.0f, 0.0f, 0.0f));
 			m_bMenuButtonPressed = true;
 		}
 		// The button has been pressed, trigger the response
-		else if (m_bMenuButtonPressed && btns[0] == 0)
+		else if (m_bMenuButtonPressed && btns[1] == 0)
 		{
 			m_UIButtons.at(m_iActiveMenuButtonNumber).setColor(glm::vec3(1.0f, 1.0f, 0.0f));
 			m_bMenuButtonPressed = false;
@@ -249,12 +249,14 @@ bool PlayerSelectScreen::checkEnoughPlayersJoined()
 	{
 		m_centreText.setText("P1 press start to race!");
 		m_centreText.setColor(glm::vec3(1.0f, 1.0f, 0.0f));
+		m_centreText.setPosition(glm::vec2(500.0f, 400.0f));
 		return true;
 	}
 	else
 	{
 		m_centreText.setText("Atleast 2 players needed to Play!");
 		m_centreText.setColor(glm::vec3(1.0f, 1.0f, 1.0f));
+		m_centreText.setPosition(glm::vec2(400.0f, 400.0f));
 		return false;
 	}
 }

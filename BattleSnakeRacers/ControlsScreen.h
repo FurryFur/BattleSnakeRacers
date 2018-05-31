@@ -10,5 +10,9 @@ public:
 	ControlsScreen();
 	~ControlsScreen() override;
 	void buttonPressed() override;
+
+private:
+	Entity* m_controlDiagram;
+	TransformComponent controlsTransform{};
 };
 

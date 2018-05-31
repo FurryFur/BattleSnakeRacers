@@ -47,10 +47,6 @@ void OffTrackKillSystem::update()
 				player.physics.acceleration += vec3{ 0, -50, 0 };
 				player.transform.eulerAngles.y += 1.0f;
 				player.removeComponents(COMPONENT_INPUT);
-
-				// Play a sound
-				Audio& audio = Audio::getInstance();
-				audio.playSFX(PLAYER_SNAKE_COLLIDE);
 			}
 			else {
 				if (player.physics.acceleration.y != 0)
@@ -60,6 +56,9 @@ void OffTrackKillSystem::update()
 			// Kill players beyond a certain -y value
 			if (player.transform.position.y <= m_killY) {
 				Game::killPlayer(*m_playerList[i]);
+				// Play a sound
+				Audio& audio = Audio::getInstance();
+				audio.playSFX(PLAYER_SNAKE_COLLIDE);
 			}
 		}
 	}

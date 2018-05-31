@@ -98,7 +98,9 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 	// Setup player2
 	if (activePlayers[1])
 	{
-		Entity& player2 = Prefabs::createModel(m_scene, "Assets/Models/UFO/PUSHILIN_flying_saucer.obj", playerTransform);
+		Entity& player2 = Prefabs::createModel(m_scene, "Assets/Models/DragCar/model.obj", playerTransform);
+		player2.preTransform.scale = glm::vec3(3.0f, 3.0f, 3.0f);
+		player2.preTransform.eulerAngles.y = glm::pi<float>();
 		player2.addComponents(COMPONENT_INPUT, COMPONENT_INPUT_MAP, COMPONENT_MOVEMENT, COMPONENT_PHYSICS, COMPONENT_PLAYERSTATS, COMPONENT_SPHERE_COLLISION);
 		player2.transform.position = startpos;
 		if (level == 3)
@@ -118,7 +120,7 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 		player2.inputMap.brakeBtnMap = 2;
 		m_playerList.push_back(&player2);
 		TextLabel player2Score = createPlayerTextLabel(2);
-		player2Score.setColor(glm::vec3(0.0f, 1.0f, 0.0f));
+		player2Score.setColor(glm::vec3(1.0f, 0.0f, 1.0f));
 		m_playerScores.push_back(player2Score);
 		//player2.playerStats.scoreLabel = &m_playerScores.back();
 

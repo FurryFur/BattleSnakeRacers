@@ -30,12 +30,17 @@ void PlayerCollisionSystem::update()
 				if (contactInfo.isCollision) {
 					// TODO: Add restitution to collision types instead of hard coding spring constant here
 					const float springConstant = 1000;
-					player1.physics.acceleration += contactInfo.contactNormals[0] * contactInfo.penetrationDistance * springConstant;
+					glm::vec3 newPlayer1Acceleration = contactInfo.contactNormals[0] * contactInfo.penetrationDistance * springConstant;
+
+					player1.physics.acceleration += newPlayer1Acceleration;
 					player2.physics.acceleration += contactInfo.contactNormals[1] * contactInfo.penetrationDistance * springConstant;
 
 					// Play a sound
-					Audio& audio = Audio::getInstance();
-					audio.playSFX(PLAYER_COLLISION);
+					if (glm::length(newPlayer1Acceleration) > 29.0f)
+					{
+						Audio& audio = Audio::getInstance();
+						audio.playSFX(PLAYER_COLLISION);
+					}
 				}
 			}
 		}
