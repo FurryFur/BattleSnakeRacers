@@ -120,7 +120,7 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 		player2.inputMap.brakeBtnMap = 2;
 		m_playerList.push_back(&player2);
 		TextLabel player2Score = createPlayerTextLabel(2);
-		player2Score.setColor(glm::vec3(1.0f, 0.0f, 1.0f));
+		player2Score.setColor(glm::vec3(0.8f, 0.0f, 0.8f));
 		m_playerScores.push_back(player2Score);
 		//player2.playerStats.scoreLabel = &m_playerScores.back();
 
