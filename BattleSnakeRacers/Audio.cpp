@@ -81,20 +81,20 @@ void  Audio::playTrack1Music()
 {
 	// Play the track1 music
 	m_bgMusicChannel->stop();
-	m_audioMgr->playSound(m_adventureMusic, channelMusic, false, &m_t1MusicChannel);
+	m_audioMgr->playSound(m_adventureMusic, channelMusic, false, &m_bgMusicChannel);
 }
 
 void  Audio::playTrack2Music()
 {
 	// Play the track2 music
 	m_bgMusicChannel->stop();
-	m_audioMgr->playSound(m_franticMusic, channelMusic, false, &m_t2MusicChannel);
+	m_audioMgr->playSound(m_franticMusic, channelMusic, false, &m_bgMusicChannel);
 }
 void  Audio::playTrack3Music()
 {
 	// Play the track3 music
 	m_bgMusicChannel->stop();
-	m_audioMgr->playSound(m_racingMusic, channelMusic, false, &m_t3MusicChannel);
+	m_audioMgr->playSound(m_racingMusic, channelMusic, false, &m_bgMusicChannel);
 }
 
 void Audio::playSFX(Sound sound)
