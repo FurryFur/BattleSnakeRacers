@@ -13,11 +13,18 @@ Audio::~Audio()
 {
 }
 
+void Audio::update()
+{
+	m_audioMgr->update();
+}
+
+
+
 bool Audio::InitFmod() {
 	FMOD_RESULT result;
 	result = FMOD::System_Create(&m_audioMgr);
 	if (result != FMOD_OK) return false;
-	result = m_audioMgr->init(999, FMOD_INIT_NORMAL, 0);
+	result = m_audioMgr->init(32, FMOD_INIT_NORMAL, 0);
 	if (result != FMOD_OK) return false;
 	return true;
 }
@@ -74,20 +81,20 @@ void  Audio::playTrack1Music()
 {
 	// Play the track1 music
 	m_bgMusicChannel->stop();
-	m_audioMgr->playSound(m_adventureMusic, channelMusic, false, &m_bgMusicChannel);
+	m_audioMgr->playSound(m_adventureMusic, channelMusic, false, &m_t1MusicChannel);
 }
 
 void  Audio::playTrack2Music()
 {
 	// Play the track2 music
 	m_bgMusicChannel->stop();
-	m_audioMgr->playSound(m_franticMusic, channelMusic, false, &m_bgMusicChannel);
+	m_audioMgr->playSound(m_franticMusic, channelMusic, false, &m_t2MusicChannel);
 }
 void  Audio::playTrack3Music()
 {
 	// Play the track3 music
 	m_bgMusicChannel->stop();
-	m_audioMgr->playSound(m_racingMusic, channelMusic, false, &m_bgMusicChannel);
+	m_audioMgr->playSound(m_racingMusic, channelMusic, false, &m_t3MusicChannel);
 }
 
 void Audio::playSFX(Sound sound)

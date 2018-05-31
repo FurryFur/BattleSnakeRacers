@@ -39,6 +39,7 @@ private:
 public:
 
 	~Audio();
+	void update();
 
 	static Audio& getInstance();
 
@@ -58,6 +59,7 @@ protected:
 
 private:
 
+	
 	bool InitFmod();
 	const bool LoadAudio();
 
@@ -66,6 +68,9 @@ private:
 	FMOD::ChannelGroup *channelEffects;
 	FMOD::ChannelGroup *accelerationChannelGroup;
 	FMOD::Channel* m_bgMusicChannel;
+	FMOD::Channel* m_t1MusicChannel;
+	FMOD::Channel* m_t2MusicChannel;
+	FMOD::Channel* m_t3MusicChannel;
 	FMOD::Channel* m_sfxChannel;
 	FMOD::Channel* m_accelerateChannel;
 
