@@ -8,14 +8,15 @@
 #include "TextLabel.h"
 #include "Audio.h"
 
+glm::vec3 colorFromChar(std::string _c);
 using namespace std;
 EndScreen::EndScreen(std::string _dataIn)
 {
 
-	string p1 = _dataIn.substr(0, 3);
-	string p2 = _dataIn.substr(3, 3);
-	string p3 = _dataIn.substr(6, 3);
-	string p4 = _dataIn.substr(9, 3);
+	string p1 = _dataIn.substr(0, 4);
+	string p2 = _dataIn.substr(4, 4);
+	string p3 = _dataIn.substr(8, 4);
+	string p4 = _dataIn.substr(12, 4);
 
 	int index = 0;
 	for (int i = 0; i < _dataIn.length(); i++)
@@ -26,7 +27,7 @@ EndScreen::EndScreen(std::string _dataIn)
 			break;
 		}
 	}
-	char pWin = '1' + ((index + 1) / 3);
+	char pWin = '1' + ((index + 1) / 4);
 	std::string winMsg = "Player ";
 	winMsg += pWin;
 	winMsg += " Wins!";
@@ -51,13 +52,13 @@ EndScreen::EndScreen(std::string _dataIn)
 		color = glm::vec3(1, 0, 0);
 		break;
 	case '2':
-		color = glm::vec3(0.8f, 0, 0.8f);
+		color = colorFromChar(p2.substr(3, 1));
 		break;
 	case '3':
-		color = glm::vec3(0, 0, 1);
+		color = colorFromChar(p3.substr(3, 1));
 		break;
 	case '4':
-		color = glm::vec3(1, 1, 0);
+		color = colorFromChar(p4.substr(3, 1));
 		break;
 	 default:
 		break;
@@ -68,28 +69,32 @@ EndScreen::EndScreen(std::string _dataIn)
 	
 	if (p1[0] != 'N')
 	{
-		createTextLabel("P1", glm::vec2(320, 500), &m_UITexts, 1.0f, glm::vec3(1, 0, 0));
+		glm::vec3 col = colorFromChar(p1.substr(3, 1));
+		createTextLabel("P1", glm::vec2(320, 500), &m_UITexts, 1.0f, col);
 		createTextLabel(p1.substr(1,2), glm::vec2(320, 400), &m_UITexts, 1.0f, glm::vec3(1, 1, 1));		
 		createTextLabel(p1.substr(0, 1), glm::vec2(320, 300), &m_UITexts, 1.0f, glm::vec3(1, 1, 1));
 
 	}
 	if (p2[0] != 'N')
 	{
-		createTextLabel("P2", glm::vec2(520, 500), &m_UITexts, 1.0f, glm::vec3(0.8f, 0, 0.8f));
+		glm::vec3 col = colorFromChar(p2.substr(3, 1));
+		createTextLabel("P2", glm::vec2(520, 500), &m_UITexts, 1.0f, col);
 		createTextLabel(p2.substr(1, 2), glm::vec2(520, 400), &m_UITexts, 1.0f, glm::vec3(1, 1, 1));
 		createTextLabel(p2.substr(0, 1), glm::vec2(520, 300), &m_UITexts, 1.0f, glm::vec3(1, 1, 1));
 
 	}
 	if (p3[0] != 'N')
 	{
-		createTextLabel("P3", glm::vec2(720, 500), &m_UITexts, 1.0f, glm::vec3(0, 0, 1));
+		glm::vec3 col = colorFromChar(p3.substr(3, 1));
+		createTextLabel("P3", glm::vec2(720, 500), &m_UITexts, 1.0f, col);
 		createTextLabel(p3.substr(1, 2), glm::vec2(720, 400), &m_UITexts, 1.0f, glm::vec3(1, 1, 1));
 		createTextLabel(p3.substr(0, 1), glm::vec2(720, 300), &m_UITexts, 1.0f, glm::vec3(1, 1, 1));
 
 	}
 	if (p4[0] != 'N')
 	{
-		createTextLabel("P4", glm::vec2(920, 500), &m_UITexts, 1.0f, glm::vec3(1, 1, 0));
+		glm::vec3 col = colorFromChar(p4.substr(3, 1));
+		createTextLabel("P4", glm::vec2(920, 500), &m_UITexts, 1.0f, col);
 		createTextLabel(p4.substr(1, 2), glm::vec2(920, 400), &m_UITexts, 1.0f, glm::vec3(1, 1, 1));
 		createTextLabel(p4.substr(0, 1), glm::vec2(920, 300), &m_UITexts, 1.0f, glm::vec3(1, 1, 1));
 	}
@@ -160,5 +165,29 @@ void EndScreen::buttonPressed()
 		// Play a sound
 		Audio& audio = Audio::getInstance();
 		audio.playSFX(BUTTON_CLICKED);
+	}
+}
+
+glm::vec3 colorFromChar(std::string _c)
+{
+	if (_c == "r")
+	{
+		return glm::vec3(1, 0, 0);
+	}
+	else if (_c == "p")
+	{
+		return glm::vec3(0.8, 0, 0.8);
+	}
+	else if (_c == "b")
+	{
+		return glm::vec3(0, 0, 1);
+	}
+	else if (_c == "y")
+	{
+		return glm::vec3(1, 1, 0);
+	}
+	else
+	{
+		return glm::vec3(0);
 	}
 }

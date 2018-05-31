@@ -89,6 +89,7 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 	player1.inputMap.turnAxisMap = 0; // Left stick x axis
 	player1.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
 	player1.inputMap.brakeBtnMap = 2;
+	player1.playerStats.color = 'r';
 	m_playerList.push_back(&player1);
 	TextLabel player1Score = createPlayerTextLabel(1);
 	player1Score.setColor(glm::vec3(1.0f, 0.0f, 0.0f));
@@ -118,6 +119,7 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 		player2.inputMap.turnAxisMap = 0; // Left stick x axis
 		player2.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
 		player2.inputMap.brakeBtnMap = 2;
+		player2.playerStats.color = 'p';
 		m_playerList.push_back(&player2);
 		TextLabel player2Score = createPlayerTextLabel(2);
 		player2Score.setColor(glm::vec3(0.8f, 0.0f, 0.8f));
@@ -148,6 +150,7 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 		player3.inputMap.turnAxisMap = 0; // Left stick x axis
 		player3.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
 		player3.inputMap.brakeBtnMap = 2;
+		player3.playerStats.color = 'b';
 		m_playerList.push_back(&player3);
 		TextLabel player3Score = createPlayerTextLabel(3);
 		player3Score.setColor(glm::vec3(0.0f, 0.0f, 1.0f));
@@ -177,6 +180,7 @@ GameplayScreen::GameplayScreen(std::array<bool, 4> activePlayers, int level)
 		player4.inputMap.turnAxisMap = 0; // Left stick x axis
 		player4.inputMap.accelerationBtnMap = 0; // A Button (Xbox controller)
 		player4.inputMap.brakeBtnMap = 2;
+		player4.playerStats.color = 'y';
 		m_playerList.push_back(&player4);
 		TextLabel player4Score = createPlayerTextLabel(4);
 		player4Score.setColor(glm::vec3(1.0f, 1.0f, 0.0f));
@@ -232,6 +236,7 @@ void GameplayScreen::update()
 				if (m_playerList.size() > i)
 				{
 					int scor = m_playerList[i]->playerStats.currentScore;
+					
 					if (scor >= 10)
 					{
 						m_dataForNextScreen += 'W' + toString(scor);
@@ -240,10 +245,11 @@ void GameplayScreen::update()
 					{
 						m_dataForNextScreen += "L0" + toString(scor);
 					}
+					m_dataForNextScreen += m_playerList[i]->playerStats.color;
 				}
 				else
 				{
-					m_dataForNextScreen += "N00";
+					m_dataForNextScreen += "N00n";
 				}
 			}
 			this->m_screenToTransitionTo = VICTORY;
