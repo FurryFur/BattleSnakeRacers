@@ -47,6 +47,8 @@ public:
 	void playTrack2Music();
 	void playTrack3Music();
 
+	void stopAccelerate();
+
 	// Play a game play Sound effect
 	void playSFX(Sound sound);
 
@@ -62,8 +64,10 @@ private:
 	FMOD::System* m_audioMgr;
 	FMOD::ChannelGroup *channelMusic;
 	FMOD::ChannelGroup *channelEffects;
+	FMOD::ChannelGroup *accelerationChannelGroup;
 	FMOD::Channel* m_bgMusicChannel;
 	FMOD::Channel* m_sfxChannel;
+	FMOD::Channel* m_accelerateChannel;
 
 	FMOD::Sound* m_bgMusic;
 	FMOD::Sound* m_franticMusic;
