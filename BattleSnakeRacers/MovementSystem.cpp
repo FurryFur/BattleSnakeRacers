@@ -25,6 +25,7 @@
 #include "Clock.h"
 #include "Utils.h"
 #include "GLMUtils.h"
+#include "Audio.h"
 
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
@@ -85,13 +86,21 @@ void MovementSystem::update()
 			if (entity.input.acceleratorDown) {
 				// Apply acceleration force
 				// TODO: Obay a max speed and acceleration variable set in the movement component
+				//Audio& audio = Audio::getInstance();
+				//audio.playSFX(PLAYER_ENGINE);
 
 				entity.physics.acceleration += forward * 10.0f;
 			}
+			else
+			{
+				//Audio& audio = Audio::getInstance();
+				//audio.stopAccelerate();
+			}
+			
 
 			if (entity.input.brakeDown) {
 				// TODO: Obay a max reverse speed and acceleration variable set in the movement component
-
+				
 				entity.physics.acceleration += -entity.physics.velocity * 5.0f;
 			}
 		}

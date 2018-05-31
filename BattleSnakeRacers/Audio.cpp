@@ -17,7 +17,7 @@ bool Audio::InitFmod() {
 	FMOD_RESULT result;
 	result = FMOD::System_Create(&m_audioMgr);
 	if (result != FMOD_OK) return false;
-	result = m_audioMgr->init(50, FMOD_INIT_NORMAL, 0);
+	result = m_audioMgr->init(999, FMOD_INIT_NORMAL, 0);
 	if (result != FMOD_OK) return false;
 	return true;
 }
@@ -31,7 +31,7 @@ const bool Audio::LoadAudio() {
 	result = m_audioMgr->createSound("Assets/Audio/Racing-Menu.mp3", FMOD_DEFAULT, 0, &m_racingMusic);
 
 	result = m_audioMgr->createSound("Assets/Audio/accelerate.wav", FMOD_DEFAULT, 0, &m_accelerate);
-	result = m_audioMgr->createSound("Assets/Audio/loopingLinearEngine.mp3", FMOD_DEFAULT, 0, &m_engineLoop);
+	result = m_audioMgr->createSound("Assets/Audio/loopingLinearEngine.wav", FMOD_DEFAULT, 0, &m_engineLoop);
 
 	result = m_audioMgr->createSound("Assets/Audio/SoundFX/ButtonClicked.wav", FMOD_DEFAULT, 0, &m_buttonClick);
 	result = m_audioMgr->createSound("Assets/Audio/SoundFX/PlayerJoined.wav", FMOD_DEFAULT, 0, &m_playerJoined);
@@ -43,6 +43,7 @@ const bool Audio::LoadAudio() {
 
 	result = m_audioMgr->createChannelGroup(NULL, &channelMusic);
 	result = m_audioMgr->createChannelGroup(NULL, &channelEffects);
+	result = m_audioMgr->createChannelGroup(NULL, &accelerationChannelGroup);
 
 	m_bgMusic->setMode(FMOD_LOOP_NORMAL);
 	m_racingMusic->setMode(FMOD_LOOP_NORMAL);
@@ -92,9 +93,13 @@ void  Audio::playTrack3Music()
 void Audio::playSFX(Sound sound)
 {
 	if (sound == PLAYER_ACCELERATE)
-		m_audioMgr->playSound(m_accelerate, channelEffects, false, &m_sfxChannel);
+		m_audioMgr->playSound(m_accelerate, accelerationChannelGroup, false, &m_sfxChannel);
 	else if (sound == PLAYER_ENGINE)
-		m_audioMgr->playSound(m_engineLoop, channelEffects, false, &m_sfxChannel);
+	{
+		m_engineLoop->setMode(FMOD_LOOP_NORMAL);		
+		m_accelerateChannel->setVolume(0.2);
+		m_audioMgr->playSound(m_engineLoop, accelerationChannelGroup, false, &m_accelerateChannel);
+	}
 	else if (sound == BUTTON_CLICKED)
 		m_audioMgr->playSound(m_buttonClick, channelEffects, false, &m_sfxChannel);
 	else if (sound == PLAYER_JOINED)
@@ -109,6 +114,12 @@ void Audio::playSFX(Sound sound)
 		m_audioMgr->playSound(m_pickupCollected, channelEffects, false, &m_sfxChannel);
 	else if (sound == RESPAWN_PLAYERS)
 		m_audioMgr->playSound(m_respawnPlayers, channelEffects, false, &m_sfxChannel);
+}
+
+
+void Audio::stopAccelerate()
+{
+	m_engineLoop->setMode(FMOD_LOOP_OFF);
 }
 
 Audio& Audio::getInstance()
