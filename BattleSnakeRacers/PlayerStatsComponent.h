@@ -17,6 +17,7 @@ struct PlayerStatsComponent {
 	unsigned int highestProgress;//mainly just for finsihing a lap
 
 	unsigned int lap = 0;
+	char color = ' ';
 
 	std::vector<Entity*> snakeTails;
 	bool getDeathState()
