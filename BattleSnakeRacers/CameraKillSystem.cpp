@@ -40,7 +40,6 @@ void CameraKillSystem::update()
 		return;
 
 	// Find the player in last place, this player is a candidate to be killed
-	bool isFrstNonDeadPlayer = true;
 	vec3 topLeft, topRight, bottomLeft, bottomRight;
 	Entity* lastPlayer = nullptr;
 	for (Entity* player : m_playerList) {
@@ -68,6 +67,9 @@ void CameraKillSystem::update()
 		// Check if player is off screen
 		if (ndcPos.x < -1 || ndcPos.x > 1 || ndcPos.y < -1 || ndcPos.y > 1) {
 			Game::killPlayer(*lastPlayer);
+
+			// Stop players that are in front dying if they are the last player and slightly off screen when the other player dies.
+			disableFor(1);
 		}
 	}
 }
