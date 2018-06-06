@@ -38,6 +38,8 @@ MainMenuScreen::MainMenuScreen()
 	// Create the main menu sub title text
 	createTextLabel("Racers!", glm::vec2(700.0f, 480.0f), &m_UITexts, 2.0f, glm::vec3(1.0f, 1.0f, 1.0));
 	// Create the main menu credits text
+	createTextLabel("Requires controllers to play!", glm::vec2(480.0f, 380.0f), &m_UITexts, 0.5f, glm::vec3(1.0f, 1.0f, 1.0));
+	// Create the main menu credits text
 	createTextLabel("Made by: Lance Chaney, Jack Mair, Hugo Adams, Blair Corban", glm::vec2(400.0f, 10.0f), &m_UITexts, 0.5f, glm::vec3(1.0f, 1.0f, 1.0));
 
 	m_activeSystems.push_back(std::move(renderSystem));

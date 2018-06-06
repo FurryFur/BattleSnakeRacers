@@ -45,7 +45,7 @@ PlayerSelectScreen::PlayerSelectScreen()
 	renderSystem->setCamera(&cameraEntity);
 
 	// Create the main menu quit button
-	createTextLabel("Back", glm::vec2(40.0f, 700.0f), &m_UIButtons, 0.5f);
+	createTextLabel("(B) Back", glm::vec2(40.0f, 700.0f), &m_UIButtons, 0.5f);
 
 	// Create the main menu title text
 	createTextLabel("Player Select, connect controllers to play!", glm::vec2(40.0f, 760.0f), &m_UITexts, 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -53,10 +53,15 @@ PlayerSelectScreen::PlayerSelectScreen()
 	m_centreText = createUniqueTextLabel("Atleast 2 players needed to Play!", glm::vec2(400.0f, 400.0f), 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
 
 
-	m_p1Ready = createUniqueTextLabel("P1 Joined!", glm::vec2(250.0f, 450.0f), 0.5f, glm::vec3(1.0f, 1.0f, 1.0f));
+	m_p1Ready = createUniqueTextLabel("P1 Joined!", glm::vec2(250.0f, 450.0f), 0.5f, glm::vec3(1.0f, 0.0f, 0.0f));
 	m_p2PressStart = createUniqueTextLabel("P2 press start to join.", glm::vec2(840.0f, 450.0f), 0.5f, glm::vec3(1.0f, 1.0f, 0.0f));
 	m_p3PressStart = createUniqueTextLabel("P3 press start to join.", glm::vec2(200.0f, 50.0f), 0.5f, glm::vec3(1.0f, 1.0f, 0.0f));
 	m_p4PressStart = createUniqueTextLabel("P4 press start to join.", glm::vec2(840.0f, 50.0f), 0.5f, glm::vec3(1.0f, 1.0f, 0.0f));
+
+	//createTextLabel("Red Player", glm::vec2(200.0f, 650.0f), &m_UITexts, 0.5f, glm::vec3(1.0f, 0.0f, 0.0f));
+	//createTextLabel("Purple Player", glm::vec2(840.0f, 650.0f), &m_UITexts, 0.5f, glm::vec3(1.0f, 0.0f, 1.0f));
+	//createTextLabel("Blue Player", glm::vec2(200.0f, 250.0f), &m_UITexts, 0.5f, glm::vec3(0.0f, 0.0f, 1.0f));
+	//createTextLabel("Yellow Player", glm::vec2(840.0f, 250.0f), &m_UITexts, 0.5f, glm::vec3(1.0f, 1.0f, 0.0f));
 
 	player1Model.addComponents(COMPONENT_PHYSICS, COMPONENT_TRANSFORM);
 	player1Model.transform.scale = glm::vec3(7.0f, 7.0f, 7.0f);
@@ -165,11 +170,11 @@ void PlayerSelectScreen::checkPlayerReadyInput()
 			player2Model.addComponents(COMPONENT_MODEL);
 			m_p2Ready = true;
 			m_p2PressStart.setText("P2 Joined!");
-			m_p2PressStart.setColor(glm::vec3(1.0f, 1.0f, 1.0f));
+			m_p2PressStart.setColor(glm::vec3(1.0f, 0.0f, 1.0f));
 			m_p2PressStart.setPosition(glm::vec2(950.0f, 450.0f));
 		}
 		// Check if the player pressed the b button
-		else if (btns[1] == GLFW_PRESS && m_isP2Joined)
+		else if (btns[7] != GLFW_PRESS && btns[1] == GLFW_PRESS && m_isP2Joined)
 		{
 			player2Model.removeComponents(COMPONENT_MODEL);
 			m_p2Ready = false;
@@ -195,11 +200,11 @@ void PlayerSelectScreen::checkPlayerReadyInput()
 			player3Model.addComponents(COMPONENT_MODEL);
 			m_p3Ready = true;
 			m_p3PressStart.setText("P3 Joined!");
-			m_p3PressStart.setColor(glm::vec3(1.0f, 1.0f, 1.0f));
+			m_p3PressStart.setColor(glm::vec3(0.0f, 0.0f, 1.0f));
 			m_p3PressStart.setPosition(glm::vec2(250.0f, 50.0f));
 		}
 		// Check if the player pressed the b button
-		else if (btns[1] == GLFW_PRESS && m_isP3Joined)
+		else if (btns[7] != GLFW_PRESS && btns[1] == GLFW_PRESS && m_isP3Joined)
 		{
 			player3Model.removeComponents(COMPONENT_MODEL);
 			m_p3Ready = false;
@@ -226,11 +231,11 @@ void PlayerSelectScreen::checkPlayerReadyInput()
 			player4Model.addComponents(COMPONENT_MODEL);
 			m_p4Ready = true;
 			m_p4PressStart.setText("P4 Joined!");
-			m_p4PressStart.setColor(glm::vec3(1.0f, 1.0f, 1.0f));
+			m_p4PressStart.setColor(glm::vec3(0.0f, 1.0f, 1.0f));
 			m_p4PressStart.setPosition(glm::vec2(950.0f, 50.0f));
 		}
 		// Check if the player pressed the b button
-		else if (btns[1] == GLFW_PRESS && m_isP4Joined)
+		else if (btns[7] != GLFW_PRESS && btns[1] == GLFW_PRESS && m_isP4Joined)
 		{
 			player4Model.removeComponents(COMPONENT_MODEL);
 			m_p4Ready = false;
