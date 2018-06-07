@@ -41,6 +41,24 @@ void PickupSystem::update()
 						// Spawn a tail for the player
 						TransformComponent snakeTailTransform{};
 						Entity& snakeTail = Prefabs::createModel(m_scene, "Assets/Models/hotdog/model.obj", snakeTailTransform);
+						
+						if (i == 0)
+						{
+							snakeTail.model.materials.at(3).debugColor = glm::vec3(0.8f, 0.0f, 0.0f);
+						}
+						else if (i == 1)
+						{
+							snakeTail.model.materials.at(3).debugColor = glm::vec3(0.7f, 0.1f, 0.7f);
+						}
+						else if (i == 2)
+						{
+							snakeTail.model.materials.at(3).debugColor = glm::vec3(0.1f, 0.1f, 0.7f);
+						}
+						else
+						{
+							snakeTail.model.materials.at(3).debugColor = glm::vec3(0.8f, 0.8f, 0.0f);
+						}
+
 						snakeTail.preTransform.eulerAngles.y = glm::half_pi<float>();
 						snakeTail.transform.scale = glm::vec3(4.0f, 4.0f, 4.0f);
 						snakeTail.addComponents(COMPONENT_SNAKETAIL, COMPONENT_PHYSICS, COMPONENT_CONTROL);

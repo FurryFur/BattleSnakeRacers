@@ -231,7 +231,7 @@ void PlayerSelectScreen::checkPlayerReadyInput()
 			player4Model.addComponents(COMPONENT_MODEL);
 			m_p4Ready = true;
 			m_p4PressStart.setText("P4 Joined!");
-			m_p4PressStart.setColor(glm::vec3(0.0f, 1.0f, 1.0f));
+			m_p4PressStart.setColor(glm::vec3(1.0f, 1.0f, 0.0f));
 			m_p4PressStart.setPosition(glm::vec2(950.0f, 50.0f));
 		}
 		// Check if the player pressed the b button
