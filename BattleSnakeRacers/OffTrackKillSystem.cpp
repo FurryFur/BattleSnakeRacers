@@ -49,6 +49,19 @@ void OffTrackKillSystem::update()
 				player.removeComponents(COMPONENT_INPUT);
 			}
 
+			// If below a certain Y value and on the track again
+			else if (player.transform.position.y <= -4.0f)
+			{
+				Game::killPlayer(*m_playerList[i]);
+				// Play a sound
+				Audio& audio = Audio::getInstance();
+				audio.playSFX(PLAYER_SNAKE_COLLIDE);
+			}
+			else
+			{
+				player.physics.velocity.y = 0.0f;
+			}
+
 			// Kill players beyond a certain -y value
 			if (player.transform.position.y <= m_killY) {
 				Game::killPlayer(*m_playerList[i]);
