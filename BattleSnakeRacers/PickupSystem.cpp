@@ -9,6 +9,8 @@
 
 #include <iostream>
 
+glm::vec3 colorFromChar(char _c);
+
 PickupSystem::PickupSystem(Scene& scene, std::vector<Entity*>& playerList)
 	: System{ scene }
 	, m_playerList{playerList}
@@ -42,22 +44,8 @@ void PickupSystem::update()
 						TransformComponent snakeTailTransform{};
 						Entity& snakeTail = Prefabs::createModel(m_scene, "Assets/Models/hotdog/model.obj", snakeTailTransform);
 						
-						if (i == 0)
-						{
-							snakeTail.model.materials.at(3).debugColor = glm::vec3(0.8f, 0.0f, 0.0f);
-						}
-						else if (i == 1)
-						{
-							snakeTail.model.materials.at(3).debugColor = glm::vec3(0.7f, 0.1f, 0.7f);
-						}
-						else if (i == 2)
-						{
-							snakeTail.model.materials.at(3).debugColor = glm::vec3(0.1f, 0.1f, 0.7f);
-						}
-						else
-						{
-							snakeTail.model.materials.at(3).debugColor = glm::vec3(0.8f, 0.8f, 0.0f);
-						}
+
+						snakeTail.model.materials.at(3).debugColor = colorFromChar(m_playerList[i]->playerStats.color);
 
 						snakeTail.preTransform.eulerAngles.y = glm::half_pi<float>();
 						snakeTail.transform.scale = glm::vec3(4.0f, 4.0f, 4.0f);
@@ -94,5 +82,29 @@ void PickupSystem::update()
 		{
 			entity.pickup.isActive = true;
 		}
+	}
+}
+
+glm::vec3 colorFromChar(char _c)
+{
+	if (_c == 'r')
+	{
+		return glm::vec3(1, 0, 0);
+	}
+	else if (_c == 'p')
+	{
+		return glm::vec3(0.8, 0, 0.8);
+	}
+	else if (_c == 'b')
+	{
+		return glm::vec3(0, 0, 1);
+	}
+	else if (_c == 'y')
+	{
+		return glm::vec3(1, 1, 0);
+	}
+	else
+	{
+		return glm::vec3(0);
 	}
 }

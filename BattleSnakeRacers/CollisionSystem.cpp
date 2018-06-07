@@ -36,7 +36,10 @@ void PlayerCollisionSystem::update()
 					player2.physics.acceleration += contactInfo.contactNormals[1] * contactInfo.penetrationDistance * springConstant;
 
 					// Play a sound
-					if (glm::length(newPlayer1Acceleration) > 29.0f)
+					glm::vec3 positionOffset = player2.transform.position - player1.transform.position;
+					positionOffset = glm::normalize(positionOffset);
+					float relativeSpeed = glm::dot(player2.physics.velocity - player1.physics.velocity, positionOffset);
+					if (relativeSpeed > 10.0f)
 					{
 						Audio& audio = Audio::getInstance();
 						audio.playSFX(PLAYER_COLLISION);
