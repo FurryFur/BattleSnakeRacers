@@ -42,7 +42,7 @@ void SnakeTailSystem::update()
 		for (int i = 0; i < m_playerList.size(); ++i)
 		{
 			// Check that its not the player the snake tail belongs to
-			if (m_playerList[i] != entity.snakeTail.player)
+			if (m_playerList[i] != entity.snakeTail.player && m_playerList[i]->playerStats.getDeathState() == false)
 			{
 				// Check they collide
 				if ((m_playerList[i]->transform.position.x >= entity.transform.position.x - 2)
